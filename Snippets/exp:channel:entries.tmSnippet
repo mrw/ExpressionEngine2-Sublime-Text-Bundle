@@ -3,15 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>{exp:$1:entries
-	${1:channel}="${2:value}"
-	${3:disable="${4:custom_fields|}${5:categories|}${6:category_fields|}${7:member_data|}${8:pagination|}${9:trackbacks}"}
-	${10:dynamic="no"}
-	${11:require_entry="yes"}$12
+	<string>{exp:channel:entries
+	channel="${1:value}"
+	disable="${3:custom_fields|}${4:categories|}${5:category_fields|}${6:member_data|}${7:pagination|}${8:trackbacks}"
+	${9:dynamic="no"}
 }
-	${13:{if no_results\}${14:{redirect="${15:404}"\}}{/if\}}
-	${16:$TM_SELECTED_TEXT}
-{/exp:$1:entries}</string>
+	${10:$TM_SELECTED_TEXT}
+{/exp:channel:entries}</string>
 	<key>keyEquivalent</key>
 	<string>^@e</string>
 	<key>name</key>
