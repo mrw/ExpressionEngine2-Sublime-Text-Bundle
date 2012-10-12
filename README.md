@@ -7,7 +7,15 @@ Forked and only slightly modified from [Wes Baker's EE 2 TextMate Bundle](https:
 
 A reworked version of [Tim Kelty's ExpressionEngine bundle](http://github.com/timkelty/expressionengine-tweaked-tmbundle), updated to work with ExpressionEngine 2.0. 
 
-Installation
+Automatic Instlalation (OSX Only)
+------------
+Run the following command in Terminal to install the ExpressionEngine bundle.
+
+```
+cd /tmp && curl -s https://nodeload.github.com/mrw/ExpressionEngine2-Sublime-Text-Bundle/tarball/master -o expressionengine.tar.gz && tar -xzf expressionengine.tar.gz > /dev/null && mv ./mrw-ExpressionEngine2-Sublime-Text-Bundle* ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/expressionengine && rm -f expressionengine.tar.gz && echo "The ExpressionEngine bundle for Sublime Text 2 is now installed."
+```
+
+Manual Installation
 ------------
 
 1. Click the Downloads button at the top right of this page.
