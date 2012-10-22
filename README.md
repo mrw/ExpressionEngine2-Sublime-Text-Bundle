@@ -9,7 +9,7 @@ A reworked version of [Tim Kelty's ExpressionEngine bundle](http://github.com/ti
 
 Automatic Installation (OSX Only)
 ------------
-Run the following command in Terminal to install the ExpressionEngine bundle.
+Run the following command in Terminal to install the ExpressionEngine bundle. Use of Terminal commands are at your own risk and should only be attempted by those who know what they are doing.
 
 ```
 cd /tmp && curl -s https://nodeload.github.com/mrw/ExpressionEngine2-Sublime-Text-Bundle/tarball/master -o expressionengine.tar.gz && tar -xzf expressionengine.tar.gz > /dev/null && mv ./mrw-ExpressionEngine2-Sublime-Text-Bundle* ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/expressionengine && rm -f expressionengine.tar.gz && echo "The ExpressionEngine bundle for Sublime Text 2 is now installed."
