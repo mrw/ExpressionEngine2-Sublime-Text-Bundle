@@ -7,7 +7,7 @@ Forked and only slightly modified from [Wes Baker's EE 2 TextMate Bundle](https:
 
 A reworked version of [Tim Kelty's ExpressionEngine bundle](http://github.com/timkelty/expressionengine-tweaked-tmbundle), updated to work with ExpressionEngine 2.0. 
 
-Automatic Instlalation (OSX Only)
+Automatic Installation (OSX Only)
 ------------
 Run the following command in Terminal to install the ExpressionEngine bundle.
 
