@@ -11,6 +11,7 @@
 		<string>php</string>
 		<string>xhtml</string>
 		<string>js</string>
+		<string>css</string>
 	</array>
 	<key>foldingStartMarker</key>
 	<string>(\{(exp:([a-zA-Z0-9_:]+)|if )\b.*?\})|(&lt;(head|table|tr|div|style|script|ul|ol|form|dl)\b.*?&gt;)</string>
