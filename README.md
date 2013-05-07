@@ -9,6 +9,10 @@ PLUS:
 * (does not highlight/color code blocks contained within EE comments)
 * (recognizes EE comments within quoted strings)
 
+* Highlighting for EE module attributes (channel=, limit=, etc)
+
+* Highlighting for EE global variables ({site_name}, {user_name}, etc)
+
 NOTE:
 
 The HTML5 package for ST may override this package and prevent proper highlighting.

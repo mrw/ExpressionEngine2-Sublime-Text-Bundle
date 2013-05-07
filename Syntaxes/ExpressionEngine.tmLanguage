@@ -422,6 +422,13 @@
 			<key>name</key>
 			<string>constant.name.tag.ee</string>
 		</dict>
+		<key>tag-ee-globals</key>
+		<dict>
+			<key>match</key>
+			<string>\{(app_version|charset|current_time|debug_mode|doc_url|elapsed_time|email|group_id|gzip_mode|hits|homepage|ip_address|lang|location|member_group|member_id|member_profile_link|screen_name|site_name|total_comments|total_entries|total_queries|username|webmaster_email)\}</string>
+			<key>name</key>
+			<string>constant.language.ee</string>
+		</dict>
 		<key>tag-stuff</key>
 		<dict>
 			<key>patterns</key>
@@ -429,6 +436,10 @@
 				<dict>
 					<key>include</key>
 					<string>#ee-comment</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#tag-ee-globals</string>
 				</dict>
 				<dict>
 					<key>include</key>
