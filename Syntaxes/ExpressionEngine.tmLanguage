@@ -411,7 +411,7 @@
 		<key>tag-generic-attribute</key>
 		<dict>
 			<key>match</key>
-			<string>\b([a-zA-Z0-9-_:]+)</string>
+			<string>\b([a-zA-Z0-9-_:]+)(?=)</string>
 			<key>name</key>
 			<string>constant.name.tag.ee</string>
 		</dict>
