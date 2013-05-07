@@ -428,6 +428,10 @@
 			<array>
 				<dict>
 					<key>include</key>
+					<string>#ee-comment</string>
+				</dict>
+				<dict>
+					<key>include</key>
 					<string>#tag-known-attribute</string>
 				</dict>
 				<dict>
