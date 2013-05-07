@@ -260,6 +260,10 @@
 					<key>include</key>
 					<string>#css</string>
 				</dict>
+				<dict>
+					<key>include</key>
+					<string>#ee-comment</string>
+				</dict>
 			</array>
 		</dict>
 		<key>entities</key>
@@ -382,10 +386,6 @@
 					<key>include</key>
 					<string>#entities</string>
 				</dict>
-				<dict>
-					<key>include</key>
-					<string>#ee-comment</string>
-				</dict>
 			</array>
 		</dict>
 		<key>string-single-quoted</key>
@@ -405,10 +405,6 @@
 				<dict>
 					<key>include</key>
 					<string>#entities</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#ee-comment</string>
 				</dict>
 			</array>
 		</dict>
