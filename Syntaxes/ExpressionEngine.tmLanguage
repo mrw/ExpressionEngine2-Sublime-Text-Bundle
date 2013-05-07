@@ -413,12 +413,23 @@
 			<key>match</key>
 			<string>\b([a-zA-Z0-9-_:]+)(?=)</string>
 			<key>name</key>
+			<string>constant.name.tag</string>
+		</dict>
+		<key>tag-known-attribute</key>
+		<dict>
+			<key>match</key>
+			<string>\b(allow_comments|allow_html|author_id|author_only|backspace|base_path|cache|cat_limit|cat_style|category|category_group|channel|charset|class|comment_id|datepicker|day|directory_id|disable|display_by|dynamic|dynamic_parameters|dynamic_start|dynamic_title|effect|entry_id|entry_id_from|entry_id_to|entry_status|error_handling|file|file_id|fixed_order|form_class|form_id|form_name|group_id|id|image_url|include_jquery|json|limit|list|logged_out_member_id|month|month_limit|name|no_result_page|offset|orderby|paginate|paginate_base|paginate_type|parent_only|parse|plugin|popup|preserve_checkboxes|profile_path|recipients|redirect|refresh|related_categories_mode|relaxed_categories|replyto|require_entry|result_page|results|return|return_X|rte_selector|rte_toolset_id|rules:[a-zA-Z0-9_-]+|safecracker_head|search:[a-zA-Z0-9_-]+|search_in|secure_action|secure_return|selector|show|show_current_week|show_empty|show_expired|show_future_entries|show_pages|silent|site|sort|sql|start_day|start_on|status|sticky|stop_before|style|theme|toolset_id|track_views|type|ui|uncategorized_entries|url_title|use_live_url|user_recipients|username|weblog|week_sort|where|which|wiki|year)\b(?=)</string>
+			<key>name</key>
 			<string>constant.name.tag.ee</string>
 		</dict>
 		<key>tag-stuff</key>
 		<dict>
 			<key>patterns</key>
 			<array>
+				<dict>
+					<key>include</key>
+					<string>#tag-known-attribute</string>
+				</dict>
 				<dict>
 					<key>include</key>
 					<string>#tag-generic-attribute</string>
