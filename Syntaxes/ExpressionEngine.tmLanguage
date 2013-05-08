@@ -359,6 +359,14 @@
 			<key>patterns</key>
 			<array>
 				<dict>
+					<key>include</key>
+					<string>#ee-tag</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#ee-comment</string>
+				</dict>
+				<dict>
 					<key>match</key>
 					<string>#.*?(?=\?&gt;)</string>
 					<key>name</key>
