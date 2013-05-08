@@ -2,8 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>bundleUUID</key>
-	<string>0030951E-4F78-4C7C-9071-00ABDC866D4F</string>
+	<key>comment</key>
+	<string>ExpressionEngine grammar for Sublime Text. Forked by fcgrx from imjared's module, which was forked from wes baker's fork of tim kelty's original work.</string>
 	<key>fileTypes</key>
 	<array>
 		<string>html</string>
@@ -220,6 +220,10 @@
 			<key>patterns</key>
 			<array>
 				<dict>
+					<key>include</key>
+					<string>#tag-ee-globals-simple</string>
+				</dict>
+				<dict>
 					<key>begin</key>
 					<string>\{/?([a-zA-Z0-9_:]+\b)</string>
 					<key>captures</key>
@@ -263,6 +267,10 @@
 				<dict>
 					<key>include</key>
 					<string>#ee-comment</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#tag-ee-globals-simple</string>
 				</dict>
 			</array>
 		</dict>
@@ -418,14 +426,21 @@
 		<key>tag-known-attribute</key>
 		<dict>
 			<key>match</key>
-			<string>\b(allow_comments|allow_html|author_id|author_only|backspace|base_path|cache|cat_limit|cat_style|category|category_group|channel|charset|class|comment_id|datepicker|day|directory_id|disable|display_by|dynamic|dynamic_parameters|dynamic_start|dynamic_title|effect|entry_id|entry_id_from|entry_id_to|entry_status|error_handling|file|file_id|fixed_order|form_class|form_id|form_name|group_id|id|image_url|include_jquery|json|limit|list|logged_out_member_id|month|month_limit|name|no_result_page|offset|orderby|paginate|paginate_base|paginate_type|parent_only|parse|plugin|popup|preserve_checkboxes|profile_path|recipients|redirect|refresh|related_categories_mode|relaxed_categories|replyto|require_entry|result_page|results|return|return_X|rte_selector|rte_toolset_id|rules:[a-zA-Z0-9_-]+|safecracker_head|search:[a-zA-Z0-9_-]+|search_in|secure_action|secure_return|selector|show|show_current_week|show_empty|show_expired|show_future_entries|show_pages|silent|site|sort|sql|start_day|start_on|status|sticky|stop_before|style|theme|toolset_id|track_views|type|ui|uncategorized_entries|url_title|use_live_url|user_recipients|username|weblog|week_sort|where|which|wiki|year)\b(?=)</string>
+			<string>\b(allow_comments|allow_html|author_id|author_only|backspace|base_path|cache|cat_limit|cat_style|category|category_group|channel|charset|class|comment_id|datepicker|day|directory_id|disable|display_by|dynamic|dynamic_parameters|dynamic_start|dynamic_title|effect|entry_id|entry_id_from|entry_id_to|entry_status|error_handling|file|file_id|fixed_order|form_class|form_id|form_name|group_id|id|image_url|include_jquery|json|limit|list|logged_out_member_id|month|month_limit|name|no_result_page|offset|orderby|paginate|paginate_base|paginate_type|parent_only|parse|plugin|popup|preserve_checkboxes|profile_path|recipients|redirect|refresh|related_categories_mode|relaxed_categories|replyto|require_entry|result_page|results|return|return_X|rte_selector|rte_toolset_id|rules:|safecracker_head|search:|search_in|secure_action|secure_return|selector|show|show_current_week|show_empty|show_expired|show_future_entries|show_pages|silent|site|sort|sql|start_day|start_on|status|sticky|stop_before|style|theme|toolset_id|track_views|type|ui|uncategorized_entries|url_title|use_live_url|user_recipients|username|weblog|week_sort|where|which|wiki|year)\b(?=)</string>
 			<key>name</key>
 			<string>constant.name.tag.ee</string>
 		</dict>
-		<key>tag-ee-globals</key>
+		<key>tag-ee-globals-embedded</key>
 		<dict>
 			<key>match</key>
-			<string>\{(app_version|charset|current_time|debug_mode|doc_url|elapsed_time|email|group_id|gzip_mode|hits|homepage|ip_address|lang|location|member_group|member_id|member_profile_link|screen_name|site_name|total_comments|total_entries|total_queries|username|webmaster_email)\}</string>
+			<string>(app_version|charset|current_time|debug_mode|doc_url|elapsed_time|email|embed=|encode=|group_id|gzip_mode|hits|homepage|ip_address|lang|location|member_group|member_id|member_profile_link|path=|screen_name|site_name|total_comments|total_entries|total_queries|username|webmaster_email)</string>
+			<key>name</key>
+			<string>constant.language.ee</string>
+		</dict>
+		<key>tag-ee-globals-simple</key>
+		<dict>
+			<key>match</key>
+			<string>\{(app_version|charset|current_time|debug_mode|doc_url|elapsed_time|email|encode=|group_id|gzip_mode|hits|homepage|ip_address|lang|location|member_group|member_id|member_profile_link|path=|screen_name|site_name|total_comments|total_entries|total_queries|username|webmaster_email)\}</string>
 			<key>name</key>
 			<string>constant.language.ee</string>
 		</dict>
@@ -439,7 +454,7 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#tag-ee-globals</string>
+					<string>#tag-ee-globals-embedded</string>
 				</dict>
 				<dict>
 					<key>include</key>
