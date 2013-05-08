@@ -320,11 +320,11 @@
 			<array>
 				<dict>
 					<key>include</key>
-					<string>#ee-tag</string>
+					<string>#ee-comment</string>
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#ee-comment</string>
+					<string>#ee-tag</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -376,11 +376,11 @@
 			<array>
 				<dict>
 					<key>include</key>
-					<string>#ee-tag</string>
+					<string>#ee-comment</string>
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#ee-comment</string>
+					<string>#ee-tag</string>
 				</dict>
 				<dict>
 					<key>match</key>
