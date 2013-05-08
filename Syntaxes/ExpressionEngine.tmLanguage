@@ -125,11 +125,11 @@
 		</dict>
 		<dict>
 			<key>include</key>
-			<string>#ee-tag</string>
+			<string>#ee-comment</string>
 		</dict>
 		<dict>
 			<key>include</key>
-			<string>#ee-comment</string>
+			<string>#ee-tag</string>
 		</dict>
 		<dict>
 			<key>begin</key>
@@ -155,6 +155,10 @@
 					<string>string.quoted.double.doctype.identifiers-and-DTDs.html</string>
 				</dict>
 			</array>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>#css</string>
 		</dict>
 		<dict>
 			<key>comment</key>
@@ -183,6 +187,10 @@
 			<string>source.css.embedded.html</string>
 			<key>patterns</key>
 			<array>
+				<dict>
+					<key>include</key>
+					<string>#embedded-code</string>
+				</dict>
 				<dict>
 					<key>include</key>
 					<string>source.css</string>
