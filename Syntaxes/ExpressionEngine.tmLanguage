@@ -472,6 +472,10 @@
 					<key>include</key>
 					<string>#string-single-quoted</string>
 				</dict>
+				<dict>
+					<key>include</key>
+					<string>#ee-tag</string>
+				</dict>
 			</array>
 		</dict>
 	</dict>
