@@ -127,7 +127,15 @@
 			<array>
 				<dict>
 					<key>include</key>
-					<string>#ee-tag-global-simple</string>
+					<string>#ee-tag-global-variable-closed</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#ee-tag-plugin</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#ee-tag-conditional</string>
 				</dict>
 				<dict>
 					<key>begin</key>
@@ -160,6 +168,10 @@
 			<array>
 				<dict>
 					<key>include</key>
+					<string>#ee-comment</string>
+				</dict>
+				<dict>
+					<key>include</key>
 					<string>#php</string>
 				</dict>
 				<dict>
@@ -172,11 +184,7 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#ee-comment</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#ee-tag-global-simple</string>
+					<string>#ee-tag-global-variable-closed</string>
 				</dict>
 			</array>
 		</dict>
@@ -342,7 +350,14 @@
 				</dict>
 			</array>
 		</dict>
-		<key>tag-generic-attribute</key>
+		<key>ee-keyword</key>
+		<dict>
+			<key>match</key>
+			<string>\b(absolute_count|absolute_results|active|add_to_cart_button|add_to_cart_url|allow_comments|aol_im|author|author_email|author_id|author_name|auto_path|avatar|avatar_image_height|avatar_image_width|avatar_url|bio|buy_now_button|buy_now_url|calendar_heading|calendar_rows|can_moderate_comment|captcha|categories|category_description|category_id|category_image|category_name|category_request|category_url_title|channel|channel_description|channel_encoding|channel_id|channel_lang|channel_language|channel_name|channel_short_name|channel_title|channel_url|clear_all_cookies_link|clear_ee_cookies_link|comment|comment_auto_path|comment_date|comment_entry_id_auto_path|comment_id|comment_path|comment_site_id|comment_stripped|comment_subscriber_total|comment_tb_total|comment_total|comment_url_title_auto_path|comments_disabled|comments_expired|cookies_allowed|cookies_allowed_link|count|credit|custom_fields|date|date_footer|date_heading|day_number|day_path|description|directory_id|directory_title|edit_date|editable|email|encoding|entries|entry_author_id|entry_date|entry_id|entry_id_path|entry_site_id|entry_titles|error:|excerpt|expiration_date|field:|field_errors|field_errors:count|file_url|filename|forum_topic|forum_topic_id|full_name|full_text|global_errors|global_errors|gmt_comment_date|gmt_edit_date|gmt_entry_date|group_id|height|icq|id_auto_path|id_path|instructions|interests|ip_address|is_ignored|item_enabled|item_id|item_name|item_purchases|item_regular_price|item_sale_price|item_type|item_use_sale|label:|last_comment_date|last_entry_date|last_visitor_date|location|logged_in|logged_out|member_email|member_name|member_path|member_search_path|month|month_num|month_short|most_visitor_date|most_visitors|msn_im|name|next_date|next_path|no_results|not_category_request|not_forum_topic|occupation|options:|page_uri|page_url|parent_id|path|permalink|photo|photo_image_height|photo_image_width|photo_url|ping_date|ping_ipaddress|ping_site_check|ping_site_name|ping_site_rss|ping_site_url|previous_date|previous_path|profile_path|recent_comment_date|ref_agent|ref_agent_short|ref_date|ref_from|ref_ip|ref_to|relative_date|relative_url|row_end|row_start|safecracker_head|screen_name|selected_option:|signature|signature_image|signature_image_height|signature_image_url|signature_image_width|size|status|sticky|subscriber_count|subscriber_email|subscriber_guest_total|subscriber_is_member|subscriber_member_id|subscriber_member_total|subscriber_screen_name|subscriber_total_results|summary|switch|title|title_permalink|total_anon|total_comments|total_entries|total_guests|total_logged_in|total_members|total_results|trackback_total|trimmed_url|url|url_as_author|url_or_email|url_or_email_as_author|url_or_email_as_link|url_title|url_title_path|username|version|view_cart_button|view_cart_url|week_date|width|yahoo_im|year|year_heading|year_short)\b</string>
+			<key>name</key>
+			<string>entity.other.variable-name.ee</string>
+		</dict>
+		<key>ee-tag-attribute-generic</key>
 		<dict>
 			<key>match</key>
 			<string>\b([a-zA-Z0-9-_:]+)(?=)</string>
@@ -356,26 +371,86 @@
 			<key>name</key>
 			<string>entity.other.parameter-name.ee</string>
 		</dict>
-		<key>ee-keyword</key>
+		<key>ee-tag-conditional</key>
 		<dict>
-			<key>match</key>
-			<string>\b(absolute_count|absolute_results|active|add_to_cart_button|add_to_cart_url|allow_comments|aol_im|author|author_email|author_id|author_name|auto_path|avatar|avatar_image_height|avatar_image_width|avatar_url|bio|buy_now_button|buy_now_url|calendar_heading|calendar_rows|can_moderate_comment|captcha|categories|category_description|category_id|category_image|category_name|category_request|category_url_title|channel|channel_description|channel_encoding|channel_id|channel_lang|channel_language|channel_name|channel_short_name|channel_title|channel_url|clear_all_cookies_link|clear_ee_cookies_link|comment|comment_auto_path|comment_date|comment_entry_id_auto_path|comment_id|comment_path|comment_site_id|comment_stripped|comment_subscriber_total|comment_tb_total|comment_total|comment_url_title_auto_path|comments_disabled|comments_expired|cookies_allowed|cookies_allowed_link|count|credit|custom_fields|date|date_footer|date_heading|day_number|day_path|description|directory_id|directory_title|edit_date|editable|email|encoding|entries|entry_author_id|entry_date|entry_id|entry_id_path|entry_site_id|entry_titles|error:|excerpt|expiration_date|field:|field_errors|field_errors:count|file_url|filename|forum_topic|forum_topic_id|full_name|full_text|global_errors|global_errors|gmt_comment_date|gmt_edit_date|gmt_entry_date|group_id|height|icq|id_auto_path|id_path|instructions|interests|ip_address|is_ignored|item_enabled|item_id|item_name|item_purchases|item_regular_price|item_sale_price|item_type|item_use_sale|label:|last_comment_date|last_entry_date|last_visitor_date|location|logged_in|logged_out|member_email|member_name|member_path|member_search_path|month|month_num|month_short|most_visitor_date|most_visitors|msn_im|name|next_date|next_path|no_results|not_category_request|not_forum_topic|occupation|options:|page_uri|page_url|parent_id|path|permalink|photo|photo_image_height|photo_image_width|photo_url|ping_date|ping_ipaddress|ping_site_check|ping_site_name|ping_site_rss|ping_site_url|previous_date|previous_path|profile_path|recent_comment_date|ref_agent|ref_agent_short|ref_date|ref_from|ref_ip|ref_to|relative_date|relative_url|row_end|row_start|safecracker_head|screen_name|selected_option:|signature|signature_image|signature_image_height|signature_image_url|signature_image_width|size|status|sticky|subscriber_count|subscriber_email|subscriber_guest_total|subscriber_is_member|subscriber_member_id|subscriber_member_total|subscriber_screen_name|subscriber_total_results|summary|switch|title|title_permalink|total_anon|total_comments|total_entries|total_guests|total_logged_in|total_members|total_results|trackback_total|trimmed_url|url|url_as_author|url_or_email|url_or_email_as_author|url_or_email_as_link|url_title|url_title_path|username|version|view_cart_button|view_cart_url|week_date|width|yahoo_im|year|year_heading|year_short)\b</string>
+			<key>begin</key>
+			<string>\{(if|if:else|else:if|\/if)\b</string>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.control.ee</string>
+				</dict>
+			</dict>
+			<key>end</key>
+			<string>\}</string>
 			<key>name</key>
-			<string>entity.other.variable-name.ee</string>
+			<string>ee.tag.html</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#ee-keyword</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#ee-tag-global-variable</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#ee-tag-logical</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#tag-stuff</string>
+				</dict>
+			</array>
 		</dict>
-		<key>ee-tag-global-embedded</key>
+		<key>ee-tag-logical</key>
 		<dict>
 			<key>match</key>
-			<string>\b(app_version|charset|current_time|debug_mode|doc_url|elapsed_time|email|embed=|encode=|group_id|gzip_mode|hits|homepage|ip_address|lang|location|member_group|member_id|member_profile_link|path=|screen_name|site_name|total_comments|total_entries|total_queries|username|webmaster_email)\b</string>
+			<string>\b(OR|AND)\b</string>
+			<key>name</key>
+			<string>keyword.operator.logical.ee</string>
+		</dict>
+		<key>ee-tag-global-variable</key>
+		<dict>
+			<key>match</key>
+			<string>\b(app_version|charset|current_time|debug_mode|doc_url|elapsed_time|email|embed=|encode=|group_id|gzip_mode|hits|homepage|ip_address|lang|location|member_group|member_id|member_profile_link|path=|screen_name|site_name|total_comments|total_entries|total_queries|username|webmaster_email|logged_in|auto_log_in)\b</string>
 			<key>name</key>
 			<string>support.constant.language.ee</string>
 		</dict>
-		<key>ee-tag-global-simple</key>
+		<key>ee-tag-global-variable-closed</key>
 		<dict>
 			<key>match</key>
-			<string>\{(app_version|charset|current_time|debug_mode|doc_url|elapsed_time|email|encode=|group_id|gzip_mode|hits|homepage|ip_address|lang|location|member_group|member_id|member_profile_link|path=|screen_name|site_name|total_comments|total_entries|total_queries|username|webmaster_email)\}</string>
+			<string>\{(app_version|charset|current_time|debug_mode|doc_url|elapsed_time|email|encode=|group_id|gzip_mode|hits|homepage|ip_address|lang|location|member_group|member_id|member_profile_link|path=|screen_name|site_name|total_comments|total_entries|total_queries|username|webmaster_email|logged_in|auto_log_in)\}</string>
 			<key>name</key>
 			<string>support.constant.language.ee</string>
+		</dict>
+		<key>ee-tag-plugin</key>
+		<dict>
+			<key>begin</key>
+			<string>\{/?(exp:[a-zA-Z0-9_:]+\b)</string>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>support.function.plugin.ee</string>
+				</dict>
+			</dict>
+			<key>end</key>
+			<string>\}</string>
+			<key>name</key>
+			<string>ee.tag.html</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#tag-stuff</string>
+				</dict>
+			</array>
 		</dict>
 		<key>tag-stuff</key>
 		<dict>
@@ -387,7 +462,11 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#ee-tag-global-embedded</string>
+					<string>#ee-keyword</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#ee-tag-global-variable</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -395,7 +474,7 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#tag-generic-attribute</string>
+					<string>#ee-tag-attribute-generic</string>
 				</dict>
 				<dict>
 					<key>include</key>
