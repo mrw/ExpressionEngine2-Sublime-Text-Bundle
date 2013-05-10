@@ -332,7 +332,7 @@
 			<key>name</key>
 			<string>entity.other.variable-name.ee</string>
 		</dict>
-		<key>ee-tag-parameter-generic</key>
+		<key>ee-tag-parameter-user</key>
 		<dict>
 			<key>match</key>
 			<string>\b([a-zA-Z0-9-_:]+)(?=)</string>
@@ -470,7 +470,7 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#ee-tag-parameter-generic</string>
+					<string>#ee-tag-parameter-user</string>
 				</dict>
 				<dict>
 					<key>include</key>
