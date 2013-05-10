@@ -5,6 +5,8 @@ ExpressionEngine Sublime Text 2 that also supports the [jQuery bundle](https://g
 
 PLUS:
 
+* Highlighting for built-in EE adddon tags
+
 * Improved handling of EE comments:
 * (does not highlight/color code blocks contained within EE comments)
 * (recognizes EE comments within quoted strings)
@@ -12,6 +14,10 @@ PLUS:
 * Highlighting for EE module attributes (channel=, limit=, etc)
 
 * Highlighting for EE global variables ({site_name}, {user_name}, etc)
+
+* Highlighting for deprecated EE tags
+
+
 
 NOTE:
 

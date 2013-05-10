@@ -23,15 +23,7 @@
 	<array>
 		<dict>
 			<key>include</key>
-			<string>#ee-comment</string>
-		</dict>
-		<dict>
-			<key>include</key>
-			<string>#ee-tag</string>
-		</dict>
-		<dict>
-			<key>include</key>
-			<string>#css</string>
+			<string>#embedded-code</string>
 		</dict>
 		<dict>
 			<key>comment</key>
