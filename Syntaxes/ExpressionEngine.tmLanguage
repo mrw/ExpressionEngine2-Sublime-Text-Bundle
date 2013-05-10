@@ -30,31 +30,6 @@
 			<string>#ee-tag</string>
 		</dict>
 		<dict>
-			<key>begin</key>
-			<string>(DOCTYPE)</string>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>entity.name.tag.doctype.html</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>(?=&gt;)</string>
-			<key>name</key>
-			<string>meta.tag.sgml.doctype.html</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>match</key>
-					<string>"[^"&gt;]*"</string>
-					<key>name</key>
-					<string>string.quoted.double.doctype.identifiers-and-DTDs.html</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
 			<key>include</key>
 			<string>#css</string>
 		</dict>
@@ -131,7 +106,7 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#ee-tag-plugin</string>
+					<string>#ee-tag-addon</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -357,14 +332,14 @@
 			<key>name</key>
 			<string>entity.other.variable-name.ee</string>
 		</dict>
-		<key>ee-tag-attribute-generic</key>
+		<key>ee-tag-parameter-generic</key>
 		<dict>
 			<key>match</key>
 			<string>\b([a-zA-Z0-9-_:]+)(?=)</string>
 			<key>name</key>
 			<string>constant.name.tag</string>
 		</dict>
-		<key>ee-tag-attribute-known</key>
+		<key>ee-tag-parameter-known</key>
 		<dict>
 			<key>match</key>
 			<string>\b(allow_comments|allow_html|author_id|author_only|backspace|base_path|cache|cat_limit|cat_style|category|category_group|channel|charset|class|comment_id|datepicker|day|directory_id|disable|display_by|dynamic|dynamic_parameters|dynamic_start|dynamic_title|effect|entry_id|entry_id_from|entry_id_to|entry_status|error_handling|file|file_id|fixed_order|form_class|form_id|form_name|group_id|id|image_url|include_jquery|json|limit|list|logged_out_member_id|month|month_limit|name|no_result_page|offset|orderby|paginate|paginate_base|paginate_type|parent_only|parse|plugin|popup|preserve_checkboxes|profile_path|recipients|redirect|refresh|related_categories_mode|relaxed_categories|replyto|require_entry|result_page|results|return|return_X|rte_selector|rte_toolset_id|rules:|safecracker_head|search:|search_in|secure_action|secure_return|selector|show|show_current_week|show_empty|show_expired|show_future_entries|show_pages|silent|site|sort|sql|start_day|start_on|status|sticky|stop_before|style|theme|toolset_id|track_views|type|ui|uncategorized_entries|url_title|use_live_url|user_recipients|username|weblog|week_sort|where|which|wiki|year)\b=</string>
@@ -405,7 +380,7 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#ee-tag-logical</string>
+					<string>#ee-tag-operator</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -416,25 +391,38 @@
 		<key>ee-tag-global-variable</key>
 		<dict>
 			<key>match</key>
-			<string>\b(app_version|charset|current_time|debug_mode|doc_url|elapsed_time|email|embed=|encode=|group_id|gzip_mode|hits|homepage|ip_address|lang|location|member_group|member_id|member_profile_link|path=|screen_name|site_name|total_comments|total_entries|total_queries|username|webmaster_email|logged_in|auto_log_in)\b</string>
+			<string>\b(app_build|app_version|auto_log_in|build|captcha|charset|cp_url|current_time|debug_mode|doc_url|elapsed_time|email|embed=[a-zA-Z0-9_/\-]*|encode=|group_description|group_id|group_title|gzip_mode|hits|homepage|ip_address|ip_hostname|lang|location|logged_in|member_group|member_id|member_profile_link|path=[a-zA-Z0-9_\-/]*|private_messages|screen_name|site_index|site_name|site_url|stylesheet=[a-zA-Z0-9_'"/]*|theme_folder_url|total_comments|total_entries|total_forum_posts|total_forum_replies|total_forum_topics|total_queries|username|version|webmaster_email)\b</string>
 			<key>name</key>
-			<string>support.constant.language.ee</string>
+			<string>support.variable.language.ee</string>
 		</dict>
 		<key>ee-tag-global-variable-closed</key>
 		<dict>
 			<key>match</key>
-			<string>\{(app_version|charset|current_time|debug_mode|doc_url|elapsed_time|email|encode=|group_id|gzip_mode|hits|homepage|ip_address|lang|location|member_group|member_id|member_profile_link|path=|screen_name|site_name|total_comments|total_entries|total_queries|username|webmaster_email|logged_in|auto_log_in)\}</string>
+			<string>\{(app_build|app_version|auto_log_in|build|captcha|charset|cp_url|current_time|debug_mode|doc_url|elapsed_time|email|embed=[a-zA-Z0-9_/\-]*|encode=|group_description|group_id|group_title|gzip_mode|hits|homepage|ip_address|ip_hostname|lang|location|logged_in|member_group|member_id|member_profile_link|path=[a-zA-Z0-9_\-/]*|private_messages|screen_name|site_index|site_name|site_url|stylesheet=[a-zA-Z0-9_'"/]*|theme_folder_url|total_comments|total_entries|total_forum_posts|total_forum_replies|total_forum_topics|total_queries|username|version|webmaster_email)\}</string>
 			<key>name</key>
-			<string>support.constant.language.ee</string>
+			<string>support.variable.language.ee</string>
 		</dict>
-		<key>ee-tag-logical</key>
+		<key>ee-tag-operator</key>
 		<dict>
 			<key>match</key>
-			<string>\b(OR|AND)\b</string>
-			<key>name</key>
-			<string>keyword.operator.logical.ee</string>
+			<string>\b(OR|AND|XOR|&amp;&amp;|&lt;=?|&gt;=?|&lt;&gt;|!=|==|\|\|)\b</string>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.ee</string>
+				</dict>
+			</dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#tag-stuff</string>
+				</dict>
+			</array>
 		</dict>
-		<key>ee-tag-plugin</key>
+		<key>ee-tag-addon</key>
 		<dict>
 			<key>begin</key>
 			<string>\{/?(exp:[a-zA-Z0-9_:]+\b)</string>
@@ -443,7 +431,7 @@
 				<key>1</key>
 				<dict>
 					<key>name</key>
-					<string>support.function.plugin.ee</string>
+					<string>support.function.addon.ee</string>
 				</dict>
 			</dict>
 			<key>end</key>
@@ -478,11 +466,11 @@
 			-->
 				<dict>
 					<key>include</key>
-					<string>#ee-tag-attribute-known</string>
+					<string>#ee-tag-parameter-known</string>
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#ee-tag-attribute-generic</string>
+					<string>#ee-tag-parameter-generic</string>
 				</dict>
 				<dict>
 					<key>include</key>
