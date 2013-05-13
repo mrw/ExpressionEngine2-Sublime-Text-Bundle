@@ -238,7 +238,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>&lt;\?(php|=)</string>
+					<string>(?:\s*)&lt;\?(php|=)</string>
 					<key>end</key>
 					<string>\?&gt;</string>
 					<key>captures</key>
