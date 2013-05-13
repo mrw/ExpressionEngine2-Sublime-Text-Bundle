@@ -1,21 +1,23 @@
 ExpressionEngine 2.0 Sublime Text 2 Bundle2
 ===========================================
 
-ExpressionEngine Sublime Text 2 that also supports the [jQuery bundle](https://github.com/mrmartineau/jQuery) syntax when inside of `<script>` tags. 
+ExpressionEngine support package for Sublime Text 2 &amp; 3 that also supports the [jQuery bundle](https://github.com/mrmartineau/jQuery) syntax when inside of `<script>` tags. 
 
 PLUS:
 
-* Highlighting for built-in EE adddon tags
+* Highlighting for built-in EE adddon tags (exp:channel:entries)
 
 * Improved handling of EE comments:
 * (does not highlight/color code blocks contained within EE comments)
 * (recognizes EE comments within quoted strings)
+* (recognizes EE comments and tags within Javascript blocks)
+* (recognizes EE comments and tags within PHP blocks)
 
 * Highlighting for EE module attributes (channel=, limit=, etc)
 
 * Highlighting for EE global variables ({site_name}, {user_name}, etc)
 
-* Highlighting for deprecated EE tags
+* Highlighting for deprecated EE tags (marked as "invalid.illegal")
 
 
 
