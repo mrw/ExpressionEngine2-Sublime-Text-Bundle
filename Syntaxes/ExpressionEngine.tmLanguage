@@ -38,6 +38,8 @@
 		<dict>
 			<key>begin</key>
 			<string>(?:^\s+)?&lt;((?i:style))\b(?![^&gt;]*/&gt;)[^.&gt;]*&gt;?</string>
+			<key>end</key>
+			<string>&lt;/((?i:style))&gt;(?:\s*\n)?</string>
 			<key>captures</key>
 			<dict>
 				<key>1</key>
@@ -46,8 +48,6 @@
 					<string>entity.name.tag.html</string>
 				</dict>
 			</dict>
-			<key>end</key>
-			<string>&lt;/((?i:style))&gt;(?:\s*\n)?</string>
 			<key>name</key>
 			<string>source.css.embedded.html</string>
 			<key>patterns</key>
@@ -248,7 +248,7 @@
 					<key>end</key>
 					<string>\?&gt;(?:\s*$\n)?</string>
 					<key>name</key>
-					<string>source.php.embedded.html</string>
+					<string>source.php.embedded.block.html</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -263,7 +263,7 @@
 					<key>end</key>
 					<string>\?&gt;</string>
 					<key>name</key>
-					<string>source.php.embedded.html</string>
+					<string>source.php.embedded.block.html</string>
 					<key>patterns</key>
 					<array>
 						<dict>
