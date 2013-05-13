@@ -242,30 +242,29 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?:^\s*)&lt;\?(php|=)?(?!.*\?&gt;)</string>
-					<key>comment</key>
-					<string>match only multi-line PHP with leading whitespace</string>
+					<string>&lt;\?(php|=)</string>
 					<key>end</key>
-					<string>\?&gt;(?:\s*$\n)?</string>
+					<string>\?&gt;</string>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>entity.name.tag.php</string>
+						</dict>
+					</dict>
 					<key>name</key>
 					<string>source.php.embedded.block.html</string>
 					<key>patterns</key>
 					<array>
 						<dict>
 							<key>include</key>
-							<string>#php-source</string>
+							<string>#ee-comment</string>
 						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>&lt;\?(php|=)?</string>
-					<key>end</key>
-					<string>\?&gt;</string>
-					<key>name</key>
-					<string>source.php.embedded.block.html</string>
-					<key>patterns</key>
-					<array>
+						<dict>
+							<key>include</key>
+							<string>#ee-tag</string>
+						</dict>
 						<dict>
 							<key>include</key>
 							<string>#php-source</string>
@@ -278,14 +277,20 @@
 		<dict>
 			<key>patterns</key>
 			<array>
-				<!-- EE CODE AND COMMENTS NOT WORKING AT ALL -->
+				<!-- PHP CODE HIGHLIGHTING DOESNT WORK AT THIS POINT. AS STOPGAP MEASURE, AT LEAST RECOGNIZE COMMENTS -->
 				<dict>
-					<key>include</key>
-					<string>#ee-comment</string>
+					<key>begin</key>
+					<string>/\*</string>
+					<key>end</key>
+					<string>\*/</string>
+					<key>name</key>
+					<string>comment.block.php</string>
 				</dict>
 				<dict>
-					<key>include</key>
-					<string>#ee-tag</string>
+					<key>match</key>
+					<string>\/\/.*</string>
+					<key>name</key>
+					<string>comment.php</string>
 				</dict>
 				<dict>
 					<key>match</key>
@@ -299,6 +304,7 @@
 					<key>name</key>
 					<string>comment.line.double-slash.ruby</string>
 				</dict>
+				<!-- TO DO: FIX PHP HIGHLIGHTING, THE DICT BELOW DOES NOTHING! -->
 				<dict>
 					<key>include</key>
 					<string>source.php</string>
