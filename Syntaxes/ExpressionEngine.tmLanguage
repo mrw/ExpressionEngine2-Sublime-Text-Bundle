@@ -220,11 +220,7 @@
 			<array>
 				<dict>
 					<key>include</key>
-					<string>#ee-comment</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#ee-tag</string>
+					<string>#embedded-code</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -259,11 +255,7 @@
 					<array>
 						<dict>
 							<key>include</key>
-							<string>#ee-comment</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#ee-tag</string>
+							<string>#embedded-code</string>
 						</dict>
 						<dict>
 							<key>include</key>
