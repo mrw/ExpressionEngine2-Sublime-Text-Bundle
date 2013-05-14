@@ -12,9 +12,9 @@
 		<string>xhtml</string>
 	</array>
 	<key>foldingStartMarker</key>
-	<string>(\{(exp:([a-zA-Z0-9_:]+)|if )\b.*?\})|(&lt;(head|table|tr|div|style|script|ul|ol|form|dl)\b.*?&gt;)</string>
+	<string>(\{(exp:([a-zA-Z0-9_:]+)|if )\b.*?\})|(&lt;(head|table|tr|div|style|script|ul|ol|form|dl|section|header|footer|article|nav|aside)\b.*?&gt;)</string>
 	<key>foldingStopMarker</key>
-	<string>(\{/(exp:([a-zA-Z0-9_:]+)|if)\})|(&lt;/(head|table|tr|div|style|script|ul|ol|form|dl)&gt;)</string>
+	<string>(\{/(exp:([a-zA-Z0-9_:]+)|if)\})|(&lt;/(head|table|tr|div|style|script|ul|ol|form|dl|section|header|footer|article|nav|aside)&gt;)</string>
 	<key>keyEquivalent</key>
 	<string>^~E</string>
 	<key>name</key>
