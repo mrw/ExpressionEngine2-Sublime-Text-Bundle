@@ -139,8 +139,8 @@
 					<key>include</key>
 					<string>#ee-tag-conditional</string>
 				</dict>
-				<!-- {custom_field} {snippet} tag params etc -->
 				<dict>
+					<!-- tag params= etc. -->
 					<key>include</key>
 					<string>#tag-stuff</string>
 				</dict>
