@@ -477,7 +477,7 @@
 		<key>ee-tag-operator</key>
 		<dict>
 			<key>match</key>
-			<string>\b(OR|AND|XOR|&amp;&amp;|&lt;=?|&gt;=?|&lt;&gt;|!=|==|\|\|)\b</string>
+			<string>\s(OR|AND|XOR|&amp;&amp;|&lt;=?|&gt;=?|&lt;&gt;|!=|==|\|\|)\s</string>
 			<key>name</key>
 			<string>keyword.operator.logical.ee</string>
 		</dict>
