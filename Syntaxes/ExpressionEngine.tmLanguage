@@ -397,7 +397,7 @@
 		<key>ee-tag-global-variable-param</key>
 		<dict>
 			<key>match</key>
-			<string>((?:path|stylesheet|embed|encode|redirect|preload_replace:[a-zA-Z0-9_-]+)=)(.*?)(?= |\})</string>
+			<string>\b((?:path|stylesheet|embed|encode|redirect|preload_replace:[a-zA-Z0-9_-]+)=)(.*?)(?= |\})</string>
 			<key>captures</key>
 			<dict>
 				<key>1</key>
