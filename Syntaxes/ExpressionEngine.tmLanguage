@@ -182,24 +182,6 @@
 				</dict>
 			</array>
 		</dict>
-		<key>entities</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>match</key>
-					<string>&amp;([a-zA-Z0-9]+|#[0-9]+|#x[0-9a-fA-F]+);</string>
-					<key>name</key>
-					<string>constant.character.entity.html</string>
-				</dict>
-				<dict>
-					<key>match</key>
-					<string>&amp;</string>
-					<key>name</key>
-					<string>invalid.illegal.bad-ampersand.html</string>
-				</dict>
-			</array>
-		</dict>
 		<key>javascript</key>
 		<dict>
 			<key>begin</key>
@@ -317,10 +299,6 @@
 					<key>include</key>
 					<string>#embedded-code</string>
 				</dict>
-				<dict>
-					<key>include</key>
-					<string>#entities</string>
-				</dict>
 			</array>
 		</dict>
 		<key>string-single-quoted</key>
@@ -336,10 +314,6 @@
 				<dict>
 					<key>include</key>
 					<string>#embedded-code</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#entities</string>
 				</dict>
 			</array>
 		</dict>
@@ -484,7 +458,7 @@
 		<key>ee-tag-parameter-known</key>
 		<dict>
 			<key>match</key>
-			<string>\b(allow_comments|allow_html|author_id|author_only|backspace|base_path|cache|cat_limit|cat_style|category|category_group|channel|charset|class|comment_id|datepicker|day|directory_id|disable|display_by|dynamic|dynamic_parameters|dynamic_start|dynamic_title|effect|entry_id|entry_id_from|entry_id_to|entry_status|error_handling|exclude_guests|file|file_id|fixed_order|form_class|form_id|form_name|format|group_id|id|image_url|include_jquery|json|limit|list|logged_out_member_id|month|month_limit|name|no_result_page|offset|orderby|paginate|paginate_base|paginate_type|parent_only|parse|plugin|popup|preserve_checkboxes|profile_path|recipients|refresh|related_categories_mode|relaxed_categories|replyto|require_entry|result_page|results|return|return_[0-9]|rte_selector|rte_toolset_id|rules:|safecracker_head|search:|search_in|secure_action|secure_return|selector|show|show_current_week|show_empty|show_expired|show_future_entries|show_pages|silent|site|sort|sql|start_day|start_on|status|status_code|sticky|stop_before|style|theme|title|toolset_id|track_views|type|ui|uncategorized_entries|url_title|use_live_url|user_recipients|username|weblog|week_sort|where|which|wiki|year)\b=</string>
+			<string>\b(allow_comments|allow_html|author_id|author_only|backspace|base_path|cache|cat_limit|cat_style|category|category_group|channel|charset|class|comment_id|datepicker|day|directory_id|disable|display_by|dynamic|dynamic_parameters|dynamic_start|dynamic_title|effect|entry_id|entry_id_from|entry_id_to|entry_status|error_handling|exclude_guests|file|file_id|fixed_order|form_class|form_id|form_name|format|group_id|id|image_url|include_jquery|json|limit|list|logged_out_member_id|month|month_limit|name|no_result_page|offset|orderby|paginate|paginate_base|paginate_type|parent_only|parse|plugin|popup|preserve_checkboxes|profile_path|recipients|refresh|related_categories_mode|relaxed_categories|replyto|require_entry|result_page|results|return|return_[0-9]|rte_selector|rte_toolset_id|rules:|safecracker_head|search:|search_in|secure_action|secure_return|selector|show|show_current_week|show_empty|show_expired|show_future_entries|show_pages|silent|site|sort|sql|start_day|start_on|status|status_code|sticky|stop_before|style|theme|title|toolset_id|track_views|type|ui|uncategorized_entries|url_title|use_live_url|user_recipients|username|weblog|week_sort|where|which|wiki|year)=</string>
 			<key>captures</key>
 			<dict>
 				<key>1</key>
