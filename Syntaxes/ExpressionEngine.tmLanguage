@@ -75,7 +75,7 @@
 				</dict>
 			</dict>
 			<key>end</key>
-			<string>--\s*}</string>
+			<string>--}</string>
 			<key>name</key>
 			<string>comment.block.ee</string>
 			<key>patterns</key>
