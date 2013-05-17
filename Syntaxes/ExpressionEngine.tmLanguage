@@ -389,7 +389,7 @@
 		<key>ee-tag-conditional</key>
 		<dict>
 			<key>begin</key>
-			<string>(/?if|if:else|else:if)\b</string>
+			<string>(if:else|if:elseif|/?if)\b</string>
 			<key>captures</key>
 			<dict>
 				<key>1</key>
