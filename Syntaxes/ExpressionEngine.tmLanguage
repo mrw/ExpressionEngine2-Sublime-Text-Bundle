@@ -164,6 +164,11 @@
 				<dict>
 					<!-- {site_name} -->
 					<key>include</key>
+					<string>#ee-tag-global-variable-param-bracketed</string>
+				</dict>
+				<dict>
+					<!-- {site_name} -->
+					<key>include</key>
 					<string>#ee-tag-constant-bracketed</string>
 				</dict>
 				<dict>
@@ -411,10 +416,14 @@
 			<key>name</key>
 			<string>support.variable.language.ee</string>
 		</dict>
-		<key>ee-tag-global-variable-param</key>
+		<key>ee-tag-global-variable-param-bracketed</key>
 		<dict>
-			<key>match</key>
-			<string>\b((?:path|stylesheet|embed|encode|redirect|preload_replace:[a-zA-Z0-9_-]+)=)(.*?)(?= |\})</string>
+			<key>begin</key>
+			<string>\{((?:path|stylesheet|embed|encode|redirect|preload_replace:[a-zA-Z0-9_-]+)=)(.*?)(?= |\})</string>
+			<key>end</key>
+			<string>\}</string>
+			<key>name</key>
+			<string>support.variable.language.ee</string>
 			<key>captures</key>
 			<dict>
 				<key>1</key>
