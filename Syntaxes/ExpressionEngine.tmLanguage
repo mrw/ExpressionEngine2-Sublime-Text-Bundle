@@ -182,6 +182,11 @@
 					<string>#ee-tag-global-variable-bracketed</string>
 				</dict>
 				<dict>
+					<!-- {custom_field} -->
+					<key>include</key>
+					<string>#ee-tag-variable-user-bracketed</string>
+				</dict>
+				<dict>
 					<key>include</key>
 					<string>#ee-tag</string>
 				</dict>
@@ -485,6 +490,13 @@
 			<string>\b([a-zA-Z0-9-_:]+)(?==)</string>
 			<key>name</key>
 			<string>entity.other.attribute-name.user.ee</string>
+		</dict>
+		<key>ee-tag-variable-user-bracketed</key>
+		<dict>
+			<key>match</key>
+			<string>\{[a-zA-Z0-9-_]+\}</string>
+			<key>name</key>
+			<string>variable.other.ee</string>
 		</dict>
 		<key>tag-stuff</key>
 		<dict>
