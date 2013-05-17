@@ -233,12 +233,20 @@
 					<string>(?:\s*)&lt;\?(php|=)</string>
 					<key>end</key>
 					<string>\?&gt;</string>
-					<key>captures</key>
+					<key>beginCaptures</key>
 					<dict>
-						<key>1</key>
+						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>entity.name.tag.php</string>
+							<string>punctuation.section.embedded.begin.php</string>
+						</dict>
+					</dict>
+					<key>endCaptures</key>
+					<dict>
+						<key>0</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.section.embedded.end.php</string>
 						</dict>
 					</dict>
 					<key>name</key>
