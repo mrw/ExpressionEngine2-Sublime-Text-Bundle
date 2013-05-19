@@ -487,7 +487,6 @@
 				</dict>
 			</dict>
 		</dict>
-<!--
 		<key>ee-tag-parameter-user</key>
 		<dict>
 			<key>match</key>
@@ -495,7 +494,6 @@
 			<key>name</key>
 			<string>entity.other.attribute-name.user.ee</string>
 		</dict>
-	-->
 		<key>ee-tag-variable-user</key>
 		<dict>
 			<key>match</key>
