@@ -510,6 +510,13 @@
 				</dict>
 			</array>
 		</dict>
+		<key>ee-tag-embed</key>
+		<dict>
+			<key>match</key>
+			<string>embed:[a-zA-Z0-9-_:]+</string>
+			<key>name</key>
+			<string>variable.other.ee</string>
+		</dict>
 		<key>tag-stuff</key>
 		<dict>
 			<key>patterns</key>
@@ -533,6 +540,10 @@
 				<dict>
 					<key>include</key>
 					<string>#ee-tag-global-variable</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#ee-tag-embed</string>
 				</dict>
 				<dict>
 					<key>include</key>
