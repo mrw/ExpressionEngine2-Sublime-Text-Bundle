@@ -427,7 +427,7 @@
 		<key>ee-tag-global-variable-param-bracketed</key>
 		<dict>
 			<key>begin</key>
-			<string>\{((?:path|permalink|title_permalink|comment_path|day_path|entry_id_path|stylesheet|embed|encode|redirect|last_author_profile_path|member_path|member_search_path|multi_field|next_path|preload_replace:[a-zA-Z0-9_-]+|previous_path|profile_path|switch|thread_path|url_title_path)=)(.*?)(?=\s|\})</string>
+			<string>\{((?:path|permalink|title_permalink|comment_path|day_path|entry_id_path|stylesheet|embed|encode|redirect|last_author_profile_path|member_path|member_search_path|multi_field|next_path|preload_replace:[a-zA-Z0-9_-]+|previous_path|profile_path|switch|thread_path|url_title_path)=)(".*?"|'.*?'|.*?)(?=\s|\})</string>
 			<key>end</key>
 			<string>\}</string>
 			<key>name</key>
