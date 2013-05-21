@@ -308,9 +308,15 @@
 			<string>string.quoted.double.html</string>
 			<key>patterns</key>
 			<array>
+<!-- UN-COMMENT THE DICT BELOW TO ENABLE EE CODE WITHIN QUOTED STRINGS
 				<dict>
 					<key>include</key>
 					<string>#embedded-code</string>
+				</dict>
+-->
+				<dict>
+					<key>include</key>
+					<string>#ee-comment</string>
 				</dict>
 			</array>
 		</dict>
@@ -324,9 +330,15 @@
 			<string>string.quoted.single.html</string>
 			<key>patterns</key>
 			<array>
+<!-- UN-COMMENT THE DICT BELOW TO ENABLE EE CODE WITHIN QUOTED STRINGS
 				<dict>
 					<key>include</key>
 					<string>#embedded-code</string>
+				</dict>
+-->
+				<dict>
+					<key>include</key>
+					<string>#ee-comment</string>
 				</dict>
 			</array>
 		</dict>
