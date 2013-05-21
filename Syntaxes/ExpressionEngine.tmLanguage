@@ -406,7 +406,7 @@
 		<key>ee-tag-deprecated</key>
 		<dict>
 			<key>match</key>
-			<string>(/?exp:weblog:.*|exp:channel:entry_form|exp:trackback:.*|exp:gallery:.*|display_custom_fields|saef_javascript)(?=\s|\})</string>
+			<string>(/?exp:weblog:.*|exp:channel:entry_form|exp:trackback:.*|exp:gallery:.*|display_custom_fields|saef_javascript)\b(?=\s|\})</string>
 			<key>name</key>
 			<string>invalid.illegal</string>
 		</dict>
