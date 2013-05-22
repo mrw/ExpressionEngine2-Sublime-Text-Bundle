@@ -47,6 +47,7 @@ More comprehensive coloring can be accomplished by also assigning styling to the
 * entity.other.attribute-name.user.ee
 * entity.other.attribute-name.predefined.ee
 * invalid.illegal
+* invalid.deprecated
 * keyword.control.ee
 * keyword.operator.logical
 * support.constant.ee

@@ -420,7 +420,7 @@
 			<key>match</key>
 			<string>(/?exp:weblog:.*|exp:channel:entry_form|exp:trackback:.*|exp:gallery:.*|display_custom_fields|saef_javascript)\b(?=\s|\})</string>
 			<key>name</key>
-			<string>invalid.illegal</string>
+			<string>invalid.deprecated</string>
 		</dict>
 		<key>ee-tag-global-variable</key>
 		<dict>
