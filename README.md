@@ -5,7 +5,9 @@ ExpressionEngine support package for Sublime Text 2 &amp; 3 that also supports t
 
 PLUS:
 
-* Highlighting for built-in EE adddon tags (exp:channel:entries)
+* Highlighting for built-in EE adddon tags (exp:channel, exp:comment, etc) and their parameters (and unlike with primitive syntaxes, mistyped parameter names are easily identified)
+
+* Highlighting for variables of built-in addon tags ({file_url}, {total_results} etc) - mistyped variable names are also easily identified
 
 * Improved handling of EE comments:
 * (does not highlight/color code blocks contained within EE comments)
@@ -17,13 +19,17 @@ PLUS:
 
 * Highlighting for EE global variables ({site_name}, {user_name}, etc)
 
+* Highlighting for EE constants ({DATE_ATOM}, etc)
+
+* Highlighting for EE conditionals (if:else, if:elseif, if)
+
 * Highlighting for deprecated EE tags (marked as "invalid.illegal")
 
 
 
 NOTES:
 
-You must install a jQuery support package to take full avantage of this package.
+You must install the jQuery bundle (mentioned above) to take full avantage of this package.
 
 The HTML5 package for ST may override this package and prevent proper highlighting.
 
@@ -50,12 +56,13 @@ More comprehensive coloring can be accomplished by also assigning styling to the
 * invalid.deprecated
 * keyword.control.ee
 * keyword.operator.logical
+* punctuation.definition.tag.begin.ee
+* punctuation.definition.tag.end.ee
 * support.constant.ee
 * support.function.addon.ee
 * support.variable.language.ee
 * variable.parameter.ee
 * variable.other.ee
-
 
 Forked and modified from [imjared's ExpressionEngine2-Sublime-Text-Bundle][https://github.com/imjared/ExpressionEngine2-Sublime-Text-Bundle], which had this note:
 
