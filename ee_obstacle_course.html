@@ -1,0 +1,6612 @@
+
+----------------------------------------
+EXPRESSIONENGINE GRAMMAR OBSTACLE COURSE
+----------------------------------------
+
+This file was created to evaluate ExpressionEngine syntax highlighting. Open it in the Sublime Text editor and set the syntax to ExpressionEngine.
+
+You will need to install an ExpressionEngine syntax definition:
+
+https://github.com/fcgrx/ExpressionEngine2-Sublime-Text-3-Bundle
+
+You will also need to use a full-featured theme for Sublime Text in order to see these tags in full color.
+
+> Created by fcgrx (http://fcgrx.com)
+
+---------------------------------------
+
+
+
+
+----------------------------------------
+INITIAL CHALLENGES:
+----------------------------------------
+
+Nested brackets:
+
+	{encode="{webmaster_email}" title="Contact Us"}
+	{template_edit_date format="{DATE_ATOM}"}
+	{exp:channel:entries channel="blog"
+		{if embed:entry_id}entry_id="{embed:entry_id}"{/if}
+	}
+	{/exp:channel:entries}
+
+Built-in and other addons:
+
+	{exp:channel:entries channel="news" search:my_field="foo"}
+	{/exp:channel:entries}
+	{exp:my_plugin my_param="foo"}
+	{/exp:my_plugin}
+
+Three uses of switch:
+
+	{exp:search:search_results switch="resultRowOne|resultRowTwo"}
+		<tr class="{switch}">
+	{switch="one|two"}
+	{switch}
+
+Four uses of site_name:
+
+	{!-- {site_name} --}
+	{if site_name}
+		site_name == {site_name}
+	{/if}
+
+Invalid tags (due to missing or malformed required parameters) which should not be highlighted as valid:
+
+	{embed}
+	{embed=}
+	{encode=}
+	{preload_replace}
+	{preload_replace:foo}
+	{preload_replace:foo=}
+	{switch=}
+	{stylesheet=
+	'template_group/css_template'}
+
+Valid tags with required parameters:
+
+	{preload_replace:foo='foo'}
+	{preload_replace:foo="foo"}
+	{preload_replace:foo='foo bar'}
+	{preload_replace:foo="foo bar"}
+	{stylesheet='template_group/css_template'}
+	{embed=blog/index}
+	{encode="you@example.com" {!-- comment--} title="Email Me!"}
+	{redirect='news/local' status_code="301"}
+
+Global variable with and without optional parameters:
+
+	{current_time}
+	{current_time format="%Y %m %d %H:%i:%s"}
+	{if gmt_entry_date == current_time}
+
+Various valid uses of "path":
+
+	{path} is a file module variable
+	{path=} is a global variable
+	{path=site}
+	{path=site/index}
+	{path='site'}
+	{path='site/index'}
+	{path="site"}
+	{path="site/index"}
+
+Don't match local/global variables when preceeded by colon:
+
+	{nothing:here:should:be:colored:item:version}
+	{this:item:too:item}
+	{bands:title}
+	{foo:app_build}
+
+Four types of date formatting:
+
+	{gmt_entry_date}
+	{gmt_entry_date }
+	{gmt_entry_date format="%Y"}
+	{if gmt_entry_date == current_time}
+
+Comment tags:
+
+	{!-- valid --}
+	{!-- valid
+		multi
+		line
+	--}
+	{!-- <?php echo 'COMM\'ENT'; ?> --}
+	{!-- <script> alert('comment');</script> --}
+	/* NOT A COMMENT */
+	// NOT A COMMENT
+	{embed=site/.img url="{publication-image}" class='img{!-- slide_under--}'}
+
+Nesting EE tags inside HTML tags:
+
+	<a {!-- COMMENT --} href="{path="channel/archives"}">
+		<img src="foo" alt="{site_name}" />
+	</a>
+
+Nesting EE tags inside PHP:
+
+	 <?php echo 'hello {username}'; ?>
+
+	<?php
+	/* COMMENT */ {if count == 2}{author}{/if}
+	{!-- COMMENT --} echo "{site_name}";
+	if ("{site_name}" == "foo") echo "valid php";
+	{!-- echo "commented out php"; --}
+	echo "valid php{!-- WITH A COMMENT --}";
+	{exp:channel:entries}
+	{/exp:channel:entries}
+	?>
+
+	<?php {!-- COMMENT --} echo "{site_name}"; ?>
+
+Nesting EE tags inside JavaScript:
+
+	<script> alert('before{!-- comment --}after'); </script>
+	<script> /* </script> */ </script>
+	<script>
+		/* JS COMMENT */
+		alert('not a comment');
+		alert('not {!-- a comment --}');
+		{!-- alert('comment'); --}
+		$('#field').add{!-- COMMENT --}Class('foo');
+		{if logged_in}
+		   $('#field').addClass('loggedinto{site_name}');
+		{/if}
+		<?php echo 'PHP INSIDE SCRIPT '; /* COMMENT */ ?>
+	</script>
+
+Nesting EE tags inside jQuery (and highlighting jQuery):
+
+	<script>
+		{if logged_in}
+			$('#field').addClass('f{!-- COMMENT --}oo');
+		{/if}
+	</script>
+
+Nesting EE tags inside CSS style block:
+
+	<style>
+		{!-- comment --}
+		.my_class { background:#fff; content:{site_name}; }
+		{!-- .unwanted_class {background:green;} --}
+		body{ background:{!-- green --} blue;}
+		{if logged_in}
+			html{ {if group_id == 1}background:yellow;{/if} }
+		{/if}
+	</style>
+
+EE variables, punctuation, operators:
+
+	{if (member_id == 2 OR member_id > 5) && (channel_id != 4 XOR
+	member_id)}
+
+	{if:elseif (member_id  ==  2) && channel_id
+	&& channel_id <>
+	4
+	OR
+	member_id
+	}
+
+	{if:elseif (site_name AND member_id)}
+	{if:else}
+		site_name={site_name}
+		member_id={member_id}
+	{/if}
+
+	{if	  name == "bozo"}
+	{if:else name=="bozo"}
+	{/if}
+
+EE core addons:
+
+	{exp:channel:calendar switch="calendarToday|calendarCell"}
+	{exp:channel:categories style="linear" backspace="5" category_group="not 1|2|4" channel="channel_name" class="my_custom_class" disable="category_fields" id="my_custom_id" parent_only="yes" restrict_channel="no" show="not 3|8" show_empty="no" show_expired_entries="yes" show_future_entries="yes" status="not submitted|processing|closed" style="nested"}
+	{exp:channel:category_archive channel="default_site" style="linear"}
+	{exp:channel:category_heading channel=""}
+	{exp:channel:entries channel="bands" limit="10" sort="desc" start_on="" show_future_entries="yes" dynamic_start="yes" track_views="one" paginate="bottom" orderby="date" sort="desc" search:my_field="foo" title="Spring 2013" url-title="winter-2013" disable="categories|custom_fields|member_data|pagination"}
+	{exp:channel:info channel="news"}
+	{exp:channel:month_links}
+	{exp:channel:next_entry}
+	{exp:channel:prev_entry}
+	{exp:comment:ajax_edit_url}
+	{exp:comment:edit_comment_script}
+	{exp:comment:entries sort="desc" orderby="date" limit="10" dynamic="no"}
+	{exp:comment:entries}
+	{exp:comment:form}
+	{exp:comment:notification_links}
+	{exp:comment:preview}
+	{exp:comment:subscriber_list}
+	{exp:cookie_consent:message}
+	{exp:email:contact_form user_recipients="no" recipients="admin@example.com" charset="utf-8"}
+	{exp:email:contact_form}  {/exp:email:contact_form}
+	{exp:email:tell_a_friend charset="utf-8" allow_html="<p>,<a>"} {/exp:email:tell_a_friend}
+	{exp:emoticon columns="4"}
+	{exp:file:entries}{/exp:file:entries}
+	{exp:forum board="board_name"}
+	{exp:forum:forum_helper orderby="post_date" sort="desc" limit="50"}
+	{exp:forum:forum_helper}
+	{exp:forum:topic_titles}
+	{exp:ip_to_nation:world_flags image_url="http://example.com/images/world_flags/"}
+	{exp:jquery:output_javascript effect="slide" file="foo" plugin="corner" ui="accordion"}
+	{exp:jquery:script_src effect="slide" file="foo" plugin="corner" ui="accordion"}
+	{exp:jquery:script_tag effect="slide" file="foo" plugin="corner" ui="accordion"}
+	{exp:magpie url="http://some-site.com" limit="15" refresh="720" parse="inward"}
+	{exp:mailinglist:form}
+	{exp:member:custom_profile_data}
+	{exp:member:ignore_list}
+	{exp:member:login_form}
+	{exp:jquery:script_tag}
+	{exp:member:ignore_list}
+	{exp:moblog:check silent="yes" which="cellphone"}
+	{exp:referrer}
+	{exp:rss:feed channel="default_site" debug="yes"}
+	{exp:safecracker channel="contact_form" return="contact/thanks" }
+	{exp:search:search_results switch="resultRowOne|resultRowTwo"}
+	{exp:stats channel="news|sports"}
+	{exp:xml_encode}
+	{exp:moblog:check silent="yes" which="cellphone"}
+	{exp:pages:load_site_pages site="default_site|corporate_site"}
+	{exp:query limit="5" paginate="top" sql="SELECT title,entry_date FROM exp_channel_titles ORDER BY entry_date DESC"}
+	{exp:query limit="5" sql="SELECT title,entry_date FROM exp_channel_titles ORDER BY entry_date DESC"}
+	{exp:query sql="SELECT screen_name FROM exp_members WHERE group_id = "6"" backspace="2"}
+	{exp:referrer limit="50" popup="yes"}
+	{exp:rss:feed channel="default_site" debug="yes"}
+	{exp:safecracker channel="channel_name" return="channel_name/edit/ENTRY_ID" entry_id=""}
+	{exp:safecracker channel="products" return="safecracker/ENTRY_ID" entry_id="" json="yes"}
+	{exp:search:advanced_form}
+	{exp:search:keywords}
+	{exp:search:search_results backspace="7"}
+	{exp:search:search_results switch="resultRowOne|resultRowTwo"}
+	{exp:search:search_results}
+	{exp:search:simple_form}
+	{exp:search:total_results}
+	{exp:simple_commerce:purchase}
+	{exp:stats channel="news|sports"}
+	{exp:updated_sites:pings which="default" limit="20"}
+	{exp:updated_sites:pings}
+	{exp:wiki base_path="Template_Group/index" wiki="wiki_short_name" theme="default"}
+	{exp:wiki base_path="wiki/index" wiki="default_wiki" theme="default"}
+	{exp:wiki base_path="wiki/index"}
+	{exp:wiki profile_path="forums"}
+	{exp:wiki profile_path="site/my_forum"}
+	{exp:wiki theme="default"}
+	{exp:wiki wiki="default_wiki"}
+	{exp:xml_encode}
+	{wiki:associated_pages}
+	{wiki:custom_namespaces_list}
+	{wiki:title_list}{/wiki:title_list}
+
+EE addons not shipped with core:
+
+	{exp:my_plugin}
+	{/exp:my_plugin}
+	{exp:word_limit total="35"}
+	{/exp:word_limit}
+
+Valid conditionals:
+
+	{if (member_id == '1' OR member_id == '2') && channel_id == '5'}
+	{if name == "bozo"}
+	{if name=="bozo"}
+	{if absolute_count == 2}
+	{if active}
+	{if allow_comments == FALSE}
+	{if allow_comments}
+	{if allow_multiple}
+	{if article_history}
+	{if articles_total == "0"}
+	{if article}
+	{if auto_login}
+	{if avatar}
+	{if blank}
+	{if bulletins}
+	{if can_admin}
+	{if can_ban}
+	{if can_change_status}
+	{if can_delete}
+	{if can_edit}
+	{if can_merge}
+	{if can_moderate_comment}
+	{if can_post_bulletin}
+	{if can_post}
+	{if can_private_message}
+	{if can_report}
+	{if can_split}
+	{if cannot_admin}
+	{if cannot_edit}
+	{if captcha}
+	{if categories}
+	{if category_description != ""}
+	{if category_description}
+	{if category_request}
+	{if checkbox}
+	{if children}
+	{if comments_disabled}
+	{if comments_expired}
+	{if cookies_allowed == "yes"}
+	{if cookies_allowed}
+	{if cookies_not_allowed}
+	{if count == total_results}
+	{if count > 5}
+	{if current_page}
+	{if date}
+	{if depth == "#"}
+	{if edit_article}
+	{if editable}
+	{if empty_feed}
+	{if entries}
+	{if error}
+	{if field_errors:count}
+	{if file_page}
+	{if file_types == "images"}
+	{if first_child}
+	{if forum_topic}
+	{if forums_exist}
+	{if global_errors:count}
+	{if gmt_entry_date == current_time}
+	{if group_id == "7"}
+	{if history}
+	{if html_email}
+	{if in_forum}
+	{if is_ignored}
+	{if is_image}
+	{if is_post}
+	{if is_post}     
+	{if can_move}
+	{if is_topic}
+	{if is_topic}     
+	{if can_move}
+	{if is_topic}    
+	{if item_enabled == "n"}
+	{if item_type == "purchase"}
+	{if item_type == "subscription"}
+	{if last_child}
+	{if last_segment == "joe"}
+	{if locked}
+	{if logged_in_member_id == author_id}
+	{if logged_in}
+	{if logged_out}
+	{if medium_file_url}
+	{if member_group == "7"}
+	{if member_id != '1' && member_group != "5" OR username == "Billy"}
+	{if member_id == "147"}
+	{if member_names}
+	{if moderated}
+	{if multiselect}
+	{if new_article}
+	{if next_page}
+	{if next_topic}
+	{if no_bulletins}
+	{if no_history}
+	{if no_results}
+	{if not_category_request}
+	{if not_entries}
+	{if not_forum_topic}
+	{if notes}
+	{if old_revision}
+	{if page_uri != ""}
+	{if page_url != ""}
+	{if paginate}
+	{if photo}
+	{if plain_email}
+	{if preview}
+	{if previous_page}
+	{if previous_topic}
+	{if radio}
+	{if redirect_page}
+	{if redirected}
+	{if relationship}
+	{if reply_results == 0}
+	{if required}
+	{if results}
+	{if revision_status == "closed"}
+	{if revision_status == "open"}
+	{if revision_status}
+	{if revision}
+	{if safecracker_file}
+	{if screen_name == "John Smith (Owner)"}
+	{if screen_name == "Mr. Ed"}
+	{if segment_2 != ""}
+	{if segment_3 != "cookies"}
+	{if segment_3 == "private"}
+	{if select}
+	{if signature_image}
+	{if signature}
+	{if special_page}
+	{if sticky == "n"}
+	{if sticky == "y"}
+	{if subcategory_total == "0"}
+	{if subscribed}
+	{if subscriber_count == 1}
+	{if subscriber_count == subscriber_total_results}
+	{if subscriber_guest_total != 1}
+	{if subscriber_is_member}
+	{if summary != ""}
+	{if summary}
+	{if textarea}
+	{if textinput}
+	{if text}
+	{if total_comments < 1}
+	{if total_entries > 1000}
+	{if uploads}
+	{if username != "Joe" AND username != "Bob"}
+	{if username == "elvira"}
+	{if username == "Joe" OR username == "Bob"}
+	{if username == "joe"}
+	{if username == "Joe"}
+	{if file}
+	{if viewable_image}
+	{if:elseif reply_results}
+	{if:elseif username == "Bob"}
+	{if:elseif}
+	{if:else}
+	{/if}
+
+User-defined fields and conditionals:
+
+	{if your_field_type}
+	{if embed:your_dog_name == "Shadow"}
+	{embed:_your_dog_name}
+	{your_snippet}
+	{embed=site/index my_field="foo"}
+
+Deprecated conditionals:
+
+	{if allow_localization}
+	{if edited}
+	{if pulldown}
+	{if message}
+	{if ignore}
+	{if attachments}
+
+Deprecated tags:
+
+	{exp:channel:entry_form}
+	{/exp:channel:entry_form}
+	{display_custom_fields}
+
+Invalid tags (should not be highlighted as EE tags):
+
+	{preload_replac:variable_name="replacement"}
+	{preload_reace:variable_name="replacement"}
+	{ notvalid}
+
+Variable pairs:
+
+	{add_to_cart_button}Add to Cart{/add_to_cart_button}
+	{articles}{/articles}
+	{audio} Listen to the audio! {/audio}
+	{author} on {entry_date format="%m/%d"}
+	{buy_now_button}Buy Now{/buy_now_button}
+	{buy_now_button}{/buy_now_button}
+	{calendar_heading}{/calendar_heading}
+	{calendar_rows}{/calendar_rows}
+	{categories backspace="7"} {category_name} {category_description} {/categories}
+	{category_menu} Categories {select_options}  {/category_menu}
+	{custom_fields}{/custom_fields}
+	{date_footer display="daily"} That's all from today! {/date_footer}
+	{date_heading display="weekly"}Week of {week_date format="%Y %m %d"}{/date_heading}
+	{date_heading} {entry_date format="%Y %m %d"} {/date_heading}
+	{embed="site/export" the_id="{entry_id}"}
+	{entries}{/entries}
+	{entry_titles} {title} {/entry_titles}
+	{field name="body" format="xhtml"} {text} {/field}
+	{field name="body_image" format="none"} {images} {/images} {/field}
+	{field name="extended" format="xhtml"} {text} {/field}
+	{field_errors}{error}{/field_errors}
+	{field}{/field}
+	{files match="movie|files"} View the presentation. {/files}
+	{first_page}{/first_page}
+	{footer} content after listing articles. {/footer}
+	{footer} content after listing subcategories. {/footer}
+	{footer}{/footer}
+	{global_errors}{/global_errors}
+	{global_errors}{error}{/global_errors}
+	{header} content before listing articles. {/header}
+	{header} content before listing subcategories. {/header}
+	{header} Articles that link to {article_title} The following pages link to {article_title}: {/header}
+	{header}{/header}
+	{images} {/images}
+	{images}{/images}
+	{items}{/items}
+	{last_page}{/last_page}
+	{letter_header}{/letter_header}
+	{letter_header}{letter}{/letter_header}
+	{member_names}{/member_names}
+	{moderators backspace="1"} {name}, {/moderators}
+	{moderators backspace="1"}{name},{/moderators}
+	{moderators}{/moderators}
+	{movie} Watch our new movie now. {/movie}
+	{movie}{/movie}
+	{my_field_name}{/my_field_name}
+	{namespace_label}
+	{next_page}{/next_page}
+	{options:custom_field}{/options:custom_field}
+	{options:my_field_name}{/options:my_field_name}
+	{options}{option_name}{/options}
+	{options}{option_value} {/options}
+	{page}{/page}
+	{paginate}{/paginate}
+	{pagination_links}{/pagination_links}
+	{parents}{/parents}
+	{path="template_group/template"}
+	{ping_row}{/ping_row}
+	{ping_servers} Ping Servers {ping_row} {ping_server_name} {/ping_row} {/ping_servers}
+	{preview} {title} {body} {/preview}
+	{previous_page}{/previous_page}
+	{row_blank}&nbsp;{/row_blank}
+	{row_column} {title} {/row_column}
+	{row_column}{/row_column}
+	{row_end}{/row_end}
+	{row_start}{/row_start}
+	{siblings}{/siblings}
+	{status_footer}{/status_footer}
+	{status_group}{/status_group}
+	{status_header}{/status_header}
+	{status_menu} Status {select_options} {/status_menu}
+	{status_menu}{/status_menu}
+	{statuses}{/statuses}
+	{status}pending{/status}
+	{sticky}yes{/sticky}
+	{view_cart_button}View Cart{/view_cart_button}
+	{year_heading}{/year_heading} {year_heading}
+
+Global variables:
+
+	{app_build}
+	{app_version}
+	{auto_log_in}
+	{build}
+	{captcha}
+	{charset}
+	{cp_url}
+	{current_id}
+	{current_page}
+	{current_path}
+	{current_request}
+	{current_time}
+	{current_url}
+	{debug_mode}
+	{doc_url}
+	{elapsed_time}
+	{email}
+	{error_message}
+	{form_declaration:wiki:edit}
+	{form_declaration:wiki:uploads}
+	{forum_build}
+	{forum_name}
+	{forum_url}
+	{group_description}
+	{group_id}
+	{group_title}
+	{gzip_mode}
+	{hits}
+	{homepage}
+	{include:body_extra}
+	{include:head_extra}
+	{include:spellcheck_js}
+	{include:theme_option_list}
+	{ip_address}
+	{ip_hostname}
+	{lang}
+	{lang:keyword}
+	{location}
+	{logged_in}
+	{logged_in_email}
+	{logged_in_group_description}
+	{logged_in_group_id}
+	{logged_in_ip_address}
+	{logged_in_location}
+	{logged_in_member_id}
+	{logged_in_private_messages}
+	{logged_in_screen_name}
+	{logged_in_total_comments}
+	{logged_in_total_entries}
+	{logged_in_total_forum_posts}
+	{logged_in_total_forum_topics}
+	{logged_in_username}
+	{logged_out}
+	{member_group}
+	{member_id}
+	{member_profile_link}
+	{module_version}
+	{page_title}
+	{path:advanced_search}
+	{path:atom}
+	{path:do_search}
+	{path:forgot}
+	{path:forum_home}
+	{path:image_url}
+	{path:login}
+	{path:logout}
+	{path:mark_all_read}
+	{path:memberlist}
+	{path:private_messages}
+	{path:recent_poster}
+	{path:register}
+	{path:rss}
+	{path:smileys}
+	{path:spellcheck_iframe}
+	{path:theme_css}
+	{path:view_active_topics}
+	{path:view_new_topics}
+	{path:view_pending_topics}
+	{path:wiki_base_url}
+	{path:wiki_home}
+	{path:your_control_panel}
+	{path:your_profile}
+	{private_messages}
+	{recent_poster}
+	{screen_name}
+	{site_id}
+	{site_index}
+	{site_label}
+	{site_name}
+	{site_short_name}
+	{site_url}
+	{theme_folder_url}
+	{total_comments}
+	{total_entries}
+	{total_forum_posts}
+	{total_forum_replies}
+	{total_forum_topics}
+	{total_queries}
+	{username}
+	{version}
+	{webmaster_email}
+
+Moblog tags (not valid in EE templates, probably should not be highlighted):
+
+	{field:body format="xhtml"}This is the body text.{/field:body}
+	{field:body}This is the body text.{/field:body}
+	{field:body}{/field:body}
+	{field:custom_field}{/field:custom_field}
+	{field:entry_body}food_images{/field:entry_body}
+	{field:location format="none"}Train Station{/field:location}
+	{field:summary}This is a summary.{/field:summary}
+	{category}3,News,7{/category}
+	{file_archive}yes{/file_archive}
+	{entry_title}My Unique Title{/entry_title}
+
+Highlighting of global variables w/ parameters:
+
+	{path=x}					is valid
+	{path=blog}					is valid
+	{path=blog }				is valid
+	{if ("{path=}" == "foo")}	is valid
+	{if (path=}					is not
+	{if path=}					is not
+	{ path=}					is not
+
+----------------------------------------
+All ExpressionEngine tags and keywords:
+----------------------------------------
+
+{absolute_count}
+{absolute_results}
+{active}
+{add_to_cart_button}{/add_to_cart_button} {add_to_cart_button}
+{add_to_cart_url}
+{address_city}
+{address_country}
+{address_name}
+{address_state}
+{address_status}
+{address_street}
+{address_zip}
+{age}
+{allow_comments}
+{allow_multiple}
+{aol_im}
+{app_build}
+{app_version}
+{article_history}
+{article_title}
+{articles_total}
+{articles}{/articles} {articles}
+{article}
+{audio}
+{author_email}
+{author_id}
+{author_name}
+{author}
+{auto_log_in}
+{auto_login}
+{auto_path}
+{auto_thread_path}
+{avatar_height}
+{avatar_image_height}
+{avatar_image_width}
+{avatar_url}
+{avatar_width}
+{avatar}
+{bio}
+{birthday}
+{blank}
+{board_label}
+{board_name}
+{build}
+{bulletins}
+{buy_now_button}{/buy_now_button} {buy_now_button}
+{buy_now_url}
+{calendar_heading}{/calendar_heading} {calendar_heading}
+{calendar_rows}{/calendar_rows} {calendar_rows}
+{can_admin}
+{can_ban}
+{can_change_status}
+{can_delete}
+{can_edit}
+{can_merge}
+{can_moderate_comment}
+{can_move}
+{can_post_bulletin}
+{can_post}
+{can_private_message}
+{can_report}
+{can_split}
+{cannot_admin}
+{cannot_edit}
+{captcha}
+{caption}
+{categories}{/categories} {categories}
+{category_description}
+{category_group}
+{category_id}
+{category_image}
+{category_menu}{/category_menu} {category_menu}
+{category_namespace}
+{category_name}
+{category_request}
+{category_url_title}
+{channel_description}
+{channel_encoding}
+{channel_id}
+{channel_language}
+{channel_lang}
+{channel_name}
+{channel_names}
+{channel_short_name}
+{channel_title}
+{channel_url}
+{channel}
+{charset}
+{checkbox}
+{children}
+{class}
+{clear_all_cookies_link}
+{clear_ee_cookies_link}
+{comment_auto_path}
+{comment_date}
+{comment_entry_id_auto_path}
+{comment_id}
+{comment_site_id}
+{comment_stripped}
+{comment_subscriber_total}
+{comment_tb_total}
+{comment_total}
+{comment_url_title_auto_path}
+{comments_disabled}
+{comments_expired}
+{comment}
+{content}
+{cookies_allowed_link}
+{cookies_allowed}
+{cookies_not_allowed}
+{count}
+{cp_url}
+{credit}
+{current_id}
+{current_page}
+{current_path}
+{current_request}
+{current_time}
+{current_url}
+{custom_field_file_url}
+{custom_fields}{/custom_fields} {custom_fields}
+{DATE_ATOM}
+{DATE_COOKIE}
+{date_footer}{/date_footer} {date_footer}
+{date_heading}{/date_heading} {date_heading}
+{DATE_ISO8601}
+{DATE_RFC1036}
+{DATE_RFC1123}
+{DATE_RFC2822}
+{DATE_RFC822}
+{DATE_RFC850}
+{DATE_RSS}
+{DATE_W3C}
+{date}
+{day_number}
+{debug_mode}
+{depth}
+{description}
+{directory_id}
+{directory_title}
+{display_field}
+{doc_url}
+{edit_article}
+{edit_date}
+{editable}
+{elapsed_time}
+{email}
+{empty_feed}
+{encoding}
+{entries}{/entries} {entries}
+{entry_author_id}
+{entry_date}
+{entry_id}
+{entry_site_id}
+{entry_titles}{/entry_titles} {entry_titles}
+{error:custom_field}
+{error_message}
+{error}
+{excerpt}
+{expiration_date}
+{extended_description}
+{extension}
+{field_data}
+{field_errors:count}
+{field_errors}{/field_errors} {field_errors}
+{field_id}
+{field_instructions}
+{field_label}
+{field_name}
+{field}{/field} {field}
+{file_id}
+{file_namespace}
+{file_name}
+{file_page}
+{file_size}
+{file_types}
+{file_type}
+{file_url}
+{filename}
+{files}
+{first_child}
+{first_name}
+{first_page}{/first_page} {first_page}
+{footer}{/footer} {footer}
+{form_declaration:wiki:edit}
+{form_declaration:wiki:uploads}
+{formatting_buttons}
+{forum_build}
+{forum_name}
+{forum_topic_id}
+{forum_topic}
+{forum_url}
+{freelancer_version}
+{full_name}
+{full_text}
+{gender}
+{global_errors}{/global_errors} {global_errors}
+{gmt_comment_date}
+{gmt_edit_date}
+{gmt_entry_date}
+{gmt_last_updated}
+{gmt_revision_date}
+{group_description}
+{group_id}
+{group_title}
+{gzip_mode}
+{header}{/header} {header}
+{heading}
+{height}
+{history}
+{hits}
+{homepage}
+{html_email}
+{icq}
+{id_auto_path}
+{id_path}
+{ignore_screen_name}
+{image_namespace}
+{images}{/images} {images}
+{in_forum}
+{include:body_extra}
+{include:head_extra}
+{include:spellcheck_js}
+{include:theme_option_list}
+{instructions:custom_field}
+{instructions}
+{interests}
+{ip_address}
+{ip_hostname}
+{is_ignored}
+{is_image}
+{is_post}
+{is_topic}
+{item_enabled}
+{item_id}
+{item_name}
+{item_purchases}
+{item_regular_price}
+{item_sale_price}
+{item_type}
+{item_use_sale}
+{items}{/items} {items}
+{item}
+{join_date}
+{keywords}
+{label:custom_field}
+{lang:custom_field}
+{language}
+{lang}
+{last_activity}
+{last_author}
+{last_child}
+{last_comment_date}
+{last_entry_date}
+{last_forum_post_date}
+{last_name}
+{last_page}{/last_page} {last_page}
+{last_post_date}
+{last_post_id}
+{last_post_relative_date}
+{last_reply}
+{last_segment}
+{last_updated}
+{last_visitor_date}
+{last_visit}
+{letter_header}{/letter_header} {letter_header}
+{letter}
+{link}
+{local_time}
+{location}
+{locked}
+{logged_in_email}
+{logged_in_group_description}
+{logged_in_group_id}
+{logged_in_ip_address}
+{logged_in_location}
+{logged_in_member_id}
+{logged_in_private_messages}
+{logged_in_screen_name}
+{logged_in_total_comments}
+{logged_in_total_entries}
+{logged_in_total_forum_posts}
+{logged_in_total_forum_topics}
+{logged_in_username}
+{logged_in}
+{logged_out}
+{mailing_list}
+{main_namespace}
+{maxlength}
+{member_email}
+{member_group}
+{member_id}
+{member_names}{/member_names} {member_names}
+{member_name}
+{member_profile_link}
+{message_text}
+{meta_refresh}
+{mime_type}
+{moderated}
+{moderators}{/moderators} {moderators}
+{modified_date}
+{module_version}
+{month_num}
+{month_short}
+{month}
+{most_visitor_date}
+{most_visitors}
+{movie}{/movie} {movie}
+{msn_im}
+{multiselect}
+{name_namespace}
+{namespace_label}
+{namespace}
+{name}
+{new_article}
+{next:}
+{next_date}
+{next_page}{/next_page} {next_page}
+{next_topic_title}
+{next_topic}
+{no_bulletins}
+{no_history}
+{no_results_page}
+{no_results}
+{not_category_request}
+{not_entries}
+{not_forum_topic}
+{notes}
+{occupation}
+{old_revision}
+{option_name}
+{option_value}
+{options:custom_field}{/options:custom_field} {options:custom_field}
+{options}{/options} {options}
+{original_page}
+{page_id}
+{page_title}
+{page_uri}
+{page_url}
+{page}{/page} {page}
+{paginate}{/paginate} {paginate}
+{pagination_links}{/pagination_links} {pagination_links}
+{pagination_page_number}
+{pagination_url}
+{parent_id}
+{parents:title}
+{parents:url-title}
+{parents:}
+{parents}{/parents} {parents}
+{password}
+{path:advanced_search}
+{path:atom}
+{path:author_profile}
+{path:close_revision}
+{path:do_search}
+{path:edit_topic}
+{path:forgot}
+{path:forum_home}
+{path:image_url}
+{path:login}
+{path:logout}
+{path:mark_all_read}
+{path:memberlist}
+{path:open_revision}
+{path:private_messages}
+{path:recent_poster}
+{path:redirect_page}
+{path:register}
+{path:rss}
+{path:smileys}
+{path:spellcheck_iframe}
+{path:theme_css}
+{path:topic_history}
+{path:view_active_topics}
+{path:view_article}
+{path:view_category}
+{path:view_file}
+{path:view_new_topics}
+{path:view_orig_article}
+{path:view_pending_topics}
+{path:view_revision}
+{path:wiki_base_url}
+{path:wiki_home}
+{path:your_control_panel}
+{path:your_profile}
+{path}
+{payer_business_name}
+{payer_status}
+{payment_fee}
+{payment_gross}
+{permalink}
+{photo_height}
+{photo_image_height}
+{photo_image_width}
+{photo_url}
+{photo_width}
+{photo}
+{ping_date}
+{ping_ipaddress}
+{ping_row}{/ping_row} {ping_row}
+{ping_server_name}
+{ping_servers}{/ping_servers} {ping_servers}
+{ping_site_check}
+{ping_site_name}
+{ping_site_rss}
+{ping_site_url}
+{plain_email}
+{post_date}
+{post_number}
+{post_total}
+{posts}
+{preview}{/preview} {preview}
+{previous:}
+{previous_date}
+{previous_page}{/previous_page} {previous_page}
+{previous_topic_title}
+{previous_topic}
+{private_messages}
+{quantity}
+{radio}
+{recent_comment_date}
+{recent_poster}
+{redirect_page}
+{redirected}
+{ref_agent_short}
+{ref_agent}
+{ref_date}
+{ref_from}
+{ref_ip}
+{ref_to}
+{relationship}
+{relative_date}
+{relative_url}
+{replies}
+{reply_author}
+{reply_results}
+{required}
+{results}
+{revision_author}
+{revision_date}
+{revision_id}
+{revision_notes}
+{revision_status}
+{revision}
+{row_blank}{/row_blank} {row_blank}
+{row_column}{/row_column} {row_column}
+{row_end}
+{row_end}{/row_end} {row_end}
+{row_start}
+{row_start}{/row_start} {row_start}
+{rows}
+{safecracker_file}
+{safecracker_head}
+{screen_name}
+{search_path}
+{segment_1}
+{segment_9}
+{select_date}
+{select_options}
+{selected_option:custom_field:label}
+{selected_option:custom_field}
+{selected}
+{select}
+{send_private_message}
+{siblings:title}
+{siblings:url-title}
+{siblings:}
+{siblings}
+{signature_image_height}
+{signature_image_url}
+{signature_image_width}
+{signature_image}
+{signature}
+{site_id}
+{site_index}
+{site_label}
+{site_name}
+{site_short_name}
+{site_url}
+{size}
+{smiley}
+{special_namespace}
+{special_page}
+{status_footer}{/status_footer} {status_footer}
+{status_group}{/status_group} {status_group}
+{status_header}{/status_header} {status_header}
+{status_menu}{/status_menu} {status_menu}
+{statuses}{/statuses} {statuses}
+{status}{/status} {status}
+{sticky}{/sticky} {sticky}
+{subcategory_total}
+{subscribed}
+{subscriber_count}
+{subscriber_email}
+{subscriber_guest_total}
+{subscriber_is_member}
+{subscriber_member_id}
+{subscriber_member_total}
+{subscriber_screen_name}
+{subscriber_total_results}
+{summary}
+{switch="one|two"}
+{template_edit_date}
+{text_direction}
+{textarea}
+{textinput}
+{text}
+{theme_folder_url}
+{timezone}
+{title_permalink}
+{title}
+{topic_date}
+{topic_relative_date}
+{topic_title}
+{topic_type}
+{total_anon}
+{total_comments}
+{total_entries}
+{total_forum_posts}
+{total_forum_replies}
+{total_forum_topics}
+{total_guests}
+{total_logged_in}
+{total_members}
+{total_pages}
+{total_posts}
+{total_queries}
+{total_replies}
+{total_results}
+{trackback_total}
+{trimmed_url}
+{unsubscribe_url}
+{upload_date}
+{uploads}
+{url:custom_field}
+{url_as_author}
+{url_or_email_as_author}
+{url_or_email_as_link}
+{url_or_email}
+{url_title}
+{url}
+{username}
+{version}
+{view_cart_button}{/view_cart_button} {view_cart_button}
+{view_cart_url}
+{view_count_four}
+{view_count_one}
+{view_count_three}
+{view_count_two}
+{viewable_image}
+{views}
+{webmaster_email}
+{week_date}
+{width}
+{wiki_name}
+{XID_HASH}
+{yahoo_im}
+{year_heading}{/year_heading} {year_heading}
+{year_short}
+{year}
+{path=}
+{path=foo}
+{path="foo"}
+{path=foo/bar}
+{path="foo/bar"}
+{stylesheet=foo}
+{permalink=foo}
+{title_permalink=foo}
+{comment_path="foo/bar"}
+{day_path="foo/bar"}
+{entry_id_path="foo/bar"}
+{embed=foo}
+{encode=foo}
+{redirect=foo}
+{last_author_profile_path="foo/bar"}
+{member_path="foo/bar"}
+{member_search_path="foo/bar"}
+{multi_field=foo}
+{next_path="foo/bar"}
+{preload_replace:foo="bar"}
+{previous_path="foo/bar"}
+{profile_path="foo/bar"}
+{switch='foo|bar'}
+{switch="foo|bar"}
+{thread_path="foo/bar"}
+{url_title_path="foo/bar"}
+
+
+
+
+
+
+----------------------------------------
+EXPRESSIONENGINE USER GUIDE
+Code examples:
+----------------------------------------
+
+<html>
+<body>
+
+{exp:search:advanced_form result_page="search/results"
+ category="not 2|8"
+	cat_style="nested"
+name="search_form"
+no_result_page="search/noresults"
+results="20" show_expired="yes"
+status="open"
+show_future_entries="yes"
+status="draft|reviewed|published"
+channel="which"
+form_class="search_form"
+form_id="my_search_form"
+}
+{author}
+{channel_description}
+{channel_id}
+{channel_language}
+{channel_name}
+{channel_url}
+{date}
+
+{edit_date format="%m"}
+{email}
+{encoding}
+{gmt_entry_date}
+{gmt_entry_date }
+{gmt_entry_date format="%Y"}
+{gmt_edit_date}
+
+{if absolute_count == 2}
+
+<table cellpadding="4" cellspacing="6" border="0" width="100%">
+	<tr>
+	<td>
+
+	<fieldset class="fieldset">
+		<legend>{lang:search_by_keyword}</legend>
+
+		<input type="text" class="input" maxlength="100" size="40" name="keywords" style="width:100%;" />
+
+		<div class="default">
+				<select name="search_in">
+					<option value="titles" selected="selected">{lang:search_in_titles}</option>
+					<option value="entries">{lang:search_in_entries}</option>
+					<option value="everywhere" >{lang:search_everywhere}</option>
+				</select>
+			</div>
+
+		<div class="default">
+				<select name="where">
+					<option value="exact" selected="selected">{lang:exact_phrase_match}</option>
+					<option value="any">{lang:search_any_words}</option>
+					<option value="all" >{lang:search_all_words}</option>
+					<option value="word" >{lang:search_exact_word}</option>
+				</select>
+			</div>
+
+	</fieldset>
+
+</td><td>
+
+<fieldset class="fieldset">
+		<legend>{lang:search_by_member_name}</legend>
+
+	<input type="text" class="input" maxlength="100" size="40" name="member_name" style="width:100%;" />
+		<div class="default"><input type="checkbox" class="checkbox" name="exact_match" value="y"  /> {lang:exact_name_match}</div>
+
+</fieldset>
+
+</td>
+	</tr>
+	</table>
+
+<table cellpadding="4" cellspacing="6" border="0" width="100%">
+	<tr>
+	<td valign="top" width="50%">
+
+<table cellpadding="0" cellspacing="0" border="0">
+	<tr>
+	<td valign="top">
+
+<div class="defaultBold">{lang:channels}</div>
+
+	<select id="channel_id" name="channel_id[]" class="multiselect" size="12" multiple="multiple" onchange="changemenu(this.selectedIndex);">
+			{channel_names}
+		</select>
+
+</td>
+	<td valign="top" width="16">&nbsp;</td>
+	<td valign="top">
+
+<div class="defaultBold">{lang:categories}</div>
+
+	<select name="cat_id[]" size="12"  class="multiselect" multiple="multiple">
+			<option value="all" selected="selected">{lang:any_category}</option>
+		</select>
+
+</td>
+	</tr>
+	</table>
+
+</td>
+	<td valign="top" width="50%">
+
+<fieldset class="fieldset">
+	<legend>{lang:search_entries_from}</legend>
+
+	<select name="date" style="width:150px">
+			<option value="0" selected="selected">{lang:any_date}</option>
+			<option value="1" >{lang:today_and}</option>
+			<option value="7" >{lang:this_week_and}</option>
+			<option value="30" >{lang:one_month_ago_and}</option>
+			<option value="90" >{lang:three_months_ago_and}</option>
+			<option value="180" >{lang:six_months_ago_and}</option>
+			<option value="365" >{lang:one_year_ago_and}</option>
+		</select>
+
+	<div class="default">
+		<input type="radio" name="date_order" value="newer" class="radio" checked="checked" />&nbsp;{lang:newer}
+		<input type="radio" name="date_order" value="older" class="radio" />&nbsp;{lang:older}
+	</div>
+
+</fieldset>
+
+<div class="default"><br /></div>
+
+<fieldset class="fieldset">
+	<legend>{lang:sort_results_by}</legend>
+
+	<select name="orderby">
+		<option value="date" >{lang:date}</option>
+		<option value="title" >{lang:title}</option>
+		<option value="most_comments" >{lang:most_comments}</option>
+		<option value="recent_comment" >{lang:recent_comment}</option>
+	</select>
+
+	<div class="default">
+		<input type="radio" name="sort_order" class="radio" value="desc" checked="checked" /> {lang:descending}
+		<input type="radio" name="sort_order" class="radio" value="asc" /> {lang:ascending}
+	</div>
+
+</fieldset>
+
+</td>
+	</tr>
+	</table>
+
+	<div class="searchSubmit">
+		<input type="submit" value="Search" class="submit" />
+	</div>
+
+{/exp:search:advanced_form}
+
+<label for="field_show_expired">Include Expired Entries?</label>
+<select name="show_expired" id="field_show_expired">
+	<option value="no">No</option>
+	<option value="yes">Yes</option>
+</select>
+
+<label for="field_show_future_entries">Include Future Entries?</label>
+<select name="show_future_entries" id="field_show_future_entries">
+	<option value="no">No</option>
+	<option value="yes">Yes</option>
+</select>
+
+{exp:channel:month_links channel="news" limit="50"
+channel="news"
+limit="10"
+sort="asc"
+show_expired="yes"
+show_future_entries="yes"
+status="open"
+status="draft"
+}
+{/exp:channel:month_links}
+{status}
+{month}, {year}
+{month}
+
+{month_num}
+
+{month_short}
+
+{path="channel/archives"}
+
+<a href="{path="channel/archives"}">{month}, {year}</a>
+
+<a href="example.com/index.php/channel/archives/2003/12/">December, 2003</a>
+
+{path="template_group/template_name"}
+
+{year}
+
+{year_short}
+
+{year_heading}
+	<p>{year}</p>
+{/year_heading}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Whats New</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<h1>All the news that's fit to pixelize.</h1>
+</body>
+</html>
+
+{exp:channel:entries}
+
+{exp:channel:entries channel="news"}
+
+{exp:channel:entries channel="news" limit="10"}
+
+{news_body}
+
+{title}
+
+{author}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>What's New</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<h1>All the news that's fit to pixelize.</h1>
+
+{exp:channel:entries channel="news" limit="10"}
+		<h2>{title}</h2>
+		<p>By {author}</p>
+
+	{news_body}
+{/exp:channel:entries}
+</body>
+</html>
+
+<ul>
+	{exp:channel:entries channel="news" limit="10"}
+		<li>{title}</li>
+	{/exp:channel:entries}
+</ul>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Home</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<h1>Home, Sweet Home.</h1>
+	<p>Kick back and relax... you"ve made it home.</p>
+
+<h2>The Latest</h2>
+	<p>Check out the <a href="{path="news"}">latest news</a>:</p>
+	<ul>
+		{exp:channel:entries channel="news" limit="10"}
+			<li><a href="{url_title_path="news"}">{title}</a></li>
+		{/exp:channel:entries}
+	</ul>
+</body>
+</html>
+
+<p>Check out the <a href="{path="news"}">latest news</a>:</p>
+
+<li><a href="{url_title_path="news"}">{title}</a></li>
+
+{exp:channel:entries channel="news" limit="10" dynamic="no"cache="yes" refresh="10"
+}
+
+{exp:channel:entries cache="yes" refresh="30"
+disable="categories|member_data"
+}
+
+{exp:channel:entries orderby="date" sort="desc" limit="10"}
+	<h1 href="{title_permalink="channel/comments"}">{title}</h1>
+{/exp:channel:entries}
+
+{exp:channel:entries orderby="date" sort="desc" limit="10" disable="categories|custom_fields|member_data|pagination"}
+	<h1 href="{title_permalink="channel/comments"}">{title}</h1>
+{/exp:channel:entries}
+
+{exp:channel:calendar switch="calendarToday|calendarCell"}
+
+<table class="calendarBG" border="0" cellpadding="6" cellspacing="1" summary="My Calendar">
+	<tr class="calendarHeader">
+	<th>
+		<div class="calendarMonthLinks"><a href="{previous_path="channel/index"}">&lt;&lt;</a>
+		</div>
+	</th>
+	<th colspan="5">
+		{date format="%F %Y"}
+		{date }
+		{date}
+	</th>
+	<th>
+		<div class="calendarMonthLinks">
+		<a class="calendarMonthLinks" href="{next_path="channel/index"}">&gt;&gt;</a>
+		</div>
+	</th>
+	</tr>
+	<tr>
+	{calendar_heading}
+	<td class="calendarDayHeading">{lang:weekday_abrev}</td>
+	{/calendar_heading}
+	</tr>
+	{calendar_rows}
+	{row_start}<tr>{/row_start}
+	{if entries}
+		<td class="{switch}" align="center"><a href="{day_path="channel/index"}">{day_number}</a>
+		</td>
+	{/if}
+	{if not_entries}
+		<td class="{switch}" align="center">{day_number}</td>
+	{/if}
+	{if blank}
+		<td class="calendarBlank">{day_number}</td>
+	{/if}
+	{row_end}</tr>{/row_end}
+	{/calendar_rows}
+	</table>
+{/exp:channel:calendar}
+
+{exp:channel:calendar switch="calendarToday|calendarCell" channel="default_site"
+leading_zeroes="yes"
+month="04" year="2002"
+show_future_entries="yes"
+start_day="sunday"
+}
+<table class="calendarBG" border="0" cellpadding="6" cellspacing="1" summary="My Calendar" width="90%">
+	<tr class="calendarHeader">
+	<th>
+		<div class="calendarMonthLinks">
+		<a href="{previous_path="channel/cal"}">&lt;&lt;</a>
+		</div>
+	</th>
+	<th colspan="5">{date format="%F %Y"}</th>
+	<th>
+		<div class="calendarMonthLinks">
+		<a class="calendarMonthLinks" href="{next_path="channel/cal"}">&gt;&gt;</a>
+		</div>
+	</th>
+	</tr>
+	<tr>
+	{calendar_heading}
+	<td class="calendarDayHeading">{lang:weekday_abrev}</td>
+	{/calendar_heading}
+	</tr>
+	{calendar_rows}
+	{row_start}<tr>{/row_start}
+	{if entries}
+		<td class="{switch}" align="center">
+		<a href="{day_path="channel/index"}">{day_number}</a>
+		{entries}
+		<div>
+			<a href="{title_permalink="channel/index"}">{title}</a>
+			<a href="{profile_path="member/profile"}">{author}</a>
+		</div>
+		{/entries}
+		</td>
+	{/if}
+	{if not_entries}
+		<td class="{switch}" align="center">{day_number}</td>
+	{/if}
+	{if blank}
+		<td class="calendarBlank">{day_number}</td>
+	{/if}
+	{row_end}</tr>{/row_end}
+	{/calendar_rows}
+</table>
+{/exp:channel:calendar}
+
+{author}
+
+{comment_auto_path}
+
+{comment_entry_id_auto_path}
+
+<a href="{comment_entry_id_auto_path}">my entry</a>
+
+<a href="http://example.com/index.php/channel/comments/234/">my entry</a>
+
+{comment_url_title_auto_path}
+
+<a href="{comment_url_title_auto_path}">my entry</a>
+
+<a href="http://example.com/index.php/channel/comments/ice_cream/">my entry</a>
+
+{comment_path="channel/comments"}
+
+<a href="{comment_path="channel/comments"}">comments</a>
+
+<a href="http://example.com/index.php/channel/comments/234/">comments</a>
+
+{comment_total}
+
+{date format="%F %Y"}
+
+{day_number}
+
+{day_path="channel/index"}
+
+<a href="{day_path="channel/index"}">{day_number}
+
+<a href="http://example.com/index.php/channel/2003/02/17/">17</a>
+
+{entry_id_path="channel/comments"}
+
+<a href="{entry_id_path="channel/comments"}">my entry</a>
+
+<a href="http://example.com/index.php/channel/comments/234/">my entry</a>
+
+{next_date format="%m %Y"}
+
+{next_path="channel/calendar"}
+
+{permalink}
+
+{permalink="channel/archives"}
+
+{previous_date format="%m %Y"}
+
+{previous_path="channel/calendar"}
+
+{profile_path="member/profile"}
+
+<a href="{profile_path="member/profile"}">{author}</a>
+
+{switch}
+
+{title}
+
+{title_permalink}
+
+{title_permalink="channel/archives"}
+
+{url_title_path="channel/archives"}
+
+<a href="{url_title_path="channel/archives"}">permalink</a>
+
+<a href="http://example.com/index.php/channel/archives/ice_cream/">permalink</a>
+
+{calendar_heading}
+	<td class="calendarDayHeading">{lang:weekday_abrev}</td>
+{/calendar_heading}
+
+{calendar_rows}
+	{row_start}<tr>{/row_start}
+	<td class="{switch}" align="center">
+		<a href="{day_path="channel/index"}">{day_number}</a>
+		{entries}
+		<div>
+		<a href="{title_permalink="channel/index"}">{title}</a> <a href="{profile_path="member/profile"}">{author}</a>
+		</div>
+		{/entries}
+	</td>
+	{row_end}</tr>{/row_end}
+{/calendar_rows}
+
+{entries}
+	<div>
+	<a href="{title_permalink="channel/index"}">{title}</a> <a href="{profile_path="member/profile"}">{author}</a>
+	</div>
+{/entries}
+
+{row_end}</tr>{/row_end}
+
+{row_start}<tr>{/row_start}
+
+{if captcha}
+	<p>Please enter the word you see in the image below:</p>
+	<p>{captcha}<br /> <input type="text" name="captcha" value="{captcha_word}" size="20" maxlength="20" style="width:140px;" /></p>
+{/if}
+
+{if captcha}
+	<p>Please enter the word you see in the image below:</p>
+	<p>{captcha}<br />
+	<input type="text" name="captcha" value="" size="20" maxlength="20" style="width:140px;" />
+ "> <!-- note: needed to insert extra closing quote here due to bug in HTML highlighting -->
+
+
+</p>
+{/if}
+
+{exp:channel:categories}
+	{category_name}
+{/exp:channel:categories}
+
+{exp:channel:categories backspace="5"}
+	<a href="{path="channel/index"}">{category_name}</a>
+	{if category_description}{category_description}{/if}
+{/exp:channel:categories}
+
+{exp:channel:categories style="linear" backspace="5"
+category_group="not 1|2|4"
+channel="channel_name"
+class="my_custom_class"
+disable="category_fields"
+id="my_custom_id"
+parent_only="yes"
+restrict_channel="no"
+show="not 3|8"
+show_empty="no"
+show_expired_entries="yes"
+show_future_entries="yes"
+status="not submitted|processing|closed"
+style="nested"
+}
+	{category_name}<br>
+{/exp:channel:categories}
+
+
+{category_description}
+
+{if category_description}{category_description}{/if}
+
+{category_id}
+
+{parent_id}
+
+{category_image}
+
+{category_name}
+
+{category_url_title}
+
+{count}
+
+{path="template_group/template"}
+
+<a href="{path="channel/index"}">{category_name}</a>
+
+<a href="{path="SITE_INDEX"}">{category_name}</a>
+
+{total_results}
+
+{class} {extended_description} {category_name_fr} etc..
+
+<a href="{path="news/index"}"{if active} class="active"{/if}>{category_name}</a>
+
+<form name="catmenu" action=''>	 '>
+	<select name="selcat" onchange="location=document.catmenu.selcat.options[document.catmenu.selcat.selectedIndex].value;">
+	<option value=''>
+
+	'> <!-- NOTE: HAD TO FIX THIS -->
+		--Select Category--</option>
+	{exp:channel:categories channel="yourchannel" style="linear"}
+		<option value="{path="channel"}">{category_name}</option>
+	{/exp:channel:categories}
+	</select>
+</form>
+
+{exp:channel:categories channel="news" style="linear" backspace="7"}
+	<a href="{path="news/entry"}">{category_name}</a><br />
+{/exp:channel:categories}
+
+{exp:channel:categories channel="politics" style="nested"}
+	<a href="{path="SITE_INDEX"}">{category_name}</a>
+{/exp:channel:categories}
+
+{exp:channel:category_archive channel="default_site" style="linear"}
+	{categories}
+	<h3>{category_name}</h3>
+	{if category_description}
+		<p>{category_description}</p>
+	{/if}
+	{/categories}
+	{entry_titles}
+	<a href="{path="SITE_INDEX"}">{title}</a><br />
+	{/entry_titles}
+{/exp:channel:category_archive}
+
+<h3>Category one</h3>
+<p>Category one is our first category.</p>
+<a href="www.mysite.com/1/">title one</a><br />
+<a href="www.mysite.com/2/">title two</a><br />
+<a href="www.mysite.com/3/">title three</a><br />
+<a href="www.mysite.com/4/">title four</a><br />
+<a href="www.mysite.com/5/">title five</a><br />
+
+<h3>Category two</h3>
+<p>This was our second category ever created.</p>
+<a href="www.mysite.com/6/">title one</a><br />
+<a href="www.mysite.com/7/">title two</a><br />
+<a href="www.mysite.com/8/">title three</a><br />
+<a href="www.mysite.com/9/">title four</a><br />
+<a href="www.mysite.com/10/">title five</a><br />
+
+etc...
+
+backspace="7"
+Category one
+
+<a href="www.mysite.com/1/">title one</a><br />
+<a href="www.mysite.com/2/">title two</a><br />
+<a href="www.mysite.com/3/">title three</a><br />
+<a href="www.mysite.com/4/">title four</a><br />
+<a href="www.mysite.com/5/">title five</a><br />
+
+Category two
+
+<a href="www.mysite.com/6/">title one</a><br />
+<a href="www.mysite.com/7/">title two</a><br />
+
+{exp:channel:category_archive channel="default_site" style="linear" backspace="7"
+class="my_custom_class"
+disable="category_fields"
+id="my_custom_id"
+orderby="date"
+show="not 3|8"
+show_empty="no"
+show_future_entries="yes"
+sort="desc"
+status="not submitted|processing|closed"
+}
+	{categories}
+	<h3>{category_name}</h3>
+	{/categories}
+	{entry_titles}
+	<a href="{path="SITE_INDEX"}">{title}</a><br />
+	{/entry_titles}
+{/exp:channel:category_archive}
+
+<h3>Category one</h3>
+<a href="www.mysite.com/1/">title one</a><br />
+<a href="www.mysite.com/2/">title two</a><br />
+<a href="www.mysite.com/3/">title three</a><br />
+<a href="www.mysite.com/4/">title four</a><br />
+<a href="www.mysite.com/5/">title five</a>
+<h3>Category two</h3>
+<a href="www.mysite.com/6/">title one</a><br />
+<a href="www.mysite.com/7/">title two</a>
+
+<ul id="my_custom_id">
+
+<ul id="nav_cat_archive">
+
+{if active} This category is active {/if}
+
+{categories}
+	<p>{category_description}</p>
+{/categories}
+
+{categories}
+	{if category_description}{category_description}{/if}
+{/categories}
+
+{category_id}
+
+{parent_id}
+
+{category_image}
+
+{categories}
+	<h3>{category_name}</h3>
+{/categories}
+
+{category_url_title}
+
+{categories}
+	<a href="{path="site/categories"}">{category_name}</a>
+{/categories}
+
+<a href="{path="site/categories"}">{category_name}</a>
+
+<a href="{path="SITE_INDEX"}">{category_name}</a>
+
+{class} {extended_description} {category_name_fr} etc..
+
+{entry_date format="%Y %m %d"}
+
+{entry_titles}
+	<a href="{entry_id_path="site/index"}">{title}</a>
+{/entry_titles}
+
+<a href="{entry_id_path="site/index"}">{title}</a>
+
+<a href="{entry_id_path="SITE_INDEX"}">{title}</a>
+
+{entry_titles} <a href="{path="site/index"}">{title}</a> {/entry_titles}
+
+<a href="{path="site/index"}">{title}</a>
+
+<a href="{path="SITE_INDEX"}">{title}</a>
+
+{entry_titles} {title} {/entry_titles}
+
+{exp:channel:category_heading
+disable="category_fields"
+relaxed_categories="yes"
+channel="news"
+}
+	<h1>{category_name}</h1>
+	{if category_description}
+	<p>{category_description}</p>
+	{/if}
+{/exp:channel:category_heading}
+
+{category_description}
+
+{if category_description}{category_description}{/if}
+
+{category_id}
+
+{parent_id}
+
+{category_image}
+
+{category_name}
+
+{category_url_title}
+
+{class} {extended_description} {category_name_fr} etc..
+
+{moderators backspace="1"}	 <a href="{path:member_profile}">{name}</a>, {/moderators}
+
+{moderators backspace="1"}<a href="{path:member_profile}">{name}</a>,{/moderators}
+
+{exp:channel:entries channel="news" limit="10"
+author_id="CURRENT_USER"
+author_id="NOT_CURRENT_USER"
+}
+	<h2>{title}</h2>
+	{body}
+{/exp:channel:entries}
+
+{exp:channel:entries backspace="7"
+cache="yes" refresh="60"
+cat_limit="30"
+}	{title}<br /> {/exp:channel:entries}
+
+{exp:channel:entries limit="10" cat_limit="100"
+category="3&7&8"
+category_group="1|2|4"
+channel="not channel1|channel2|channel3"
+disable="categories|member_data"
+}
+
+{exp:channel:entries orderby="date" sort="desc" limit="10"}
+	<a href="{title_permalink="channel/comments"}">{title}</a><br>
+{/exp:channel:entries}
+
+{exp:channel:entries orderby="date" sort="desc" limit="10" disable="categories|custom_fields|member_data|pagination"
+display_by="month" limit="3"
+limit="20"
+show_future_entries="yes" show_current_week="yes"
+dynamic="no"
+dynamic_start="yes"
+dynamic_parameters="orderby|limit|sort"
+entry_id="not 45|534|807"
+entry_id_from="20"
+entry_id_to="4000"
+fixed_order="3|7|1" sort="desc"
+group_id="not 2|3|4"
+limit="12"
+month_limit="30"
+}
+	<a href="{title_permalink="channel/comments"}">{title}</a><br>
+{/exp:channel:entries}
+
+{exp:channel:entries limit="10" month_limit="100"
+offset="1"  sort="asc"
+orderby="default_site:body|second_site:summary"
+paginate="top"
+paginate_base="site/index"
+paginate_type="field"
+related_categories_mode="yes"
+}
+
+{exp:channel:entries related_categories_mode="yes" custom_fields="yes" member_data="yes"
+relaxed_categories="yes"
+require_entry="yes"
+search:body="pickles"
+search:body="=pickles|shoes"
+search:body="=not pickles|shoes"
+search:body="pickles|shoes"
+search:body="not pickles|shoes"
+search:body="pickles&&shoes"
+search:body="not pickles&&shoes"
+search:body="cat\W"
+search:body="IS_EMPTY"
+search:body="not IS_EMPTY"
+search:body="=IS_EMPTY|sandwich"
+search:body="IS_EMPTY|sandwich"
+search:body="not IS_EMPTY|sandwich|salad"
+show_current_week="yes"
+show_expired="yes"
+show_future_entries="yes"
+show_pages="only" show_pages="no"
+sort="asc" sort="desc"
+orderby="screen_name|date" sort="asc|desc"
+start_day="Monday"
+start_on="2004-06-05 20:00"
+}
+	<h2>{title}</h2>
+	{body}
+	<div class="posted">Posted by {author} on {entry_date format="%m/%d"} at {entry_date format="%h:%i %A"}</div>
+{/exp:channel:entries}
+
+{exp:channel:entries channel="{my_weblog}" sort="desc" start_on="{current_time format="%Y-%m-%d %H:%i"}" show_future_entries="yes"}
+
+<?php
+	$start_time = ee()->localize->format_date("%Y-%m-%d %H:%i", ee()->localize->now - 86400);
+?>
+
+{exp:channel:entries channel="{my_weblog}" limit="5" sort="desc" start_on="<?php echo $start_time; ?>"
+status="open"
+status="draft|reviewed|published"
+status="not submitted|processing|closed"
+stop_before="2004-06-12 20:00"
+}
+
+<?php
+	$current_time = ee()->localize->format_date("%Y-%m-%d %H:%i", ee()->localize->now - 518400);
+?>
+
+{exp:channel:entries channel="{my_weblog}" orderby="date" sort="desc" stop_before="<?php echo $current_time; ?>"
+sticky="no"
+track_views="one" track_views="two" track_views="three" track_views="four"
+uncategorized_entries="no"
+url_title="my_wedding"
+url_title="my_wedding|my_honeymoon|my_kids"
+url_title="not my_in_laws"
+username="petunia"
+username="tom|dick|harry"
+username="not tom|dick|harry|fred"
+username="CURRENT_USER"
+username="NOT_CURRENT_USER"
+week_sort="asc"
+year="2003"
+month="12"
+day="23"
+year="2002"
+year="2003"
+month="12"}
+
+{view_count_one}{view_count_two}{view_count_three}{view_count_four}
+
+{absolute_count}
+
+{absolute_results}
+
+{aol_im}
+
+{author}
+
+{author_id}
+
+{avatar_image_height}
+
+{if avatar}
+	<img src="{avatar_url}" width="{avatar_image_width}" height="{avatar_image_height}" alt="{author}'s avatar">
+{/if}
+
+{avatar_image_width}
+
+{if avatar}
+	<img src="{avatar_url}" width="{avatar_image_width}" height="{avatar_image_height}" alt="{author}'s avatar">
+{/if}
+
+{avatar_url}
+
+{if avatar}
+	<img src="{avatar_url}" width="{avatar_image_width}" height="{avatar_image_height}" alt="{author}'s avatar"> ">
+{/if}
+
+{bio}
+
+{channel}
+
+{channel_id}
+
+{channel_short_name}
+
+{yahoo_im}
+
+{comment_auto_path}
+
+{comment_entry_id_auto_path}
+
+<a href="{comment_entry_id_auto_path}">my entry</a>
+
+<a href="http://example.com/index.php/channel/comments/234">my entry</a>
+
+{comment_subscriber_total}
+
+{comment_total}
+
+{comment_url_title_auto_path}
+
+<a href="{comment_url_title_auto_path}">my entry</a>
+
+<a href="http://example.com/index.php/channel/comments/ice_cream/">my entry</a>
+
+{count}
+
+{edit_date format="%Y %m %d"}
+
+{email}
+
+{entry_date format="%Y %m %d"}
+
+{entry_id}
+
+{entry_id_path="channel/archives"}
+
+<a href="{entry_id_path="channel/archives"}">my entry</a>
+
+<a href="http://example.com/index.php/channel/archives/234/">my entry</a>
+
+{entry_site_id}
+
+{expiration_date format="%Y %m %d"}
+
+{forum_topic_id}
+
+{if forum_topic}
+	<a href="{path="forums/viewthread"}{forum_topic_id}">Discuss this in our forums</a>
+{/if}
+
+{gmt_entry_date format="%Y %m %d"}
+
+{gmt_edit_date format="%Y %m %d"}
+
+{icq}
+
+{interests}
+
+{ip_address}
+
+{location}
+
+{member_search_path="search/results"}
+
+<a href="{member_search_path="search/results"}">View entries by this member</a>
+
+{msn_im}
+
+{occupation}
+
+{page_uri}
+
+{if page_uri != ""} <a href="{page_uri}">View this page</a> {/if}
+
+{page_url}
+
+{if page_url != ""} <a href="{page_url}">View this page</a> {/if}
+
+{permalink}
+
+{permalink="channel/archives"}
+
+{photo_url}
+
+{photo_image_height}
+
+{photo_image_width}
+
+{profile_path="member"}
+
+<a href="{profile_path="member"}">{author}</a>
+
+{recent_comment_date format="%Y %m %d"}
+
+{relative_url}
+
+{relative_date}
+
+{screen_name}
+
+{signature}
+
+{if signature} <p>{signature}</p> {/if}
+
+{signature_image_height}
+
+{if signature_image}
+	<img src="{signature_image_url}" width="{signature_image_width}" height="{signature_image_height}" alt="{author}'s signature">
+{/if}
+
+{signature_image_url}
+
+{if signature_image}
+	<img src="{signature_image_url}" width="{signature_image_width}" height="{signature_image_height}" alt="{author}'s signature">
+{/if}
+
+{signature_image_width}
+
+{if signature_image}
+	<img src="{signature_image_url}" width="{signature_image_width}" height="{signature_image_height}" alt="{author}'s signature"> ">
+{/if}
+
+{status}
+
+{switch="option_one|option_two|option_three"}
+
+{exp:channel:entries channel="yourchannel"}
+	<div class="{switch="one|two"}">
+		<h2>{title}</h2>
+		{body}
+	</div>
+{/exp:channel:entries}
+
+{title}
+
+{title_permalink}
+
+{title_permalink="channel/archives"}
+
+{total_results}
+
+{trimmed_url}
+
+{url}
+
+{url_or_email}
+
+{url_or_email_as_author}
+
+{url_or_email_as_link}
+
+{url_title}
+
+{url_title_path="channel/archives"}
+
+<a href="{url_title_path="channel/archives"}">permalink</a>
+
+<a href="http://example.com/index.php/channel/archives/ice_cream/">permalink</a>
+
+{username}
+
+{week_date format="%Y %m %d"}
+
+{if summary != ""}
+	The summary is not empty!
+{/if}
+
+{if summary}
+	The summary is not empty!
+{/if}
+
+{if allow_comments} content {/if}
+
+{if allow_comments}
+	({comment_total}) <a href="{comment_path="channel/comments"}">Comments</a>
+{/if}
+
+{if allow_comments == FALSE} content {/if}
+
+{if avatar} content {/if}
+
+{if avatar}
+	<img src="{avatar_url}" width="{avatar_image_width}" height="{avatar_image_height}" alt="{author}'s avatar"> ">
+{/if}
+
+{if category_request} content {/if}
+
+{if count > 5} content {/if}
+
+{if forum_topic} content {/if}
+
+{if forum_topic}
+	<a href="{path="forums/viewthread"}/{forum_topic_id}">Discuss this in our forums</a>
+{/if}
+
+{if no_results} content {/if}
+
+{if no_results}  <p>There are no entries available.</p>  {/if}
+
+{if no_results} {redirect="channel/noresult"} {/if}
+
+{if no_results} {redirect="404"} {/if}
+
+{if not_category_request} content {/if}
+
+{if not_forum_topic} content {/if}
+
+{if not_forum_topic} There is no forum discussion available. {/if}
+
+{if photo} content {/if}
+
+{if photo}
+	<img src="{photo_url}" width="{photo_image_width}" height="{photo_image_height}" alt="{author}'s photo">
+	">
+{/if}
+
+{if signature_image} content {/if}
+
+{if signature_image}
+	<img src="{signature_image_url}" width="{signature_image_width}" height="{signature_image_height}" alt="{author}'s signature">
+	">
+{/if}
+
+{if sticky == "y"} content {/if}
+
+{if sticky == "n"} content {/if}
+
+{date_heading}  <h1>{entry_date format="%Y %m %d"}</h1>  {/date_heading}
+
+{date_footer display="daily"}  <p>That's all from today!</p>  {/date_footer}
+
+{date_footer display="daily"}
+
+{date_heading}  <h1>{entry_date format="%Y %m %d"}</h1>  {/date_heading}
+
+{date_heading display="weekly"}Week of {week_date format="%Y %m %d"}{/date_heading}
+
+{date_heading display="daily"}
+
+{categories}
+	{category_image}
+	<a href="{path="channel/index"}">{category_name}</a>
+{/categories}
+
+{categories backspace="5"}
+
+Local News<br>
+Health News<br>
+Science News<br>
+
+{categories backspace="5"}
+	{category_name}<br>
+{/categories}
+
+Local News<br>
+Health News<br>
+Science News
+
+{categories limit="1"}
+
+{categories show="4}
+{7"}
+
+{categories show="not 3}
+{6}
+{8"}
+
+{categories show_group="1}
+{3"}
+
+{categories show_group="not 2}
+{4"}
+
+{if active} This category is active {/if}
+
+{category_description}
+
+{category_group}
+
+{category_id}
+
+{parent_id}
+
+{category_image}
+
+{category_name}
+
+{category_url_title}
+
+{path="channel/index"}
+
+{categories}  <a href="{path="SITE_INDEX"}">{category_name}</a>  {/categories}
+
+{class} {extended_description} {category_name_fr} etc..
+
+{exp:channel:info channel="news"}
+	Channel Name: {channel_title}<br>
+	Description: {channel_description}
+{/exp:channel:info}
+
+{channel_description}
+
+{channel_encoding}
+
+{channel_lang}
+
+{channel_title}
+
+{channel_url}
+
+{!--	  Your comments will go in here.
+You can even span it across multiple lines.	 --}
+
+{!--	Once the channel is set up and the old data inserted, use this below.
+
+{exp:channel:entries channel="recipies"}
+		{title}
+	{/exp:channel:entries}
+ --}
+
+{if username == "joe"}  <h1>Hi Joe!</h1>  {/if}
+
+{if screen_name == "John Smith (Owner)"}
+
+{if username == "Joe" OR username == "Bob"}
+	<h1>Hey, Joe or Bob!</h1>
+{/if}
+
+{if username != "Joe" AND username != "Bob"}
+	<h1>Hey, people who are neither Joe nor Bob!</h1>
+{/if}
+
+{if:elseif}
+
+{if:else}
+
+{if username == "Joe"}
+	<h1>Hey, Joe! Where were you Tuesday?</h1>
+{if:elseif username == "Bob"}
+	<h1>Hey, Bob! Thanks for the tickets!</h1>
+{if:else}
+	<h1>Welcome to our site.</h1>
+{/if}
+
+{if member_id != '1' && member_group != "5" OR username == "Billy"} Hi! {/if}
+
+{if (member_id == '1' OR member_id == '2') && channel_id == '5'}
+
+{if group_id == "7"}  You"re an "Editor"!  {/if}
+
+{if logged_in}  Welcome back to the site!<br /> <a href="{path="LOGOUT"}">Logout</a>  {/if}
+
+{if logged_out}  You aren"t a member or aren"t logged in.<br /> <a href="{path="member/login"}">Login</a>  }
+{ <a href="{path="member/register"}">Register</a>  {/if}
+
+{if member_group == "7"}  You"re an "Editor"!  {/if}
+
+{if member_id == "147"}  Ooh, you"re really special, Frank!!  {/if}
+
+{if screen_name == "Mr. Ed"}  Thanks for all your hard work on the site, Ed!  {/if}
+
+{if total_comments < 1}  What??  No one has commented on my site at all?!?!  {/if}
+
+{if total_entries > 1000}  Yowza!  This is one hot site!  {/if}
+
+{if segment_3 == "private"}  You"re seeing something private!  {/if}
+
+{if username == "elvira"}  Hi, mom!  I know it's you!  {/if}
+
+{exp:channel:entries channel="default_site"}
+	{if logged_in_member_id == author_id}
+		<p>You wrote this entry!</p>
+	{/if}
+{/exp:channel:entries}
+
+{exp:email:contact_form}  {/exp:email:contact_form}
+
+{exp:email:contact_form user_recipients="no" recipients="admin@example.com" charset="utf-8"
+charset="utf-8"
+name="myForm"
+recipients="admin@example.com"
+recipients="admin@example.com,ceo@example.com,president@example.com"
+redirect="5"
+redirect="6"
+redirect="none"
+replyto="yes"
+return="http://example.com/index.php"
+return="http://example.com/index.php"
+return="http://example.com/index.php|Return to Home Page"
+return="Return to the Site"
+user_recipients="yes"
+user_recipients="no"
+form_class="my_form"
+form_id="contact_form"
+}
+	<h2>Support Form</h2>
+	<p>
+		<label for="from">Your Email:</label><br />
+		<input type="text" id="from" name="from" size="40" maxlength="35" value="{member_email}" />
+	</p>
+	<p>
+		<label for="subject">Subject:</label><br />
+		<input type="text" id="subject" name="subject" size="40" value="Contact Form" />
+	</p>
+	<p>
+		<label for="message">Message:</label><br />
+		<textarea id="message" name="message" rows="18" cols="40">
+			Support Email from: {member_name}
+			Sent at:  {current_time format="%Y %m %d"}
+		</textarea>
+	</p>
+	<p>
+		<input name="submit" type="submit" value="Submit Form" />
+	</p>
+{/exp:email:contact_form}
+
+{author_email}
+
+{author_name}
+
+{member_email}
+
+{member_name}
+
+<input type="text" name="captcha" value="" maxlength="20" />
+
+ ">
+
+{if captcha}
+	<p>Please enter the word you see in the image below:</p>
+	<p>{captcha}<br /> <input type="text" name="captcha" value="" maxlength="20" />
+
+	"</p>
+{/if}
+
+<input type="text" name="from" size="40" />
+
+<textarea name="message" rows="10" cols="40"></textarea>
+
+Home Phone: <input type="text" name="message[]" size="12" maxlength="15" /><br /> <br />
+Cell Phone: <input type="text" name="message[]" size="12" maxlength="15" />
+
+<input type="text" name="name" size="40" />
+
+<textarea name="required" rows="5" cols="40" readonly="readonly"></textarea>
+
+Age: <input type="text" name="required[]" size="3" maxlength="3" /><br /> <br />
+Bio: <textarea name="required[]" rows="5" cols="40"></textarea>
+
+<input type="text" name="subject" size="40" />
+
+<input type="text" name="to" size="40" />
+
+{body}
+{summary}
+{extended}
+
+etc..
+
+{news_image}
+
+{news_image:small}
+
+{news_image wrap="link"}
+
+<a href="http://example.com/dir/filename.ext">filename</a>
+
+{news_image wrap="image"}
+
+<img src="http://example.com/dir/filename.ext" alt="filename" />
+{news_image}
+	This file is a {extension} and was uploaded on {upload_date format="%Y %m %d"}
+	<a href="{url}">View it now</a>
+{/news_image}
+
+{credit}
+
+{description}
+
+{extension}
+
+{file_id}
+
+{file_name}
+
+{file_size}
+
+{height}
+
+{location}
+
+{mime_type}
+
+{modified_date format="%Y %m %d"}
+
+{path}
+
+{title}
+
+{upload_date format="%Y %m %d"}
+
+{url}
+
+{url:small}
+
+{width}
+
+{poll_options}
+	{item}<br />
+{/poll_options}
+
+{poll_options markup="ul"}
+
+<ul>
+	<li>Green</li>
+	<li>Blue</li>
+	<li>Orange</li>
+</ul>
+
+{poll_options backspace="7"}
+	{item}<br />
+{/poll_options}
+
+<ul>
+	<li>Green</li><br />
+	<li>Blue</li><br />
+	<li>Orange</li><br />
+</ul>
+
+{age}
+{gender}
+{zodiac}
+etc...
+
+{my_date format="%Y %m %d"}
+
+{current_time format="%F %d %Y"}
+
+January 15 2006
+
+{current_time format="%D, %F %d, %Y - %g:%i:%s"}
+
+Mon, January 15, 2006 - 10:23:45
+
+{current_time format="{DATE_ATOM}"}
+
+<?php
+ee()->cp->add_js_script(array("ui" => array("sortable", "tabs")));
+ee()->cp->add_js_script("plugin", "tablesorter");
+
+ee()->extensions->call("safecracker_submit_entry_start", $this);
+
+ee()->extensions->call("safecracker_submit_entry_end", $this);
+?>
+
+{exp:channel:entries  dynamic_parameters="orderby|limit|sort"}
+
+<form method="post" action="{path="template_group/template_name"}">
+	<select name="orderby">
+	<option value="date">Sort By:</option>
+	<option value="date">Date</option>
+	<option value="title">Title</option> <option value="comment_total">Most Comments</option>
+	</select>
+	<select name="sort">
+	<option value="asc">Order In:</option>
+	<option value="asc">Ascending</option>
+	<option value="desc">Descending</option>
+	</select>
+	<select name="limit">
+	<option value="10">Result Limit:</option>
+	<option value="10">10</option>
+	<option value="20">20</option>
+	<option value="30">30</option>
+	</select>
+
+<input type="submit" value="Go!" />
+</form>
+
+{embed="template_group/template"}
+
+{embed="site/header"}
+
+{embed="site/header" dog_name="Shadow"}
+
+<h2>My dog's name is {embed:dog_name}</h2>
+
+{exp:channel:entries channel="default_site" limit="1"}
+	{embed="site/export" the_id="{entry_id}"}
+{/exp:channel:entries}
+
+{if embed:dog_name == "Shadow"}
+	My dog's name is {embed:dog_name}.
+{if:else}
+	{embed:dog_name} will never be as cool as Shadow.
+{/if}
+
+{exp:channel:entry_form
+	channel="default_site" return="site/index" preview="site/entry"
+allow_comments="yes"
+category="7|13"
+category="3|7|13|42"
+hidden_pings="yes"
+preview="site/entry"
+return="site/index"
+show_fields="body|extended"
+show_fields="body|extended|full_image"
+show_fields="not image_thumbnail|source|rating"
+status="pending"
+sticky_entry="yes"
+use_live_url="no"
+channel="news"
+form_class="saef_form"
+include_jquery="no"
+}
+
+	{preview}
+	<h1>{title}</h1>
+
+	{display_custom_fields}
+
+	{/preview}
+
+	<table>
+	<tr>
+	<td>
+
+	<p>Title<br />
+	<input type="text" name="title" id="title" value="{title}" size="50" maxlength="100" onkeyup="liveUrlTitle();"  /></p>
+
+	<p>URL Title<br />
+	<input type="text" name="url_title"  id="url_title" value="{url_title}" maxlength="75" size="50" /></p>
+
+	{custom_fields}
+	{if required}* {/if}{field_label}<br />
+	{formatting_buttons}
+	{field_instructions}
+
+	{if textarea}
+	<textarea id="{field_name}" name="{field_name}" dir="{text_direction}" cols="50" rows="{rows}">{field_data}</textarea><br />
+	{/if}
+
+	{if textinput}
+	<input type="text" dir="{text_direction}" id="{field_name}" name="{field_name}" value="{field_data}" maxlength="{maxlength}" size="50" /><br />
+	{/if}
+
+	{if pulldown}
+	<select id="{field_name}" name="{field_name}">
+	{options}<option value="{option_value}"{selected}>{option_name}</option>{/options}<br />
+	</select>
+	{/if}
+
+	{if date}
+	<input type="text" id="{field_name}" name="{field_name}" value="{field_data}" maxlength="{maxlength}" size="50" /><br />
+	{/if}
+
+	{if relationship}
+	<select id="{field_name}" name="{field_name}">
+	{options}<option value="{option_value}"{selected}>{option_name}</option>{/options}<br />
+	</select>
+	{/if}
+
+	{if multiselect}
+	<select id="{field_name}" name="{field_name}[]" multiple="multiple">
+	{options}<option value="{option_value}"{selected}>{option_name}</option>{/options}
+	</select>
+	{/if}
+
+	{if checkbox}
+	{options}{option_value} <input type="checkbox" id="{field_name}" name="{field_name}[]" value="{option_value}"{checked} />{/options}
+	{/if}
+
+	{if radio}
+	{options}{option_value} <input type="radio" id="{field_name}" name="{field_name}" value="{option_value}"{checked} />{/options}
+	{/if}
+
+	{if file}
+		{file}
+	{/if}
+
+	{/custom_fields}
+
+	</td>
+	<td valign="top">
+
+	<input type="submit" name="submit" value="Submit" />
+	<input type="submit" name="preview" value="Preview" />
+
+	{status_menu}
+	<p>Status<br />
+	<select name="status">
+	{select_options}
+	</select>
+	</p>
+	{/status_menu}
+
+	<p>Date <br />
+	<input type="text" name="entry_date" value="{entry_date}" maxlength="23" size="25" /></p>
+
+	<p>Expiration Date <br />
+	<input type="text" name="expiration_date" value="{expiration_date}" maxlength="23" size="25" /></p>
+
+	<p>Comment Expiration Date <br />
+	<input type="text" name="comment_expiration_date" value="{comment_expiration_date}" maxlength="23" size="25" /></p>
+
+	<p><input type="checkbox" name="sticky" value="y"  {sticky} /> Make Entry Sticky</p>
+	<p><input type="checkbox" name="allow_comments" value="y" {allow_comments} /> Allow Comments</p>
+	<p><input type="checkbox" name="dst_enabled" value="y" {dst_enabled} />DST Active on Date of Entry</p>
+
+	{ping_servers}
+	<p>Ping Servers<br />
+	{ping_row}
+	<input type="checkbox" name="ping[]" value="{ping_value}" {ping_checked} /> {ping_server_name}<br />
+	{/ping_row}
+	</p>
+	{/ping_servers}
+
+	{category_menu}
+	<p>Categories<br />
+	<select name="category[]" size="4" multiple="multiple">
+	{select_options}
+	</select>
+	</p>
+	{/category_menu}
+
+	</td>
+	</tr>
+	</table>
+
+{/exp:channel:entry_form}
+
+<link href="{path="css/_ee_saef_css"}" type="text/css" rel="stylesheet" media="screen" />
+
+<p><input type="checkbox" name="allow_comments" value="y" {allow_comments} /> Allow Comments</p>
+
+{category_menu} <p>Categories<br /> <select name="category[]" size="4" multiple="multiple"> {select_options} </select> </p> {/category_menu}
+
+<p>Comment Expiration Date <br /> <input type="text" name="comment_expiration_date" value="{comment_expiration_date}" maxlength="23" size="25" /></p>
+
+{custom_fields}
+{if required}* {/if}{field_label}<br />
+{field_instructions}
+
+{if textarea}
+<textarea id="{field_name}" name="{field_name}" dir="{text_direction}" cols="50" rows="{rows}" onclick="setFieldName(this.name)">{field_data}</textarea><br />
+{/if}
+{if textinput}
+<input type="text" dir="{text_direction}" id="{field_name}" name="{field_name}" value="{field_data}" maxlength="{maxlength}" size="50" onclick="setFieldName(this.name)" /><br />
+{/if}
+{if pulldown}
+<select id="{field_name}" name="{field_name}">
+{options}<option value="{option_value}"{selected}>{option_name}</option>{/options}<br />
+</select>
+{/if}
+{if date}
+<input type="text" id="{field_name}" name="{field_name}" value="{field_data}" maxlength="{maxlength}" size="50" onclick="setFieldName(this.name)" /><br />
+{/if}
+{if relationship}
+<select id="{field_name}" name="{field_name}">
+{options}<option value="{option_value}"{selected}>{option_name}</option>{/options}<br />
+</select>
+{/if}
+{if multiselect}
+<select id="{field_name}" name="{field_name}[]" multiple="multiple">
+{options}<option value="{option_value}"{selected}>{option_name}</option>{/options}
+</select>
+{/if}
+{if checkbox}
+{options}{option_value} <input type="checkbox" id="{field_name}" name="{field_name}[]" value="{option_value}"{checked} />{/options}
+{/if}
+{if radio}
+{options}{option_value} <input type="radio" id="{field_name}" name="{field_name}" value="{option_value}"{checked} />{/options}
+{/if}
+
+{if file}
+	{file}
+{/if}
+{/custom_fields}
+
+<p><input type="checkbox" name="dst_enabled" value="y" {dst_enabled} /> DST Active on Date of Entry</p>
+
+<p>Date <br /> <input type="text" name="entry_date" value="{entry_date}" maxlength="23" size="25" /></p>
+
+<p>Expiration Date <br /> <input type="text" name="expiration_date" value="{expiration_date}" maxlength="23" size="25" /></p>
+
+{formatting_buttons}
+
+<p><input type="checkbox" name="sticky" value="y"  {sticky} /> Make Entry Sticky</p>
+
+{ping_servers} <p>Ping Servers<br /> {ping_row} <input type="checkbox" name="ping[]" value="{ping_value}" {ping_checked} /> {ping_server_name}<br /> {/ping_row} </p> {/ping_servers}
+
+{status_menu} <p>Status<br /> <select name="status"> {select_options} </select> </p> {/status_menu}
+
+<p>Title<br /> <input type="text" name="title" id="title" value="{title}" size="50" maxlength="100" onkeyup="liveUrlTitle();"  /></p>
+
+<p>URL Title<br /> <input type="text" name="url_title"  id="url_title" value="{url_title}" maxlength="75" size="50" /></p>
+
+{field_instructions}
+
+{saef_javascript}
+
+{preview} <h1>{title}</h1>  {display_custom_fields}  {/preview}
+
+{display_custom_fields}
+
+{preview} <h2>{title}</h2>  {body}  <div class="more">{extended}</div>  {/preview}
+
+{exp:channel:next_entry}
+	<p>Next entry: <a href="{path="site/comments"}">{title}</a></p>
+{/exp:channel:next_entry}
+
+{exp:channel:prev_entry category="2"
+category="2|45|4|9"
+category="not 4|5|7"
+category="3&7&8"
+category="not 3&5"
+category_group="2"
+category_group="1|2|4"
+category_group="not 2"
+channel="news"
+channel="channel1|channel2|channel3"
+channel="not channel4|channel5"
+entry_id="12"
+entry_id="not 2|9|23|50"
+show_expired="yes"
+show_future_entries="yes"
+status="open"
+status="draft|reviewed|published"
+status="not submitted|processing|closed"
+url_title="{segment_4}"
+}
+	<p>Previous entry: <a href="{path="site/comments"}">{title}</a></p>
+{/exp:channel:prev_entry}
+
+{channel}
+
+{channel_short_name}
+
+{channel_url}
+
+{comment_entry_id_auto_path}
+
+<a href="{comment_entry_id_auto_path}">Next entry</a>
+
+<a href="http://example.com/index.php/channel/comments/234/">Next entry</a>
+
+{comment_url_title_auto_path}
+
+<a href="{comment_url_title_auto_path}">Next entry</a>
+
+<a href="http://example.com/index.php/channel/comments/ice_cream/">Next entry</a>
+
+{entry_id}
+
+{id_path="template_group/template"}
+
+<a href="{id_path="site/index"}">{title}</a>
+
+<a href="{path="SITE_INDEX"}">{title}</a>
+
+{path="template_group/template"}
+
+<a href="{path="site/index"}">{title}</a>
+
+<a href="{path="SITE_INDEX"}">{title}</a>
+
+{title}
+
+{url_title}
+
+{exp:channel:entries channel="news" limit="1" track_views="one"}
+	<h3>{title}</h3>
+	{body}
+	<div class="date">Posted on {entry_date format="%M %d, %Y"}</div>
+{/exp:channel:entries}
+
+{view_count_one}
+{view_count_two}
+{view_count_three}
+{view_count_four}
+
+{exp:channel:entries channel="news" limit="15"}
+	<h3>{title}</h3>
+	{body}
+
+<div class="date">Posted on {entry_date format="%M %d, %Y"}</div>
+	This entry has been viewed {view_count_one} times.
+{/exp:channel:entries}
+
+{exp:safecracker channel="contact_form" return="contact/thanks" }
+   <input name="title" type="text">
+   <input name="my_custom_field" type="text">
+   <input type="submit" value="Submit">
+{/exp:safecracker}
+
+{exp:safecracker channel="channel_name" return="channel_name/edit/ENTRY_ID" entry_id="{segment_3}"}
+
+<label for="title">Title</label>
+	<input type="text" name="title" id="title" value="{title}" size="50" maxlength="100" onkeyup="liveUrlTitle();">
+
+<label for="url_title">URL Title</label>
+	<input type="text" name="url_title" id="url_title" value="{url_title}" maxlength="75" size="50">
+
+<select name="my_field_name" id="my_field_name">
+		{options:my_field_name}
+		<option value="{option_value}"{selected}>{option_name}</option>
+		{/options:my_field_name}
+	</select>
+
+{status_menu}
+	<label for="status">Status</label>
+	<select name="status" id="status">
+		{select_options}
+	</select>
+	{/status_menu}
+
+<label for="entry_date">Date</label>
+	<input type="text" name="entry_date" id="entry_date" value="{entry_date}" maxlength="23" size="25">
+
+<label for="expiration_date">Expiration Date</label>
+	<input type="text" name="expiration_date" id="expiration_date" value="{expiration_date}" maxlength="23" size="25">
+
+<label for="comment_expiration_date">Comment Expiration Date</label>
+	<input type="text" name="comment_expiration_date" id="comment_expiration_date" value="{comment_expiration_date}" maxlength="23" size="25">
+
+<label class="checkbox"><input type="checkbox" name="sticky" value="y"  {sticky}> Make Entry Sticky</label>
+	<label class="checkbox"><input type="checkbox" name="allow_comments" value="y" {allow_comments}> Allow Comments</label>
+
+{category_menu}
+	<label for="categories">Categories</label>
+	<select name="category[]" id="categories" size="4" multiple="multiple">
+		{select_options}
+	</select>
+	{/category_menu}
+
+{if captcha}
+	<label for="captcha">Please enter the word you see in the image below:</label>
+	{captcha}
+	<input type="text" name="captcha" value="{captcha_word}" maxlength="20">
+	{/if}
+
+<input type="submit" name="submit" value="Submit">
+{/exp:safecracker}
+
+{exp:safecracker channel="products" return="safecracker/ENTRY_ID" entry_id="{segment_2}"}
+	<label for="title">Title</label>
+	<input type="text" name="title" id="title" value="{title}" size="50" maxlength="100" onkeyup="liveUrlTitle();">
+
+<label for="url_title">URL Title</label>
+	<input type="text" name="url_title" id="url_title" value="{url_title}" maxlength="75" size="50">
+
+<label for="entry_date">Date</label>
+	<input type="text" name="entry_date" id="entry_date" value="{entry_date}" maxlength="23" size="25">
+
+<label for="my_field_name">Your Custom Field</label>
+	<input type="text" name="my_field_name" id="my_field_name" value="{my_field_name}">
+
+<label for="my_field_name">Your Custom Field (a field with options)</label>
+	<select name="my_field_name">
+		{options:my_field_name}
+			<option value="{option_value}"{selected}>{option_name}</option>
+		{/options:my_field_name}
+	</select>
+
+<label for="my_field_name">Your 3rd Party WYSIWYG Field</label> {field:my_field_name}
+	<input type="submit" name="submit" value="Submit">
+{/exp:safecracker}
+
+<html>
+	<head>
+		{exp:jquery:script_tag}
+
+	<!--using the jQuery Form plugin http://jquery.malsup.com/form/-->
+		<script src="/js/jquery.form.js" type="text/javascript"></script>
+
+	<script type="text/javascript">
+			$(document).ready(function(){
+				$("#publishForm").ajaxForm({
+					dataType: "json",
+					success: function(data) {
+						if (data.success) {
+							alert("You successfully added a new entry with entry_id "+data.entry_id)
+						} else {
+							alert("Failed with the following errors: "+data.errors.join(", "));
+						}
+					}
+				});
+			});
+		</script>
+	</head>
+	<body>
+		{exp:safecracker channel="products" return="safecracker/ENTRY_ID" entry_id="{segment_2}" json="yes"}
+			<label for="title">Title</label>
+			<input type="text" name="title" id="title" value="{title}" size="50" maxlength="100" onkeyup="liveUrlTitle();">
+
+		<label for="url_title">URL Title</label>
+			<input type="text" name="url_title" id="url_title" value="{url_title}" maxlength="75" size="50">
+
+		<label for="entry_date">Date</label>
+			<input type="text" name="entry_date" id="entry_date" value="{entry_date}" maxlength="23" size="25">
+
+		<input type="submit" name="submit" value="Submit">
+		{/exp:safecracker}
+	</body>
+</html>
+
+{exp:file:entries limit="20" paginate="both" directory_id="3"
+category="2"
+category="2|45|4|9"
+category="not 4|5|7"
+category_group="2"
+category_group="1|2|4"
+category_group="not 2"
+directory_id="3"
+directory_id="1}
+{2}
+{3"
+directory_id="not 1}
+{2}
+{3"
+disable="categories"
+disable="categories|pagination"
+dynamic="no"
+file_id="22"
+limit="30"
+orderby="date"
+paginate="top" paginate="bottom"  paginate="both"  paginate="inline"
+paginate_base="site/index"
+relaxed_categories="yes"
+sort="desc"
+uncategorized_entries="no"
+}
+	<p><strong>{title}</strong> - posted: {entry_date format="%h:%i %A"}</p>
+
+{categories}
+		{category_image} - <a href="{path="about/test"}">{category_name}</a><br>
+	{/categories}
+
+{if medium_file_url}
+		<p><a href="{id_path="gallery/comments"}"><img src="{medium_file_url}" width="{medium_width}" height="{medium_height}" alt="{title}" title="{title}" /></a></p>
+	{/if}
+
+{caption}
+{/exp:file:entries}
+
+{absolute_count}
+
+{count}
+
+{credit}
+
+{description}
+
+{directory_id}
+
+{directory_title}
+
+{entry_date format="%Y %m %d"}
+
+{edit_date format="%Y %m %d"}
+
+{filename}
+
+{file_url}
+
+{height}
+
+{id_path="gallery/full_image"}
+
+<a href="{id_path="gallery/full_image"}">my picture</a>
+
+<a href="http://example.com/index.php/gallery/full_image/234/">my picture</a>
+
+{location}
+
+{size}
+
+{switch="option_one|option_two|option_three"}
+
+{exp:file:entries} <div class="{switch="one|two"}"> <h1>{filename}</h1> {caption} </div> {/exp:file:entries}
+
+{title}
+
+{total_results}
+
+{width}
+
+{small_file_url}
+{medium_file_url}
+
+{categories}
+	{category_image} <a href="{path="gallery/index"}">{category_name}</a>
+{/categories}
+
+Local News<br />	  Health News<br />  Science News<br />
+
+{categories backspace="7"}	{category_name}<br /> {/categories}
+
+Local News<br />		 Health News<br />	Science News
+
+{category_description}
+
+{category_group}
+
+{category_id}
+
+{parent_id}
+
+{category_image}
+
+{category_name}
+
+{category_url_title}
+
+{path="gallery/index"}
+
+{categories}  <a href="{path="SITE_INDEX"}">{category_name}</a>  {/categories}
+
+{class} {extended_description} {category_name_fr} etc..
+
+{if name=="bozo"}  You"ve got a big nose!  {/if}
+
+{if viewable_image} content {/if}
+
+{if no_results} content {/if}
+
+{if no_results}  <p>There are no current files to view.</p>  {/if}
+
+{if no_results} {redirect="site/noresult"} {/if}
+
+<table>
+	<tr>
+		<td>Title</td>
+		<td>Status</td>
+		<td>Last reply</td>
+	</tr>
+	{exp:forum:forum_helper orderby="post_date" sort="desc" limit="50"}
+		<tr>
+			<td><a href="{thread_path="forums/viewthread"}">{title}</a></td>
+			<td>{"status"}</td>
+			<td>
+				Last response: {last_post_date format="%m/%d/%Y %h:%i %a"}<br />
+				By: <a href="{last_author_profile_path="forums/member"}">{last_author}</a>
+			</td>
+		</tr>
+	{/exp:forum:topic_titles}
+</table>
+
+{exp:forum:forum_helper orderby="post_date" sort="desc" limit="50"}
+	{status_group status="new"}
+		{status_header}
+			<h2>{status}<h2>
+			<table>
+				<tr>
+					<td>Title</td>
+					<td>Last reply</td>
+				</tr>
+		{/status_header}
+				<tr>
+					<td><a href="{thread_path="forums/viewthread"}">{title}</a></td>
+					<td>
+						Last response: {last_post_date format="%m/%d/%Y %h:%i %a"}<br />
+						By: <a href="{last_author_profile_path="forums/member"}">{last_author}</a></td>
+					</tr>
+		{status_footer}
+			</table>
+		{/status_footer}
+	{/status_group}
+	{status_group status="not new"}
+		{status_header}
+			<h2>{status}<h2>
+			<table>
+				<tr>
+					<td>Title</td>
+					<td>Status</td>
+					<td>Last reply</td>
+				</tr>
+		{/status_header}
+				<tr>
+					<td><a href="{thread_path="forums/viewthread"}">{title}</a></td>
+					<td>{status}</td>
+					<td>
+						Last response: {last_post_date format="%m/%d/%Y %h:%i %a"}<br />
+						By: <a href="{last_author_profile_path="forums/member"}">{last_author}</a>
+					</td>
+				</tr>
+		{status_footer}
+			</table>
+		{/status_footer}
+	{/status_group}
+{/exp:forum:forum_helper}
+
+</tr><tr><td class="tableCellOne" colspan="2"><div class="defaultBold"><input type="checkbox" name="accept_messages" value="y" {state:accept_messages} />  {lang:accept_messages}</div></td>
+<?php
+$config["use_forum_url"] = "y";
+?>
+
+{if in_forum}	 <div class="itempadbig">	 <select name="theme_switcher" class="select" onchange="if (this.value != "") location.href=this.value">	 <option value="">">
+
+{lang:select_theme}</option>	 {include:theme_option_list}	 </select>	 </div>	 {/if}
+
+<div class="tablePostInfo">     {lang:posted_on} {last_reply format="%m-%d-%Y %h:%i %A"}<br />     {lang:posted_by} <a href="{path:reply_member_profile}">{reply_author}</a> </div>
+
+<div class="tablePostInfo">     {if is_topic}{lang:posted_on} {last_reply format="%m-%d-%Y %h:%i %A"}<br />{/if}     {if is_post}<a href="{path:post_link}">{lang:posted_on} {last_reply format="%m-%d-%Y %h:%i %A"}</a><br />{/if}     {lang:posted_by} <a href="{path:reply_member_profile}">{reply_author}</a> </div>
+
+{if is_topic}     {if can_change_status}&nbsp;&nbsp;<span class="smallLinks">[ <a href="{path:change_status}">{lang:change_status}</a> ]</span>{/if}	 {/if}	 {if can_ban}&nbsp;&nbsp;<span class="smallLinks">[ <a href="{path:ban_member}">{lang:ban_member}</a> ]{/if}	 &nbsp;
+
+{if is_topic}     {if can_change_status}&nbsp;&nbsp;<span class="smallLinks">[ <a href="{path:change_status}">{lang:change_status}</a> ]</span>{/if}	 {/if}	 {if can_ban}&nbsp;&nbsp;<span class="smallLinks">[ <a href="{path:ban_member}">{lang:ban_member}</a> ]{/if}	 {if is_post}&nbsp;&nbsp;<span class="smallLinks">[ <a name="{post_id}" href="{path:post_link}" title="{lang:post_permalink}"># {post_number}</a> ]</span>{/if}	 &nbsp;
+
+<td class="tableCellOne"><div class="itempadbig"><input type="submit" name="submit" class="submit" value="{lang:split_thread}" /></div></td>
+
+<td class="tableCellOne"><div class="itempadbig">	 {if previous_page}	 <input type="submit" name="previous_page" class="submit" value="‹‹ {lang:previous}" />	 {/if}	  	 <input type="submit" name="submit" class="submit" value="{lang:split_thread}" />	  	 {if next_page}	 <input type="submit" name="next_page" class="submit" value="{lang:next} ››" />	 {/if}	 </div>	 </td>
+
+<input type="checkbox" name="post_id[]" value="{post_id}" /> {lang:split}
+
+<input type="checkbox" name="post_id[]" value="{post_id}" {checked} /> {lang:split}
+
+{if can_private_message} <tr>  <td class="tableCellTwo" style="width:42%;"><div class="defaultBold">{lang:private_message}</div></td> <td class="tableCellOne" style="width:58%;"> <a href="{send_private_message}"><img src="{path:image_url}icon_pm.gif" width="56" height="14" alt="Send Private Message" title="Send Private Message" border="0" /></a> </td>  </tr> {/if}
+
+<!--- Begin Member Search -->  <script type="text/javascript"> <!--  var searchFieldCount = 1;  function add_search_field() {     if (document.getElementById('search_field_1'))     
+{         // Find last search field
+		var originalSearchField = document.getElementById('search_field_1');         searchFieldCount++;                  // Clone it, change the id   
+	  var newSearchField = originalSearchField.cloneNode(true);         newSearchField.id = 'search_field_' + searchFieldCount;                  // Zero the input and change the names of fields    
+	 var newFieldInputs = newSearchField.getElementsByTagName('input');         newFieldInputs[0].value = '';         newFieldInputs[0].name = 'search_keywords_' + searchFieldCount;                  var newFieldSelects = newSearchField.getElementsByTagName('select');         newFieldSelects[0].name = 'search_field_' + searchFieldCount;                  // Append it and we're done    
+	 originalSearchField.parentNode.appendChild(newSearchField);     } }  function delete_search_field(obj) {     if (obj.parentNode && obj.parentNode.id != 'search_field_1')     {         obj.parentNode.parentNode.removeChild(obj.parentNode)     } }  //-->
+</script>
+<table class='tableborder' border='0' cellspacing='0' cellpadding='0' style='width:100%'> <tr>     <td class='memberlistHead'>{lang:member_search}</td> </tr> <tr>     <td class='tableCellOne'>         {form:form_declaration:do_member_search}                  <div id="member_search_fields">                  <div id="search_field_1" class="itempadbig">         <input type="text" name="search_keywords_1" />         <select name='search_field_1' class='select' >         <option value='screen_name'>Search Field</option>         <option value='screen_name'>Screen Name</option>         <option value='email'>Email Address</option>         <option value='url'>URL</option>         <option value='location'>Location</option>         {custom_profile_field_options}         </select>         <a href="#" onclick="add_search_field(); return false;" class="defaultBold">+</a>         <a href="#" onclick="delete_search_field(this); return false;" class="defaultBold">-</a>         </div>                  </div>                  <select name='search_group_id' class='select' >         {group_id_options}         </select>                  <div class="itempadbig">  <input type='submit' value='Search' class='submit' /></div>                  </form>     </td> </tr> </table>
+
+{if allow_localization}	 <div class="menuItem"><a href="{path:localization}">{lang:localization}</a></div>	 {/if}	  </div>
+
+{if allow_localization}	 <div class="menuItem"><a href="{path:localization}">{lang:localization}</a></div>	 {/if}	 {if can_delete}	 <div class="menuItem"><a href="{path:delete}">{lang:mbr_delete}</a></div>	 {/if}	  </div>
+
+}	 // END CLASS	 ?>
+
+/* -------------------------------------	 /*  delete_confirmation_form	 /* -------------------------------------*/	  function delete_confirmation_form()	 {	 return <<< EOF	  {form_declaration}	  <table class="tableBorder" cellpadding="0" cellspacing="0" border="0" style="width:560px;" align="center">	 <tr>	     <td class="profileAlertHeadingBG" colspan="2">{lang:mbr_delete}</td>	 </tr>	 <tr>	     <td class="tableRowHeadingBold" colspan="2">{lang:confirm_password}</td>	 </tr>	 <tr>	     <td class="tableCellOne" align="right"><b>{lang:password}</b></td>	     <td class="tableCellOne"><input type="password" style="width:80%" class="input" name="password" size="20" value="" maxlength="32" /></td>	 </tr>	 <tr>	     <td class="tableCellOne" colspan="2">	         <div class="itempadbig">{lang:mbr_delete_blurb}</div>	         <div class="itempadbig alert"> ">
+{lang:mbr_delete_warning}</div>	     </td>	 </tr>	 <tr>	     <td class="tableCellTwo" colspan="2"><div class="itempadbig"><input type="submit" class="submit" value="{lang:submit}" /></div></td>	 </tr>	 </table>	  </form>	  EOF;	 }	 /* END */
+
+}	 // END CLASS	 ?>
+
+// -----------------------------------	 //  Bulletin Board - USER	 // -----------------------------------			 function bulletin_board()	 {	     return <<<ONEIL	     	 <div class='menuHeadingBG'><div class="tableHeading">{lang:bulletin_board}</div></div>		  {if can_post_bulletin}	 <table border='0'  cellspacing='0' cellpadding='0' style='width:100%;' >	 <tr><td class='tableCellOne'>	 <span class="defaultBold">» <a href='{path:send_bulletin}' >{lang:send_bulletin}</a></span>	 </td></tr>	 </table>	 {/if}		  {if no_bulletins}	 <div class="tableCellOne">	 <span class="defaultBold">{lang:message_no_bulletins}</span>	 {/if}			   {if bulletins}	 {include:bulletins}	 {/if}		  {if paginate}	 <table border='0'  cellspacing='5' cellpadding='0' class='tablePad' >	 <tr>	 <td  class='default' >	 {include:pagination_link}	 </td>	 </tr>	 </table>	 {/if}		     	 ONEIL;		  }	 // END			   // -----------------------------------	 //  Single Bulletin	 // -----------------------------------			 function bulletin()	 {	     return <<<JAFFA		  <div class="{style}" id="bulletin_div_{bulletin_id}">		  <span class="defaultBold">{lang:message_sender}</span>: {bulletin_sender}<br />	 <span class="defaultBold">{lang:message_date}</span>: {bulletin_date}<br />		  <div class="itempadbig">	 <textarea name='bulletin_{bulletin_id}' readonly='readonly' style='width:100%' class='textarea' rows='8' cols='90'>{bulletin_message}</textarea>	 </div>		  </div>		     	 JAFFA;		  }	 // END					//-------------------------------------	 //  Bulletin Sending Form	 //-------------------------------------		  function bulletin_form()	 {	 return <<< EOF		  {form:form_declaration:sending_bulletin}		  {if message}	 <div class='tableCellOne'><div class='success'>{include:message}</div></div>	 {/if}		  <table border='0' cellspacing='0' cellpadding='0' style='width:100%'>		  <tr>	 <td class='profileHeadingBG' colspan="2"><div class="tableHeading">{lang:send_bulletin}</div></td>	 </tr>		  <tr>	 <td class='tableCellOne' style="width:20%;"><div class='defaultBold'>{lang:member_group}</div></td>	 <td class='tableCellOne' style="width:80%;">	 <select name="group_id">	 {group_id_options}	 </select>	 </td>	 </tr>		  <tr>	 <td class='tableCellTwo' style="width:20%;"><div class='defaultBold'>{lang:bulletin_message}</div></td>	 <td class='tableCellTwo' style="width:80%;"><textarea name='bulletin_message' style='width:100%' class='textarea' rows='10' cols='90'></textarea></td>	 </tr>		  <tr>	 <td class='tableCellOne' style="width:20%;"><div class='defaultBold'>{lang:bulletin_date}</div></td>	 <td class='tableCellOne' style="width:80%;">	 <input type="text" style="width:80%" class="input" name="bulletin_date" size="20" value="{input:bulletin_date}" maxlength="50" />	 </td>	 </tr>			   <tr>	 <td class='tableCellOne' style="width:20%;"><div class='defaultBold'>{lang:bulletin_expires}</div></td>	 <td class='tableCellOne' style="width:80%;">	 <input type="text" style="width:80%" class="input" name="bulletin_expires" size="20" value="{input:bulletin_expires}" maxlength="50" />	 </td>	 </tr>		  <tr>	 <td class='tableCellTwo' colspan="2">	 <div class='marginpad'>	 <input type='submit' class='submit' value='{lang:submit}' />	 </div>	 </td>	 </tr>		  </table>		  </form>	 EOF;	 }	 // END
+
+{if edited}<div class="edited"><em>[ {lang:edited}: {edit_date format="%d %F %Y %h:%i %A"} {lang:by} <a href="{path:edit_author_profile}">{edit_author}</a> ]</em></div>{/if}
+
+<td class="tableCellOne" valign="top" colspan="2"><div class="post">{body}</div>     {if edited}<div class="edited"><em>[ {lang:edited}: {edit_date format="%d %F %Y %h:%i %A"} {lang:by} <a href="{path:edit_author_profile}">{edit_author}</a> ]</em></div>{/if}     {if attachments}     {include:post_attachments}     {/if}     {if signature}     {include:signature}     {/if}	 </td>
+
+.edited {     font-size:    9px;     color:          #555;	 }
+
+<script type="text/javascript">	 <!--	  function showHideRow(el)	 {     if (document.getElementById(el).style.display == "")     {         document.getElementById(el).style.display = "none";     }     else     {         document.getElementById(el).style.display = "";     }	}
+   </script>
+
+<tr>
+
+{if is_ignored}	 <tr>  <td class="tableCellOne" colspan="5">   {lang:topic_hidden} <strong>{author}</strong> {lang:is_ignored}.   <span style="float:right"><a href="#" onclick="showHideRow("{id1}");return false;">{lang:view_hide}</a> &bull;   <a href="{path:ignore}">{lang:stop_ignoring} {author}</a></span>  </td>	 </tr>	 {/if}	  <tr id="{id1}" {if is_ignored}style="display: none;"{/if}>
+<script>
+function showfastreply()	 {     if (document.getElementById("fastreply").style.display == "block")     {         document.getElementById("fastreply").style.display = "none";     }     else     {         document.getElementById("fastreply").style.display = "block";     }	 }	  //-->	 </script>
+
+function showfastreply()	 {     if (document.getElementById("fastreply").style.display == "block")     {         document.getElementById("fastreply").style.display = "none";     }     else     {         document.getElementById("fastreply").style.display = "block";     }	 }	  function showHideRow(el)	 {     if (document.getElementById(el).style.display == "")     {         document.getElementById(el).style.display = "none";     }     else     {         document.getElementById(el).style.display = "";     }	}
+	 </script>
+
+<tr>
+
+{if is_ignored}	 <tr>  <td colspan="3">   <table class="ignored" style="width:100%">    <tr>    <td class="tableCellOne" colspan="3">     {lang:post_hidden} <strong>{author}</strong> {lang:is_ignored}.     <span style="float:right"><a href="#" onclick="showHideRow("{id9}");return false;">{lang:view_hide}</a> &bull;     <a href="{path:ignore}">{lang:stop_ignoring} {author}</a></span>    </td>    </tr>   </table>  </td>	 </tr>	 {/if}	  <tr id="{id9}" {if is_ignored}style="display: none;"{/if}>
+
+&nbsp;&nbsp;<span class="smallLinks">[ <a href="{path:ignore}" title="{lang:ignore}">{lang:ignore}</a> ]</span>
+<script>
+function showhide_topic_review()	 {     if (document.getElementById("review_on").style.display == "block")     {         document.getElementById("review_on").style.display = "none";         document.getElementById("review_off").style.display = "block";		       }     else     {         document.getElementById("review_on").style.display = "block";         document.getElementById("review_off").style.display = "none";     }	 }	  //-->	 </script>
+
+function showhide_topic_review()	 {     if (document.getElementById("review_on").style.display == "block")     {         document.getElementById("review_on").style.display = "none";         document.getElementById("review_off").style.display = "block";		       }     else     {         document.getElementById("review_on").style.display = "block";         document.getElementById("review_off").style.display = "none";     }	 }	  function showHideRow(el)	 {     if (document.getElementById(el).style.display == "")     {         document.getElementById(el).style.display = "none";     }     else     {         document.getElementById(el).style.display = "";     }	}
+	 </script>
+
+<tr>
+
+{if is_ignored} <tr>  <td colspan="3">   <table class="ignored" style="width:100%">    <tr>    <td class="tableCellOne">     {lang:post_hidden} <strong>{author}</strong> {lang:is_ignored}.     <span style="float:right"><a href="#" onclick="showHideRow("{id1}");showHideRow("{id2}");return false;">{lang:view_hide}</a> &bull;     <a href="{path:ignore}">{lang:stop_ignoring} {author}</a></span>    </td>    </tr>   </table>  </td>	 </tr>	 {/if}	  <tr id="{id1}" {if is_ignored}style="display: none;"{/if}>
+
+</tr><tr>
+
+</tr><tr id="{id2}" {if is_ignored}style="display: none;"{/if}>
+<script>
+.ignored {   border:               1px solid #B2B3CE;   padding:             0;   margin-top:        1px;   margin-bottom:  8px;	 }
+</script>
+
+<div class="borderTopBot"><div class="profileHead">{lang:subscriptions}</div></div>	  <div class="profileMenuInner">	 <div class="menuItem"><a href="{path:subscriptions}" >{lang:edit_subscriptions}</a></div>	 </div>
+
+<div class="borderTopBot"><div class="profileHead">{lang:utilities}</div></div>	  <div class="profileMenuInner">	 <div class="menuItem"><a href="{path:subscriptions}" >{lang:edit_subscriptions}</a></div>	 <div class="menuItem"><a href="{path:ignore_list}" >{lang:ignore_list}</a></div>	 </div>
+
+<div class="itempadbig"><a href="{search_path}"><b>{lang:view_posts_by_member}</b></a></div>
+
+<div class="itempadbig"><a href="{search_path}"><b>{lang:view_posts_by_member}</b></a></div>	 {if ignore}   <div class="itempad"><b>{ignore_link}</b></div>	 {/if}
+
+{lang:total_posts_heading}
+
+{lang:total_replies_heading}
+
+{posts}
+
+{replies}
+
+{lang:total_posts_heading}
+
+{lang:total_replies_heading}
+
+{total_posts}
+
+{total_replies}
+
+<div class="itempad">{lang:total_posts} {total_forum_posts}</div>
+
+<div class="itempad">{lang:total_replies} {total_forum_replies}</div>	 <div class="itempad">{lang:total_posts} {total_forum_posts}</div>
+
+{lang:total_posts_heading}
+
+{lang:total_replies_heading}
+
+{total_posts}
+
+{total_replies}
+
+</tr><tr>	  <td class="tableCellOne"><div class="defaultBold">{lang:total_forum_posts}</div></td>	 <td class="tableCellOne">{total_posts}</td>	  {/if}	  </tr><tr>	  <td class="tableCellTwo"><div class="defaultBold">{lang:total_entries}</div></td>	 <td class="tableCellTwo">{total_entries}</td>	  </tr><tr>	  <td class="tableCellOne"><div class="defaultBold">{lang:total_comments}</div></td>	 <td class="tableCellOne">{total_comments}</td>
+
+</tr><tr>	  <td class="tableCellOne"><div class="defaultBold">{lang:total_forum_replies}</div></td>	 <td class="tableCellOne">{total_replies}</td>	  </tr><tr>	  <td class="tableCellTwo"><div class="defaultBold">{lang:total_forum_posts}</div></td>	 <td class="tableCellTwo">{total_posts}</td>	  {/if}	  </tr><tr>	  <td class="tableCellOne"><div class="defaultBold">{lang:total_entries}</div></td>	 <td class="tableCellOne">{total_entries}</td>	  </tr><tr>	  <td class="tableCellTwo"><div class="defaultBold">{lang:total_comments}</div></td>	 <td class="tableCellTwo">{total_comments}</td>
+
+</tr><tr>	  <td class="tableCellTwo"><div class="defaultBold">{lang:total_forum_posts}</div></td>	 <td class="tableCellOne"><div class="default">{total_forum_posts}</div></td>
+
+</tr><tr>	  <td class="tableCellTwo"><div class="defaultBold">{lang:total_forum_replies}</div></td>	 <td class="tableCellOne"><div class="default">{total_forum_replies}</div></td>	  </tr><tr>	  <td class="tableCellTwo"><div class="defaultBold">{lang:total_forum_posts}</div></td>	 <td class="tableCellOne"><div class="default">{total_forum_posts}</div></td>
+
+</tr><tr>	  <td class="tableCellTwo">	 <div class="itempadbig"><input type="submit" name="submit" class="submit" value="{lang:merge_threads}" /></div>	 </td>
+
+</tr><tr>	  <td class="tableCellTwo">	 <div class="itempad"><input type="checkbox" class="checkbox" name="notify" value="1" checked="checked" /> {lang:notify_thread_owner}</div>	 </td>	  </tr><tr>	  <td class="tableCellTwo">	 <div class="itempadbig"><input type="submit" name="submit" class="submit" value="{lang:merge_threads}" /></div>	 </td>
+
+<td class="tableCellTwo"><input type="checkbox" class="checkbox" name="redirect" value="1" checked="checked" /> {lang:retain_move_link}</td>
+
+<td class="tableCellTwo">	 <div class="itempad"><input type="checkbox" class="checkbox" name="redirect" value="1" checked="checked" /> {lang:retain_move_link}</div>	 <div class="itempad"><input type="checkbox" class="checkbox" name="notify" value="1" checked="checked" /> {lang:notify_thread_owner}</div>	 </td>
+
+{if forums_exist}	 <tr>	 <td class="tableCellOne"><div class="itempadbig">{lang:forum}	  <select name="forum_id" class="select">	 {split_select_options}	 </select>	 </div></td>	 </tr>	 {/if}	  <tr>
+
+{if forums_exist}	 <tr>	 <td class="tableCellOne"><div class="itempadbig">{lang:forum}	  <select name="forum_id" class="select">	 {split_select_options}	 </select>	 </div></td>	 </tr>	 {/if}	  <tr>	  <td class="tableCellOne">	 <div class="itempad"><input type="checkbox" class="checkbox" name="notify" value="1" checked="checked" /> {lang:notify_thread_owner}</div>	 </td>	  </tr><tr>
+
+{if can_ban}&nbsp;&nbsp;<span class="smallLinks">[ <a href="{path:ban_member}">{lang:ban_member}</a> ]</span>{/if}
+
+{if can_ban}&nbsp;&nbsp;<span class="smallLinks">[ <a href="{path:ban_member}">{lang:ban_member}</a> ]</span>{/if}	  {if can_report}&nbsp;&nbsp;<span class="smallLinks">[ <a href="{path:report}" title="{lang:report}">{lang:report}</a> ]</span>{/if}
+
+<fieldset class="searchBox">	 <legend class="searchBoxTitle">{lang:search_by_member_name}</legend>	  <input type="text" class="input" maxlength="100" size="40" name="member_name" style="width:100%;" />	 <div class="searchpad"><input type="checkbox" class="checkbox" name="exact_match" value="y"  /> {lang:exact_name_match}</div>	 </fieldset>
+
+<script type="text/javascript" charset="utf-8">     function switchto(el)     {         if (el == 'byMemberGroup')         {             document.getElementById('byMemberGroup').style.display = "";             document.getElementById('byMemberName').style.display = "none";         }         else         {             document.getElementById('byMemberGroup').style.display = "none";             document.getElementById('byMemberName').style.display = "";		          }     }	 </script>	  <fieldset id="byMemberName" class="searchBox">	 <legend class="searchBoxTitle">{lang:search_by_member_name} - (<a href="#" onclick="switchto('byMemberGroup'); return false;">{lang:switch_to_group}</a>)</legend>	  <input type="text" class="input" maxlength="100" size="40" name="member_name" style="width:100%;" />	 <div class="searchpad"><input type="checkbox" class="checkbox" name="exact_match" value="y"  /> {lang:exact_name_match}</div>	 </fieldset>	  <fieldset id="byMemberGroup" class="searchBox" style="display: none;">	 <legend class="searchBoxTitle">{lang:search_by_member_group} - (<a href="#" onclick="switchto('byMemberName'); return false;">{lang:switch_to_name}</a>)</legend>	  <select name='member_group[]' class='multiselect' size='5' style="width:100%;" multiple='multiple'>	 {member_group_select_options}	 </select>	 </fieldset>
+
+<body>
+
+<body {include:body_extra}>
+
+{if is_topic}     {if can_move}         <td><div class="button100"><div class="buttonSmall" id="{id6}" onClick="navJump("{path:move_topic}")" onMouseOver="navHover(this);" onMouseOut="navReset(this);">{lang:move}</div></div></td>     {/if} {/if}
+
+{if is_topic}     {if can_move}         <td><div class="button100"><div class="buttonSmall" id="{id6}" onClick="navJump("{path:move_topic}")" onMouseOver="navHover(this);" onMouseOut="navReset(this);">{lang:move}</div></div></td>     {/if}     {if can_merge}         <td><div class="button100"><div class="buttonSmall" id="{id7}" onClick="navJump("{path:merge_topic}")" onMouseOver="navHover(this);" onMouseOut="navReset(this);">{lang:merge}</div></div></td>     {/if}     {if can_split}         <td><div class="button100"><div class="buttonSmall" id="{id8}" onClick="navJump("{path:split_topic}")" onMouseOver="navHover(this);" onMouseOut="navReset(this);">{lang:split}</div></div></td>     {/if} {/if}
+
+{if previous_topic} ‹‹ <a href="{path:previous_topic_url}">{previous_topic_title}</a>  {/if}  {if next_topic}      <a href="{path:next_topic_url}">{next_topic_title}</a> ›› {/if}
+
+<a href="{path:view_active_topics}">{lang:view_active_topics}</a>
+
+<div id="forum{category_id}off" style="display:none;"> <table class="tableBorder" cellpadding="0" cellspacing="0" border="0" style="width:100%;" > <tr> <td class="tableHeadingBG"><div class="tableHeading">{category_name}</div>	 {if category_description}<div class="tableHeadingSmall">{category_description}</div>{/if} </td> <td class="tableHeadingBG" align="right"> <a href="javascript:void(0);" onclick="show_element("forum{category_id}")"><img src="{path:image_url}expand.gif" width="10" height="10" border="0" title="{lang:show_category}" alt="{lang:show_category}" /></a>  </td> </tr> </table> </div>  <div id="forum{category_id}on" style="display:block;"> <table class="tableBorderLeft" cellpadding="0" cellspacing="0" border="0" style="width:100%;" > <tr> <td class="tableHeadingBG" colspan="4"><div class="tableHeading">{category_name}</div>	 {if category_description}<div class="tableHeadingSmall">{category_description}</div>{/if} </td> <td class="tableHeadingBG" colspan="1" align="right"> <a href="javascript:void(0);" onclick="hide_element("forum{category_id}")"><img src="{path:image_url}collapse.gif" width="10" height="10" border="0" title="{lang:hide_category}" alt="{lang:hide_category}" /></a> </td> </tr> <tr> <td class="tableRowHeadingBold" colspan="2">{lang:forum_name_heading}</td> <td class="tableRowHeadingBold" align="center">{lang:total_topics_heading}</td> <td class="tableRowHeadingBold" align="center">{lang:total_posts_heading}</td> <td class="tableRowHeadingBold">{lang:post_info_heading}</td> </tr>
+
+</div>
+
+{if can_post}     <td align="center"><div class="button100"><div class="buttonSmall" id="{id3}" onclick="navJump("{path:quote_reply}")" onmouseover="navHover(this);" onmouseout="navReset(this);">{lang:quote}</div></div></td>	 {/if}
+
+{if is_post}     {if can_move}         <td><div class="button100"><div class="buttonSmall" id="{id10}" onclick="navJump("{path:move_reply}")" onmouseover="navHover(this);" onmouseout="navReset(this);">{lang:move}</div></div></td>     {/if}	 {/if}	  {if can_post}     <td align="center"><div class="button100"><div class="buttonSmall" id="{id3}" onclick="navJump("{path:quote_reply}")" onmouseover="navHover(this);" onmouseout="navReset(this);">{lang:quote}</div></div></td>	 {/if}
+
+{topic_type}<a href="{path:view_thread}" title="{topic_title}" ><b>{topic_title}</b></a>
+
+{if reply_results == 0}     {topic_type}<a href="{path:view_thread}" title="{topic_title}" ><b>{topic_title}</b></a>	 {if:elseif reply_results < 6}     {topic_type}<a href="{path:view_thread}" title="{topic_title}" ><b>{topic_title}</b></a>     <br /><span class="smallLinks">{lang:found_in} <ul>{include:reply_results}</ul></span>	 {if:else}     {topic_type}<a href="{path:view_thread}" title="{topic_title}" ><b>{topic_title}</b></a>     <br /><span class="smallLinks">{lang:found_in_many} - <a href="{path:search_thread}">{lang:search_thread}</a></span>	 {/if}
+
+}	 // END CLASS	 ?>
+
+//-------------------------------------	 //  Search Thread Page	 //-------------------------------------	  function search_thread_page()	 {	 return <<< EOF	 {include:html_header}	 {include:top_bar}	 {include:page_header}	 {include:page_subheader}	 <div id="content">	 {include:thread_search_results}	 </div>	 {include:html_footer}	 EOF;	 }	 /* END */		//-------------------------------------	 //  Reply Results	 //-------------------------------------	  function reply_results()	 {	 return <<< EOF	 <li><a href="{path:viewreply}">{snippet}&hellip;</a> by <a href="{path:member_profile}">{author}</a></li>	 EOF;	 }	 /* END */	//-------------------------------------	 //  Search Results	 //-------------------------------------	  function thread_search_results()	 {	 return <<< EOF	  <table cellpadding="3" cellspacing="0" border="0" style="width:98%;" >	 <tr>	 <td valign="middle"><div class="itempadbig"><div class="defaultBold">{lang:keywords} {keywords}</div></div>	 </td>	 <td align="right"><div class="defaultBold">Total Results: {total_results}</div>	 </td>	 </tr>	 </table>	   <table class="tableBorderLeft" cellpadding="0" cellspacing="0" border="0" style="width:100%;" >	 <tr>	 <td class="tableHeadingBG" colspan="5"><div class="tableHeading">{lang:search_results}</div></td>	 </tr><tr>	 <td class="tableRowHeadingBold" colspan="2" style="width:62%;">{lang:replies_in_topic} <em>{topic_title}</em></td>	 <td class="tableRowHeadingBold" style="width:38%;">{lang:reply_info_heading}</td>	 </tr>	 {include:thread_result_rows}	 </table>	   <table cellpadding="0" cellspacing="0" border="0" >	 <tr>	 <td class="itempadbig" valign="bottom">	 {if paginate}     <table cellpadding="0" cellspacing="0" border="0" class="paginateBorder">     <tr>     <td><div class="paginateStat">{current_page} of {total_pages}</div></td>     {pagination_links}     </tr>     </table>	 {/if}	 </td>	 </tr>	 </table>	 EOF;	 }	 /* END */	//-------------------------------------	 //  Thread Result Rows	 //-------------------------------------	  function thread_result_rows()	 {     return <<< EOF	 <tr>	 <td class="tableCellTwo" style="width:4%;" align="center"><a href="{path:view_thread}"><img src="{topic_marker}" width="24" height="18" border="0" alt="{topic_title}" title="{topic_title}" /></a></td>	 <td class="tableCellOne" style="width:62%;">	 <div class="topicTitle">     <a href="{path:viewreply}" title="{lang:view_reply}" >{snippet}&hellip;</a>     <div class="forumLightLinks">{lang:posted_by} <a href="{path:member_profile}">{author}</a></div>	 </div>	 </td>	 <td class="tableCellOne" style="width:38%;">	 <div class="tablePostInfo">     {lang:posted_on} {post_date format="%m-%d-%Y %h:%i %A"}	 </div>	 </td>	 </tr>	 EOF;	 }	 /* END */
+
+{if can_post}     <td align="center"><div class="button100"><div class="buttonSmall" id="{id3}" onclick="navJump("{path:quote_reply}")" onmouseover="navHover(this);" onmouseout="navReset(this);">{lang:quote}</div></div></td>	 {/if}
+
+{if is_post}     {if can_move}         <td><div class="button100"><div class="buttonSmall" id="{id10}" onclick="navJump("{path:move_reply}")" onmouseover="navHover(this);" onmouseout="navReset(this);">{lang:move}</div></div></td>     {/if}	 {/if}	  {if can_post}     <td align="center"><div class="button100"><div class="buttonSmall" id="{id3}" onclick="navJump("{path:quote_reply}")" onmouseover="navHover(this);" onmouseout="navReset(this);">{lang:quote}</div></div></td>	 {/if}
+
+{topic_type}<a href="{path:view_thread}" title="{topic_title}" ><b>{topic_title}</b></a>
+
+{if reply_results == 0}     {topic_type}<a href="{path:view_thread}" title="{topic_title}" ><b>{topic_title}</b></a>	 {if:elseif reply_results < 6}     {topic_type}<a href="{path:view_thread}" title="{topic_title}" ><b>{topic_title}</b></a>     <br /><span class="smallLinks">{lang:found_in} <ul>{include:reply_results}</ul></span>	 {if:else}     {topic_type}<a href="{path:view_thread}" title="{topic_title}" ><b>{topic_title}</b></a>     <br /><span class="smallLinks">{lang:found_in_many} - <a href="{path:search_thread}">{lang:search_thread}</a></span>	 {/if}
+
+}	 // END CLASS	 ?>
+
+//-------------------------------------	 //  Search Thread Page	 //-------------------------------------	  function search_thread_page()	 {	 return <<< EOF	 {include:html_header}	 {include:top_bar}	 {include:page_header}	 {include:page_subheader}	 <div id="content">	 {include:thread_search_results}	 </div>	 {include:html_footer}	 EOF;	 }	 /* END */		//-------------------------------------	 //  Reply Results	 //-------------------------------------	  function reply_results()	 {	 return <<< EOF	 <li><a href="{path:viewreply}">{snippet}&hellip;</a> by <a href="{path:member_profile}">{author}</a></li>	 EOF;	 }	 /* END */	//-------------------------------------	 //  Search Results	 //-------------------------------------	  function thread_search_results()	 {	 return <<< EOF	  <table cellpadding="3" cellspacing="0" border="0" style="width:98%;" >	 <tr>	 <td valign="middle"><div class="itempadbig"><div class="defaultBold">{lang:keywords} {keywords}</div></div>	 </td>	 <td align="right"><div class="defaultBold">Total Results: {total_results}</div>	 </td>	 </tr>	 </table>	   <table class="tableBorderLeft" cellpadding="0" cellspacing="0" border="0" style="width:100%;" >	 <tr>	 <td class="tableHeadingBG" colspan="5"><div class="tableHeading">{lang:search_results}</div></td>	 </tr><tr>	 <td class="tableRowHeadingBold" colspan="2" style="width:62%;">{lang:replies_in_topic} <em>{topic_title}</em></td>	 <td class="tableRowHeadingBold" style="width:38%;">{lang:reply_info_heading}</td>	 </tr>	 {include:thread_result_rows}	 </table>	   <table cellpadding="0" cellspacing="0" border="0" >	 <tr>	 <td class="itempadbig" valign="bottom">	 {if paginate}     <table cellpadding="0" cellspacing="0" border="0" class="paginateBorder">     <tr>     <td><div class="paginateStat">{current_page} of {total_pages}</div></td>     {pagination_links}     </tr>     </table>	 {/if}	 </td>	 </tr>	 </table>	 EOF;	 }	 /* END */	//-------------------------------------	 //  Thread Result Rows	 //-------------------------------------	  function thread_result_rows()	 {     return <<< EOF	 <tr>	 <td class="tableCellTwo" style="width:4%;" align="center"><a href="{path:view_thread}"><img src="{topic_marker}" width="24" height="18" border="0" alt="{topic_title}" title="{topic_title}" /></a></td>	 <td class="tableCellOne" style="width:62%;">	 <div class="topicTitle">     <a href="{path:viewreply}" title="{lang:view_reply}" >{snippet}&hellip;</a>     <div class="forumLightLinks">{lang:posted_by} <a href="{path:member_profile}">{author}</a></div>	 </div>	 </td>	 <td class="tableCellOne" style="width:38%;">	 <div class="tablePostInfo">     {lang:posted_on} {post_date format="%m-%d-%Y %h:%i %A"}	 </div>	 </td>	 </tr>	 EOF;	 }	 /* END */
+
+<html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{lang}" lang="{lang}">
+
+{if no_bulletins} <div class="tableCellOne"> <span class="defaultBold">{lang:message_no_bulletins}</span> </div> {/if}
+
+<div class="profileHeadingBG"><div class="tableHeading">{lang:heading}</h2></div></div>
+
+<div class="profileHeadingBG"><div class="tableHeading">{lang:heading}</div></div>
+
+function category_page() {
+	return <<< EOF
+
+{include:html_header}
+	{include:top_bar}
+	{include:page_header}
+	{include:page_subheader}
+
+<div id="content">
+		{include:main_forum_list}
+		{include:forum_legend}
+	</div>
+
+{include:html_footer}
+
+EOF;
+}
+ /* END */
+
+{include:html_header}
+{include:top_bar}
+{include:page_header}
+{include:page_subheader}
+
+<div id="content">
+	{include:main_forum_list}
+	{include:forum_legend}
+</div>
+
+{include:html_footer}
+
+<input type="text" class="input" name="title" style="width:100%" size="90" value="{title}" />
+
+<input type="text" class="input" name="title" style="width:100%" size="90" value="{title}" onkeydown="var evt = arguments[0] }
+{}
+{ window.event; return (evt.keyCode != 13);" />
+
+<input type="text" class="input" name="poll_question" style="width:75%" size="90" value="{poll_question}" />
+
+<input type="text" class="input" name="poll_question" style="width:75%" size="90" value="{poll_question}" onkeydown="var evt = arguments[0] }
+{}
+{ window.event; return (evt.keyCode != 13);" />
+
+<input type="text" class="input" name="option[{n}]" style="width:50%" size="60" value="{poll_answer}" maxlength="120" />
+
+<input type="text" class="input" name="option[{n}]" style="width:50%" size="60" value="{poll_answer}" maxlength="120" onkeydown="var evt = arguments[0] }
+{}
+{ window.event; return (evt.keyCode != 13);" />
+
+<div class="forumLightLinks">{lang:multiple_attachments_message}</div>
+
+<!DOCTYPE html>
+<html lang="en">
+	  <head>
+		  <meta charset="UTF-8">
+		  <title>Hello, World!</title>
+	  </head>
+
+<body>
+		  <h1>Hello, World!</h1>
+		  <p>
+		  This is an excellent way to see our work.
+		  </p>
+	  </body>
+</html>
+
+{embed="site/.navigation" loc="books"}
+
+{hits}
+
+{exp:rss:feed
+channel="which"
+show_expired="yes"
+show_future_entries="yes"
+status="open"
+status="draft|reviewed|published"
+status="not submitted|processing|closed"
+username="petunia"
+username="tom|dick|harry"
+username="not tom|dick|harry|fred"
+username="CURRENT_USER"
+username="NOT_CURRENT_USER"
+}
+
+{/exp:rss:feed}
+
+{author}
+
+{channel_description}
+
+{channel_id}
+
+{channel_language}
+
+{channel_name}
+
+{channel_url}
+
+{date format="%Y %m %d"}
+
+{edit_date format="%Y %m %d"}
+
+{email}
+
+{encoding}
+
+{gmt_date format="%Y %m %d"}
+
+{gmt_edit_date format="%Y %m %d"}
+
+{version}
+
+{exp:channel:entries channel="default_site" limit="10" dynamic_start="yes"}
+
+{exp:rss:feed channel="default_site" debug="yes"
+include_jquery="no"
+selector=".my-custom-class"
+toolset_id="1"
+allow_comments="yes"
+author_only="yes"
+channel="news"
+class="safecracker"
+datepicker="no"
+dynamic_title="[your_custom_field] Submission"
+entry_id="{segment_3}"
+error_handling="inline"
+id="safecracker"
+include_jquery="no"
+json="yes"
+logged_out_member_id="3"
+preserve_checkboxes="yes"
+require_entry="yes"
+return="site/ENTRY_ID"
+return_11="site/thanks"
+rules:my_field_name="required|min_length[5]"
+rte_selector=".my-custom-class"
+rte_toolset_id="1"
+safecracker_head="no"
+secure_action="yes"
+secure_return="yes"
+site="your_site_name"
+url_title="{segment_3}"
+use_live_url="no"
+}
+
+{if empty_feed}
+	<?xml version="1.0" encoding="{charset}"?>
+	<rss version="2.0">
+		<channel>
+			<title>{site_name}</title>
+			<link>{site_url}</link>
+			<description>{site_name}</description>
+			<item>
+				<title>Feed Error</title>
+				<description>{error}</description>
+			</item>
+		</channel>
+	</rss>
+{/if}
+
+<script type="text/javascript" src="{exp:rte:script_url selector=".my-class"}"></script>
+
+<link href="{path=css/_ee_saef_css}" type="text/css" rel="stylesheet" media="screen">
+
+<label for="title">Title</label>
+<input type="text" name="title" id="title" value="{title}" size="50" maxlength="100" onkeyup="liveUrlTitle();">
+
+<label for="url_title">URL Title</label>
+<input type="text" name="url_title" id="url_title" value="{url_title}" maxlength="75" size="50">
+
+<p>Date <br> <input type="text" name="entry_date" value="{entry_date}" maxlength="23" size="25"></p>
+
+<p>Expiration Date <br>
+	<input type="text" name="expiration_date" value="{expiration_date}" maxlength="23" size="25">
+</p>
+
+{category_menu}
+	<label for="categories">Categories</label>
+	<select name="category[]" id="categories" size="4" multiple="multiple">
+		{select_options}
+	</select>
+{/category_menu}
+
+<label for="categories">Categories</label>
+<select name="category[]" id="categories" size="4" multiple="multiple">
+	{categories}
+		<option value="{category_id}"{selected}>{category_name}</option>
+	{/categories}
+</select>
+
+{status_menu}
+	<p>Status<br>
+		<select name="status">
+			{select_options}
+		</select>
+	</p>
+{/status_menu}
+
+<label for="status">Status</label>
+<select name="status" id="status">
+	{statuses}
+		<option value="{status}"{selected}>{status}</option>
+	{/statuses}
+</select>
+
+<input type="text" name="my_field_name" id="my_field_name" value="{my_field_name}">
+{field:my_field_name}
+
+<select name="my_field_name" id="my_field_name">
+	{options:my_field_name}
+		<option value="{option_value}"{selected}>{option_name}</option>
+	{/options:my_field_name}
+</select>
+
+{my_field_name}
+
+{my_field_name}{/my_field_name}
+
+{field:my_field_name}
+
+{error:my_field_name}
+
+{label:my_field_name}
+
+{instructions:my_field_name}
+
+{selected_option:my_field_name}
+
+{selected_option:my_field_name:label}
+
+<select name="my_field_name">
+	{options:my_field_name}
+		<option value="{option_value}"{selected}>{option_name}</option>
+	{/options:my_field_name}
+</select>
+
+{custom_fields}
+	<label for="{field_name}">{if required}* {/if}{field_label}</label>
+	{field_instructions}
+	{formatting_buttons}
+
+{if error}
+		<p class="error">{error}</p>
+	{/if}
+
+{if textarea}
+		<textarea id="{field_name}" name="{field_name}" dir="{text_direction}" rows="{rows}">{field_data}</textarea>
+	{/if}
+
+{if text}
+		<input type="text" dir="{text_direction}" id="{field_name}" name="{field_name}" value="{field_data}" maxlength="{maxlength}" size="50">
+	{/if}
+
+{if select}
+		<select id="{field_name}" name="{field_name}">
+			{options}<option value="{option_value}"{selected}>{option_name}</option>{/options}
+		</select>
+	{/if}
+
+{if date}
+		<input type="text" id="{field_name}" name="{field_name}" value="{field_data}" size="50">
+	{/if}
+
+{if checkbox}
+		{options}
+			<label class="checkbox">{option_value}
+				<input type="checkbox" id="{field_name}" name="{field_name}[]" value="{option_value}"{checked}>
+			</label>
+		{/options}
+	{/if}
+
+{if radio}
+		{options}
+			<label class="checkbox">{option_value}
+				<input type="radio" id="{field_name}" name="{field_name}" value="{option_value}"{checked}>
+			</label>
+		{/options}
+	{/if}
+
+{if safecracker_file}
+		{display_field}
+	{/if}
+
+{if relationship}
+		{if allow_multiple}
+			<ul style="list-style: none">
+				{options}
+				<li>
+					<input type="text" name="{field_name}[sort][]" value="{option_order}" style="width: 25px">
+					<label class="checkbox">
+					<input type="checkbox" name="{field_name}[data][]" value="{option_value}"{checked}> {option_name}
+					</label>
+				</li>
+				{/options}
+			</ul>
+		{if:else}
+				<select id="{field_name}" name="{field_name}[data][]">
+				{options}
+					<option value="{option_value}"{selected}>{option_name}</option>
+				{/options}
+				</select>
+		{/if}
+	{/if}
+
+{if multiselect}
+		<select id="{field_name}" name="{field_name}[]" multiple="multiple">
+			{options}
+				<option value="{option_value}"{selected}>{option_name}</option>
+			{/options}
+		</select>
+	{/if}
+{/custom_fields}
+
+{field_name}
+{field_label}
+{field_id}
+{error}
+{field_instructions}
+{formatting_buttons} - Shows the EE formatting buttons if have that option selected for that field
+{display_field} - Displays the field as it appears in the CP (using the fieldtype API display_field method)
+{text_direction}
+{rows} - For textareas
+{field_data} - If used in an edit form, the custom field data for that entry.
+{maxlength} - For text inputs
+
+{options}
+	<option value="{option_value}"{selected}>{option_name}</option>
+{/options}
+
+{if required} {/if}
+{if your_field_type} {/if}
+{if error} {/if}
+
+{if captcha}
+	<label for="captcha">Please enter the word you see in the image below:</label>
+	{captcha}
+	<input type="text" name="captcha" value="{captcha_word}" maxlength="20">
+{/if}
+
+{safecracker_head}
+
+{global_errors}{error}{/global_errors}
+
+{if global_errors:count}{/if}
+
+{field_errors}{error}{/field_errors}
+
+{if field_errors:count}{/if}
+
+logged_out_member_id
+
+{exp:simple_commerce:purchase entry_id="{entry_id}" success="site/success" cancel="site/index"
+cancel="store/cancel"
+country_code="DE"
+currency="USD"
+decimal=","
+entry_id="{entry_id}"
+show_disabled="yes"
+success="store/thank_you"
+}
+	   <h3>{item_name}</h3>
+
+<p><strong>{item_sale_price}</strong></p>
+
+{if item_type == "purchase"}
+		   <p><a href="{buy_now_url}" onclick="window.open(this.href);return false;">Buy Now</a></p>
+		   <p><a href="{add_to_cart_url}" onclick="window.open(this.href);return false;">Add to Cart</a></p>
+		   <p><a href="{view_cart_url}" onclick="window.open(this.href);return false;">View Cart</a></p>
+	   {/if}
+	   {if item_type == "subscription"}
+		   <p><a href="{subscribe_now_url}" onclick="window.open(this.href);return false;">Subscribe Now</a></p>
+	   {/if}
+{/exp:simple_commerce:purchase}
+
+{if item_enabled == "n"}
+	<p><strong>NOT AVAILABLE</strong></p>
+{if:else}
+	<p>{item_sale_price}</p>
+	<p><a href="{buy_now_url}" onclick="window.open(this.href);return false;">Buy Now</a></p>
+	<p><a href="{add_to_cart_url}" onclick="window.open(this.href);return false;">Add to Cart</a></p>
+	<p><a href="{view_cart_url}" onclick="window.open(this.href);return false;">View Cart</a></p>
+{/if}
+
+{item_id}
+
+{item_name}
+
+{item_enabled}
+
+{item_purchases}
+
+{item_regular_price}
+
+{item_sale_price}
+
+{item_use_sale}
+
+{item_type}
+
+<a href="{add_to_cart_url}" onclick="window.open(this.href);return false;">Add to Cart</a>
+
+<a href="{buy_now_url}" onclick="window.open(this.href);return false;">Buy Now</a>
+
+<a href="{view_cart_url}" onclick="window.open(this.href);return false;">View Cart</a>
+
+<a href="{subscribe_now_url}" onclick="window.open(this.href);return false;">Subscribe Now</a>
+
+{add_to_cart_button}Add to Cart{/add_to_cart_button}
+
+{buy_now_button}Buy Now{/buy_now_button}
+
+{view_cart_button}View Cart{/view_cart_button}
+
+var $debug		= TRUE;
+
+openssl genrsa -out private_key.pem 1024
+
+openssl req -new -key private_key.pem -x509 -days 730 -out public_certificate.pem
+
+{exp:stats
+site="default_site"
+site="default_site|boston|new_york"
+site="not chicago|los_angeles"
+channel="default_site"
+channel="default_site|sports|news"
+channel="not channel5|channel6"
+}
+	statistics content
+{/exp:stats}
+
+{exp:stats channel="news|sports"}
+	statistics content
+{/exp:stats}
+
+{last_comment_date format="%m/%d/%Y %h:%i %a"}
+
+{last_entry_date format="%m/%d/%Y %h:%i %a"}
+
+{last_visitor_date format="%m/%d/%Y %h:%i %a"}
+
+{most_visitor_date format="%m/%d/%Y %h:%i %a"}
+
+{most_visitors}
+
+{total_anon}
+
+{total_comments}
+
+{total_entries}
+
+{total_guests}
+
+{total_logged_in}
+
+{total_members}
+
+{member_names}
+	<a href="{member_path="member/index"}">{name}</a><br>
+{/member_names}
+
+{if member_names}
+	{member_names}
+		{name}<br>
+	{/member_names}
+{/if}
+
+{member_names backspace="5"}
+
+{member_names backspace="5"}
+	<a href="{member_path="member/index"}">{name}</a><br>
+{/member_names}
+
+{exp:updated_sites:pings which="default" orderby="title" limit="20"
+limit="30"
+orderby="date"
+sort="asc" "sort="desc""
+which="default"
+which="default|private|business"
+which="not private|secret|friends"
+}
+	<p><a href="{ping_site_url}">{ping_site_name}</a></p>
+{/exp:updated_sites:pings}
+
+{count}
+
+{ping_date format="%Y %m %d"}
+
+{ping_ipaddress}
+
+{ping_site_check}
+
+{ping_site_name}
+
+{ping_site_rss}
+
+{ping_site_url}
+
+{switch="option_one|option_two}
+
+{exp:updated_sites:pings which="default" limit="20"}
+	<p class="{switch="one|two"}">
+		<a href="{ping_site_url}">{ping_site_name}</a>
+	</p>
+{/exp:updated_sites:pings}
+
+{total_results}
+
+{exp:wiki base_path="Template_Group/index" wiki="wiki_short_name" theme="default"}
+
+{exp:wiki base_path="wiki/index" wiki="default_wiki" theme="default"}
+
+{exp:wiki}
+
+{exp:wiki base_path="wiki/index"}
+
+{exp:wiki profile_path="site/my_forum"}
+
+{exp:wiki profile_path="forums"}
+
+{exp:wiki theme="default"}
+
+{exp:wiki wiki="default_wiki"}
+
+{exp:comment:entries sort="asc" limit="20"
+dynamic="no"
+entry_id="24"
+entry_id="13|42|147"
+entry_id="not 45|534|807"
+comment_id="22"
+limit="30"
+orderby="date"
+paginate="top" paginate="bottom"  paginate="both"  paginate="inline"
+paginate_base="site/index"
+show_expired="yes"
+sort="asc" "sort=desc"
+url_title="my_wedding"
+channel="which"
+channel="channel1|channel2|channel3"
+channel="not channel1|channel2|channel3"
+entry_status="Featured"
+status="Closed"
+author_id="5"
+paginate="top" paginate="bottom"  paginate="both"  paginate="inline"
+}
+	{comment}
+	<p>By {name} on {comment_date format="%Y %m %d"}</p>
+{/exp:comment:entries}
+
+{absolute_count}
+
+{author}
+
+<a href="http://example.com/index.php/member/{author_id}/">{author}</a>
+
+{author_id}
+
+<a href="http://example.com/index.php/member/{author_id}/">{name}</a>
+
+{aol_im}
+
+{avatar_image_height}
+
+{if avatar} <img src="{avatar_url}" width="{avatar_image_width}" height="{avatar_image_height}" alt="{author}'s avatar" /> {/if}
+
+{avatar_image_width}
+
+{if avatar} <img src="{avatar_url}" width="{avatar_image_width}" height="{avatar_image_height}" alt="{author}'s avatar" /> {/if}
+
+{avatar_url}
+
+{if avatar} <img src="{avatar_url}" width="{avatar_image_width}" height="{avatar_image_height}" alt="{author}'s avatar" /> {/if}
+
+{if can_moderate_comment}
+
+{channel_short_name}
+
+{channel_title}
+
+{comment}
+
+{comment_stripped}
+
+{comment_auto_path}
+
+{comment_date format="%Y %m %d"}
+
+{comment_entry_id_auto_path}
+
+<a href="{comment_entry_id_auto_path}">my entry</a>
+
+<a href="http://example.com/index.php/channel/comments/234/">my entry</a>
+
+{comment_id}
+
+{comment_site_id}
+
+{comment_url_title_auto_path}
+
+<a href="{comment_url_title_auto_path}">my entry</a>
+
+<a href="http://example.com/index.php/channel/comments/ice_cream/">my entry</a>
+
+{count}
+
+{if editable}Show Edit{/if}
+
+{edit_date format="%Y %m %d"}
+
+{email}
+
+{entry_author_id}
+
+{entry_id}
+
+{entry_id_path="channel/comments"}
+
+<a href="{entry_id_path="channel/comments"}">my entry</a>
+
+<a href="http://example.com/index.php/channel/comments/234/">my entry</a>
+
+{gmt_comment_date format="%Y %m %d"}
+
+{icq}
+
+{interests}
+
+{ip_address}
+
+{location}
+
+{group_id}
+
+{member_search_path="search/results"}
+
+<a href="{member_search_path="search/results"}">View entries by this member</a>
+
+{msn_im}
+
+{occupation}
+
+{name}
+
+{permalink}
+
+<a href="{permalink}">permanent link</a>
+
+{photo_url}
+
+{photo_image_height}
+
+{photo_image_width}
+
+{signature}
+
+{if signature} <p>{signature}</p> {/if}
+
+{signature_image_height}
+
+{if signature_image} <img src="{signature_image_url}" width="{signature_image_width}" height="{signature_image_height}" alt="{author}'s signature" /> {/if}
+
+{signature_image_url}
+
+{if signature_image} <img src="{signature_image_url}" width="{signature_image_width}" height="{signature_image_height}" alt="{author}'s signature" /> {/if}
+
+{signature_image_width}
+
+{if signature_image} <img src="{signature_image_url}" width="{signature_image_width}" height="{signature_image_height}" alt="{author}'s signature" /> {/if}
+
+{switch="option_one|option_two|option_three"}
+
+{exp:comment:entries} <div class="{switch='one}
+{two'}"> <h1>{name}</h1> {comment} </div> {/exp:comment:entries}
+
+{title}
+
+{total_results}
+
+{total_comments}
+
+{url}
+
+{url_as_author}
+
+{url_or_email}
+
+{url_or_email_as_author}
+
+{url_or_email_as_link}
+
+{url_title_path="channel/comments"}
+
+<a href="{url_title_path="channel/comments"}">permalink</a>
+
+<a href="http://example.com/index.php/channel/comments/ice_cream/">permalink</a>
+
+{username}
+
+{channel_id}
+
+{yahoo_im}
+
+{age} {gender} {zodiac} etc..
+
+{if name=="bozo"}  You"ve got a big nose!  {/if}
+
+{if avatar} content {/if}
+
+{if avatar} <img src="{avatar_url}" width="{avatar_image_width}" height="{avatar_image_height}" alt="{author}'s avatar" /> {/if}
+
+{if is_ignored} content {/if}
+
+{exp:comment:entries}
+	{if is_ignored}You are ignoring {author}.{/if}
+	<div {if is_ignored}style="display: none;"{/if}>{comment}</div>
+{/exp:comment:entries}
+
+<script type="text/javascript">
+	function showHideComment(el) {
+		if (document.getElementById(el).style.display == "block") {
+		document.getElementById(el).style.display = "none";
+		}
+		else {
+		document.getElementById(el).style.display = "block";
+		}
+	}
+</script>
+
+{exp:comment:entries}
+	{if is_ignored}
+		<p><a href="#" onclick="showHideComment("{comment_id}")">View / Hide</a> comment from ignored member: {author}</p>
+	{/if}
+
+<div id="{comment_id}" {if is_ignored}style="display: none;"{/if}>{comment}</div>
+{/exp:comment:entries}
+
+{if no_results} content {/if}
+
+{if no_results}  <p>There are no comments for this entry yet.</p>  {/if}
+
+{if no_results} {redirect="site/noresult"} {/if}
+
+{if signature_image} content {/if}
+
+{if signature_image} <img src="{signature_image_url}" width="{signature_image_width}" height="{signature_image_height}" alt="{author}'s signature" /> {/if}
+
+{exp:comment:notification_links}
+	{if subscribed}
+		<h5><a href="{unsubscribe_link}">Unsubscribe to comment notification for this entry.</a></h5>
+	{if:else}
+		<h5><a href="{subscribe_link}">Subscribe to comment notification for this entry.</a></h5>
+	{/if}
+{/exp:comment:notification_links}
+
+{exp:comment:subscriber_list
+entry_id="24"
+exclude_guests="yes"
+}
+	{if subscriber_count == 1}
+		<p>{subscriber_total_results} Subscribed</p>
+		<ul>
+	{/if}
+
+{if subscriber_is_member}
+		<li><a href="{path="member/{subscriber_member_id}"}">{subscriber_screen_name}</a></li>
+	{/if}
+
+{if subscriber_count == subscriber_total_results}
+		<li>and {subscriber_guest_total} Guest{if subscriber_guest_total != 1}s{/if}</li>
+		</ul>
+	{/if}
+{/exp:comment:subscriber_list}
+
+{subscriber_count}
+
+{subscriber_email}
+
+{if subscriber_is_member}
+	 {subscriber_screen_name}
+{if:else}
+	 {encode="{subscriber_email}"}
+{/if}
+
+{subscriber_guest_total}
+
+{subscriber_member_id}
+
+{subscriber_member_total}
+
+{subscriber_screen_name}
+
+{subscriber_total_results}
+
+{if subscriber_is_member}
+
+{exp:comment:entries sort="desc" orderby="date" limit="10" dynamic="no"}
+	{comment}
+	<p>
+		By {name} on {comment_date format="%Y %m %d"}<br>
+		From the entry "<a href="{comment_url_title_auto_path}">{title}</a>".
+	</p>
+{/exp:comment:entries}
+
+{exp:comment:form channel="news" preview="channel/preview"
+entry_id="24"
+preview="channel/preview"
+url_title="my_wedding"
+channel="news"
+form_class="news_comment_form"
+form_id="news_comment_form"
+return="template_group/template/url_title"
+}
+
+{if logged_out}
+		<label for="name">Name:</label> <input type="text" name="name" value="{name}" size="50" /><br />
+		<label for="email">Email:</label> <input type="text" name="email" value="{email}" size="50" /><br />
+		<label for="location">Location:</label> <input type="text" name="location" value="{location}" size="50" /><br />
+		<label for="url">URL:</label> <input type="text" name="url" value="{url}" size="50" /><br />
+	{/if}
+
+<label for="comment">Comment:</label><br />
+	<textarea name="comment" cols="70" rows="10">{comment}</textarea>
+	<label><input type="checkbox" name="save_info" value="yes" {save_info} /> Remember my personal information</label><br />
+	<label><input type="checkbox" name="notify_me" value="yes" {notify_me} /> Notify me of follow-up comments?</label><br />
+
+{if captcha}
+		<label for="captcha">Please enter the word you see in the image below:</label><br />
+		<p>{captcha}<br />
+		<input type="text" name="captcha" value="{captcha_word}" maxlength="20" /></p>
+	{/if}
+
+<input type="submit" name="submit" value="Submit" />
+	<input type="submit" name="preview" value="Preview" />
+
+{/exp:comment:form}
+
+{if logged_out}
+
+{if captcha}
+
+{if comments_expired}
+
+{if comments_disabled}
+
+{exp:comment:preview}
+	{comment}
+{/exp:comment:preview}
+
+{comment}
+
+{comment_date format="%Y %m %d"}
+
+{email}
+
+{location}
+
+{name}
+
+{url}
+
+{url_as_author}
+
+{url_or_email}
+
+{url_or_email_as_author}
+
+{url_or_email_as_link}
+
+{exp:comment:entries limit="20"}
+	<div class="comment" id="comment_{comment_id}">
+		<span class="comment_body">
+			{comment}
+		</span>
+
+	{if editable}
+			<a href="#" class="edit_link">Edit</a>
+
+		<div class="editCommentBox" style="display:none;">
+				<textarea cols="70" rows="8">{comment_stripped}</textarea><br />
+				<input type="submit" name="cancel" value="Cancel" class="cancel_edit">
+				<input type="submit" name="save" value="Save" class="submit_edit">
+			</div>
+		{/if}
+
+	{if can_moderate_comment}
+		<a href="#" class="mod_link">Close</a>
+		{/if}
+	</div>
+{/exp:comment:entries}
+
+{exp:jquery:script_tag}
+{exp:comment:edit_comment_script}
+
+{exp:comment:edit_comment_script}
+
+{exp:comment:ajax_edit_url}
+
+{exp:cookie_consent:message}
+
+{if cookies_allowed == "yes"}
+		Thanks for allowing cookies!<br>
+		Delete cookies: {clear_ee_cookies_link}
+	{if:else}
+		Please allow cookies:<br>
+		{cookies_allowed_link}
+	{/if}
+
+{/exp:cookie_consent:message}
+
+{clear_all_cookies_link}
+
+{clear_ee_cookies_link}
+
+{cookies_allowed}
+
+{cookies_allowed_link}
+
+<input type="checkbox" name="cookie_consent" value="y"/>&nbsp;&nbsp;<span  class="alert">Allow Cookies</span>
+
+{clear_all_cookies_link}
+{clear_ee_cookies_link}
+{cookies_allowed_link}
+
+{if cookies_allowed}{/if}
+{if cookies_not_allowed}{/if}
+
+<a href="#" onclick="window.open("{path="channel/smileys"}", "_blank", "width=300,height=400")">Smilies</a>
+
+<script type="text/javascript">
+	function add_smiley(smiley) {
+		opener.document.getElementById("comment_form").comment.value += " " + smiley + " ";
+		window.close();
+		opener.window.document.getElementById("comment_form").comment.focus();
+	}
+</script>
+
+<table border="0" width="100%" cellpadding="6" cellspacing="1">
+	{exp:emoticon columns="4"}
+		<tr class="row">
+			<td class="red"><div>{smiley}</div></td>
+		</tr>
+	{/exp:emoticon}
+</table>
+
+{exp:jquery:script_tag}
+
+{exp:jquery:script_tag plugin="corner"}
+
+{exp:jquery:script_tag ui="accordion"}
+
+{exp:jquery:script_tag ui="core"}
+
+{exp:jquery:script_tag effect="slide"}
+
+{exp:jquery:script_tag file="foo"}
+
+{exp:jquery:script_src}
+
+{exp:jquery:script_src plugin="corner"}
+
+{exp:jquery:script_src ui="accordion"}
+
+{exp:jquery:script_src effect="slide"}
+
+{exp:jquery:script_src file="foo"}
+
+{exp:jquery:output_javascript}
+
+{exp:jquery:output_javascript plugin="corner"}
+
+{exp:jquery:output_javascript ui="accordion"}
+
+{exp:jquery:output_javascript effect="slide"}
+
+{exp:jquery:output_javascript file="foo"}
+
+{message_text}, {mailing_list}, and {unsubscribe_url}
+
+{if html_email}{/if}
+
+{if plain_email}{/if}
+
+To remove your email from the "{mailing_list}" mailing list, click here:
+
+{if html_email}<a href="{unsubscribe_url}">{unsubscribe_url}</a>{/if}{if plain_email}{unsubscribe_url}{/if}
+
+{exp:mailinglist:form list="default"
+list="default"
+form_class="mailinglist_form"
+form_id="mailinglist_form"
+}
+	<p>Join our Mailing List</p>
+	<p><input type="text" name="email" value="{email}"></p>
+	<p><input type="submit" value="submit"></p>
+{/exp:mailinglist:form}
+
+{email}
+
+<input type="text" name="email" value="{email}" />
+
+{full_name}
+
+{exp:member:login_form return="site/index"
+form_class="login"
+form_id="login"
+form_name="login"
+return="site/index"
+}
+	<p>
+		<label>Username</label><br>
+		<input type="text" name="username"  maxlength="32" size="25">
+
+</p>
+	<p>
+		<label>Password</label><br>
+		<input type="password" name="password"  maxlength="32" size="25">
+	</p>
+	{if auto_login}
+		<p><input type="checkbox" name="auto_login" value="1"> Auto-login on future visits</p>
+	{/if}
+
+<p><input type="checkbox" name="anon" value="1" checked="checked"> Show my name in the online users list</p>
+	<p><input type="submit" name="submit" value="Submit"></p>
+	<p><a href="{path="member/forgot_password"}">Forgot your password?</a></p>
+{/exp:member:login_form}
+
+{if auto_login} {/if}
+
+{if auto_login}
+	<p><input class="checkbox" type="checkbox" name="auto_login" value="1"> Auto-login on future visits</p>
+{/if}
+
+{path="member/login"}
+
+<a href="{path="member/login"}">Log In</a>
+
+{path="logout"}
+
+<a href="{path="logout"}">Log Out</a>
+
+{path="member/register"}
+
+<a href="{path="member/register"}">Register as a new member</a>
+
+{path="member/memberlist"}
+
+<a href="{path="member/memberlist"}">View the Memberlist</a>
+
+{path="member/profile"}
+
+<a href="{path="member/profile"}">Edit your profile</a>
+
+{path="member/forgot_password"}
+
+<a href="{path="member/forgot_password"}">Forget your password?</a>
+
+{if logged_in}
+	<a href="{path="member/profile"}">Edit your profile</a><br>
+	<a href="{path="member/memberlist"}">View the Memberlist</a><br>
+	<a href="{path="logout"}">Log Out</a>
+{/if}
+{if logged_out}
+	Are you a member? Please <a href="{path="member/login"}">log-in</a>.<br>
+	Not a member? <a href="{path="member/register"}">Register</a>.<br>
+	Have you <a href="{path="member/forgot"}">forgotten your password</a>?
+{/if}
+
+{exp:member:custom_profile_data
+member_id="147"
+}
+	<p>{age}, {gender}</p>
+{/exp:member:custom_profile_data}
+
+{avatar_height}
+
+{if avatar}
+	<img src="{avatar_url}" width="{avatar_width}" height="{avatar_height}" alt="{screen_name}'s avatar">
+{/if}
+
+{avatar_width}
+
+{if avatar}
+	<img src="{avatar_url}" width="{avatar_width}" height="{avatar_height}" alt="{screen_name}"s avatar">
+{/if}
+
+{avatar_url}
+
+{if avatar}
+	<img src="{avatar_url}" width="{avatar_width}" height="{avatar_height}" alt="{screen_name}"s avatar">
+{/if}
+
+{bio}
+
+{birthday}
+
+{email}
+
+{group_id}
+
+{join_date format="%Y %m %d"}
+
+{language}
+
+{location}
+
+{last_activity format="%Y %m %d"}
+
+{last_comment_date format="%Y %m %d"}
+
+{last_entry_date format="%Y %m %d"}
+
+{last_forum_post_date format="%Y %m %d"}
+
+{last_visit format="%Y %m %d"}
+
+{local_time format="%Y %m %d"}
+
+{member_group}
+
+{member_id}
+
+{photo_height}
+
+{if photo}
+	<img src="{photo_url}" width="{photo_width}" height="{photo_height}" alt="{screen_name}'s photo">
+{/if}
+
+{photo_width}
+
+{if photo}
+	<img src="{photo_url}" width="{photo_width}" height="{photo_height}" alt="{screen_name}'s photo">
+{/if}
+
+{photo_url}
+
+{if photo}
+	<img src="{photo_url}" width="{photo_width}" height="{photo_height}" alt="{screen_name}'s photo">
+{/if}
+
+{screen_name}
+
+{search_path}
+
+<a href="{search_path}">View Entries by User</a>
+
+{send_private_message}
+
+<a href="{send_private_message}">Send Private Message to {screen_name}.</a>
+
+{signature}
+
+{timezone}
+
+{total_comments}
+
+{total_entries}
+
+{total_forum_posts}
+
+{total_forum_topics}
+
+{url}
+
+{username}
+
+{age}
+{gender}
+{zodiac}
+etc..
+
+{exp:member:ignore_list
+member_id="147"
+}
+	<p>{ignore_screen_name}</p>
+{/exp:member:ignore_list}
+
+{images}<img src="{file}" width="{width}" height="{height}" alt="pic" />{/images}
+{text}
+
+{field name="body" format="xhtml"} {text} {/field}
+{field name="body_image" format="none"} {images} <img src="{file}" width="{width}" height="{height}" alt="pic" /> {/images} {/field}
+
+{audio} <p>Listen to the <a href="{file}">audio</a>!</p> {/audio}
+
+{field name="extended" format="xhtml"} {text} {/field}
+
+{audio} <p>Listen to the <a href="{file}">audio</a>!</p> {/audio}
+
+{files match="movie|files"} <p>View the <a href="{file}">presentation</a>.</p> {/files}
+
+{files match="audio|files"}
+
+<img src="{file}" width="{width}" height="{height}" alt="pic" />
+
+{images} <img src="{file}" width="{width}" height="{height}" alt="pic" /> {/images}
+
+{movie} <p>Watch our new <a href="{file}">movie</a> now.</p> {/movie}
+
+{field name="extended" format="xhtml"} {text} {/field}
+
+{images} <img src="{thumbnail}" width="{thumb_width}" height="{thumb_height}" alt="thumbnail image" /> {/images}
+
+{images} <img src="{thumbnail}" width="{thumb_width}" height="{thumb_height}" alt="thumbnail image" /> {/images}
+
+{images} <img src="{thumbnail}" width="{thumb_width}" height="{thumb_height}" alt="thumbnail image" /> {/images}
+
+<img src="{file}" width="{width}" height="{height}" alt="pic" />
+
+{category}3,6{/category}
+{field:body format="xhtml"}
+	Here's a quick picture of the train station this morning on the way to work.
+	Notice the guy selling flowers?  He's been there every morning like clockwork for the last 2 years.
+	He's always cheerful and actually has some pretty nice flowers.
+{/field:body}
+{field:location format="none"}Train Station{/field:location}
+
+{category}3,News,7{/category}
+
+{entry_title}My Unique Title{/entry_title}
+{sticky}
+{file_archive}
+{field:entry_body}food_images{/field:entry_body}
+
+{field:body}This is the body text.{/field:body}
+
+{field:summary}This is a summary.{/field:summary}
+
+{field:body format="xhtml"}This is the body text.{/field:body}
+
+{file_archive}yes{/file_archive}
+
+{status}pending{/status}
+
+{sticky}yes{/sticky}
+
+{exp:moblog:check silent="yes" which="cellphone"
+silent="yes"
+which="cellphone"
+which="cellphone|moblog2|samsung"
+which="not moblog2|samsung"
+}
+
+{exp:channel:entries channel="personnel"}
+	<h2>{title}</h2>
+	<h3>Position</h3>
+	<p>{position}</p>
+	<h3>Background</h3>
+	<p>{background}</p>
+{/exp:channel:entries}
+
+{exp:pages:load_site_pages site="default_site|corporate_site"}
+
+{exp:query sql="SELECT screen_name FROM exp_members WHERE member_id = "1" "}
+	{screen_name}
+{/exp:query}
+
+{exp:query sql="SELECT screen_name, email, location FROM exp_members WHERE group_id = "1""}
+	{screen_name}
+	{email}
+	{location}
+{/exp:query}
+
+{exp:query sql="SELECT * FROM exp_members WHERE group_id = "1""}
+	{username}
+	{screen_name}
+	{password}
+	{email}
+	{location}
+{/exp:query}
+
+{exp:query sql="SELECT screen_name FROM exp_members WHERE group_id = "6""}
+	{screen_name}<br>
+{/exp:query}
+
+{exp:query sql="SELECT screen_name FROM exp_members WHERE group_id = "6""}
+	{screen_name}<br>
+	{if no_results} Sorry, no sports heroes here! {/if}
+{/exp:query}
+
+<p>Dates for the Last Five Entries:</p>
+{exp:query sql="SELECT entry_date FROM exp_channel_titles ORDER BY entry_date DESC LIMIT 5"}
+	<p>{entry_date format="%Y %m %d"}</p>
+{/exp:query}
+
+{exp:query limit="5" sql="SELECT title,entry_date FROM exp_channel_titles ORDER BY entry_date DESC"}
+	<p>{title} - {entry_date format="%Y %m %d"}</p>
+	{paginate}
+		<p>Page {current_page} of {total_pages} pages {pagination_links}</p>
+	{/paginate}
+{/exp:query}
+
+{exp:query limit="5" paginate="top" sql="SELECT title,entry_date FROM exp_channel_titles ORDER BY entry_date DESC"}
+	<p>{title} - {entry_date format="%Y %m %d"}</p>
+	{paginate}
+		{if previous_page} <a href="{auto_path}">Previous Page</a>   {/if}
+		{if next_page} <a href="{auto_path}">Next Page</a> {/if}
+	{/paginate}
+{/exp:query}
+
+{exp:query sql="SELECT screen_name FROM exp_members WHERE group_id = "6"" backspace="2"}
+
+{exp:query sql="SELECT screen_name FROM exp_members WHERE group_id = '6'" backspace="2"}{screen_name}, {/exp:query}
+
+{count}
+
+{exp:query sql="SELECT count(*) AS census FROM my_table"}
+	{count} <!--This is the row count-->
+	{census} <!--This is the contents of the database field "count"-->
+{/exp:query}
+
+{switch="option_one|option_two|option_three"}
+
+{exp:query sql="SELECT screen_name, email FROM exp_members WHERE group_id = "1""}
+	<div class="{switch="one|two"}">
+		<h1>{screen_name}</h1>
+		<p>{email}</p>
+	</div>
+{/exp:query}
+
+{total_results}
+
+<table border="0" width="100%" cellpadding="6" cellspacing="1">
+	<tr>
+		<th>Date</th>
+		<th>From</th>
+		<th>IP Address</th>
+		<th>To</th>
+	</tr>
+	{exp:referrer limit="50" popup="yes"}
+		<tr>
+			<td>{ref_date format="%m/%d/%Y"}</td>
+			<td>{ref_from}</td>
+			<td>{ref_ip}</td>
+			<td>{ref_to}</td>
+		</tr>
+	{/exp:referrer}
+</table>
+
+{ref_agent}
+
+{ref_agent_short}
+
+{ref_date format="%m/%d/%Y"}
+
+{ref_from}
+
+{ref_ip}
+
+{ref_to}
+
+{switch="option_one|option_two}
+
+{exp:referrer limit="50" popup="yes"}
+	<tr class="{switch="one|two"}">
+		<td><div>{ref_from}</div></td>
+		<td><div>{ref_to}</div></td>
+	</tr>
+{/exp:referrer}
+
+{exp:ip_to_nation:world_flags image_url="http://example.com/images/world_flags/"}
+	{ip_address}
+{/exp:ip_to_nation:world_flags}
+
+{exp:forum}
+
+{exp:forum board="board_name"}
+
+{exp:channel:entries channel="news" orderby="date" sort="desc" limit="1" paginate="bottom"}
+	<h2>{title}</h2>
+	{summary}
+	{body}
+
+{paginate}
+	<p>Page {current_page} of {total_pages} pages {pagination_links}</p>
+	{/paginate}
+{/exp:channel:entries}
+
+{exp:comment:entries channel="news" sort="desc" limit="1" paginate="bottom"
+paginate="top" paginate="bottom"  paginate="both"  paginate="inline"
+}
+	{comment}
+	<p>By {name} on {comment_date format="%Y %m %d"}</p>
+	{paginate}
+	{if previous_page}
+		<a href="{auto_path}">Previous Page</a> &nbsp;
+	{/if}
+	{if next_page}
+		<a href="{auto_path}">Next Page</a>
+	{/if}
+	{/paginate}
+{/exp:comment:entries}
+
+{pagination_links}
+
+{pagination_links}
+	<ul>
+		{first_page}
+			<li><a href="{pagination_url}" class="page-first">First Page</a></li>
+		{/first_page}
+
+	{previous_page}
+			<li><a href="{pagination_url}" class="page-previous">Previous Page</a></li>
+		{/previous_page}
+
+	{page}
+			<li><a href="{pagination_url}" class="page-{pagination_page_number} {if current_page}active{/if}">{pagination_page_number}</a></li>
+		{/page}
+
+	{next_page}
+			<li><a href="{pagination_url}" class="page-next">Next Page</a></li>
+		{/next_page}
+
+	{last_page}
+			<li><a href="{pagination_url}" class="page-last">Last Page</a></li>
+		{/last_page}
+	</ul>
+{/pagination_links}
+
+{pagination_page_number}
+
+{pagination_url}
+
+{first_page}
+	<li><a href="{pagination_url}" class="page-first">First Page</a></li>
+{/first_page}
+
+{previous_page}
+	<li><a href="{pagination_url}" class="page-previous">Previous Page</a></li>
+{/previous_page}
+
+{next_page}
+	<li><a href="{pagination_url}" class="page-next">Next Page</a></li>
+{/next_page}
+
+{last_page}
+	<li><a href="{pagination_url}" class="page-last">Last Page</a></li>
+{/last_page}
+
+{page}
+	<li><a href="{pagination_url}" class="page-{pagination_page_number}">{pagination_page_number}</a></li>
+{/page}
+
+{if current_page}class="current"{/if}
+
+{paginate}  {/paginate}
+
+{if next_page}  {/if}
+
+{if previous_page}  {/if}
+
+{auto_path}
+
+{current_page}
+
+{total_pages}
+
+{exp:channel:entries channel="news" paginate_type="field" paginate="bottom"
+paginate="top" paginate="bottom"  paginate="both"  paginate="inline"
+paginate_type="field"
+}
+   <h3>{title}</h3>
+   {body}
+   {multi_field="page1|page2|page3|page4"}
+   <div>
+	  Last updated on {edit_date format="%M %d, %Y"} at
+	 {edit_date format="%h:%i %A"}<br />
+   </div>
+   {paginate}
+	  <p>Page {current_page} of {total_pages} pages for this article
+	 {pagination_links}</p>
+   {/paginate}
+{/exp:channel:entries}
+
+{current_page}
+
+{multi_field="summary|body|extended"}
+
+{multi_field="page1|page2|page3"}
+
+{path}
+
+{total_pages}
+
+{path="template_group/template"}
+
+{path="channel/comments"}
+
+<a href="{path="channel/archives"}">My Archives Page</a>
+
+{path="site_index"}
+
+{path="logout"}
+
+{exp:channel:entries limit="<?php echo $limit; ?>"}
+
+<?php
+if ($size == "big")
+{
+	echo "{exp:channel:entries limit="50"}";
+}
+else
+{
+	echo "{exp:channel:entries limit="2"}";
+}
+?>
+
+{exp:xml_encode}
+	some content
+{/exp:xml_encode}
+
+{exp:word_limit total="35"
+parse="inward"
+}
+	{exp:xml_encode}
+		some content
+	{/exp:xml_encode}
+{/exp:word_limit}
+
+{exp:magpie url="http://some-site.com" parse="inward"}
+	{items}
+		<a href="{link}">{title}</a><br />
+		{exp:word_limit total="20"}
+			{content}
+		{/exp:word_limit}<br />
+	{/items}
+{/exp:magpie}
+
+{exp:magpie url="http://some-site.com" limit="15" refresh="720" parse="inward"}
+	<ul>
+		{items}
+			<li><a href="{link}">{title}</a><br />
+				{exp:word_limit total="35"}
+					{exp:xml_encode}
+						{content}
+					{/exp:xml_encode}
+				{/exp:word_limit}
+			</li>
+		{/items}
+	</ul>
+{/exp:magpie}
+
+{preload_replace:variable_name="replacement"}
+
+{preload_replace:channels="news|reviews"}
+
+{exp:channel:category_heading channel="{channels}"}
+	<h1>{category_name}</h1>
+	{if category_description != ""}<p>{category_description}</p>{/if}
+{/exp:channel:category_heading}
+
+{exp:channel:entries channel="{channels}" limit="10"
+boards="2"
+boards="2|3|4"
+boards="not 1|4"
+forums="3"
+forums="3|14|16"
+forums="not 9|12"
+limit="30"
+orderby="post_date"
+sort="asc"
+}
+	<h2>{title}</h2>
+	{body}
+{/exp:channel:entries}
+
+{author}
+
+{auto_thread_path}
+
+<a href="{auto_thread_path}">{title}</a>
+
+<a href="http://example.com/index.php/forums/viewthread/11245/">My forum topic</a>
+
+{board_label}
+
+{board_name}
+
+{body}
+
+{forum_name}
+
+{forum_url}
+
+{last_author}
+
+{last_author_profile_path="forums/member"}
+
+<a href="{last_author_profile_path="forums/member"}">{last_author}</a>
+
+<a href="http://example.com/index.php/forums/member/147/">Fred Smith</a>
+
+{last_post_date format="%m/%d/%Y %h:%i %a"}
+
+{last_post_id}
+
+<a href="{forum_url}viewreply/{last_post_id}/">View latest reply</a>
+
+{last_post_relative_date}
+
+Posted {last_post_relative_date} ago
+
+{last_reply}
+
+{post_total}
+
+{profile_path="forums/member"}
+
+<a href="{profile_path="forums/member"}">{author}</a>
+
+<a href="http://example.com/index.php/forums/member/147/">Fred Smith</a>
+
+{thread_path="forums/viewthread"}
+
+<a href="{thread_path="forums/viewthread"}">{title}</a>
+
+<a href="http://example.com/index.php/forums/viewthread/42/">My Forum Thread</a>
+
+{title}
+
+{topic_date format="%m/%d/%Y %h:%i %a"}
+
+{topic_relative_date}
+
+Posted {topic_relative_date} ago
+
+{views}
+
+{exp:channel:entries channel="stores"}
+	<h1>{title}</h1>
+	<p>Phone: {phone}</p>
+	<p>Address: {address}</p>
+	<h2>Specialty Pizzas</h2>
+	{specialty_pizzas}
+		<h3>{specialty_pizzas:title}</h3>
+		<p>{specialty_pizzas:description}</p>
+		<p>{specialty_pizzas:ingredients}</p>
+	{/specialty_pizzas}
+{/exp:channel:entries}
+
+<h2>Specialty Pizzas</h2>
+{specialty_pizzas}
+	<h3>{specialty_pizzas:title}</h3>
+	<p>{specialty_pizzas:description}</p>
+	<p>{specialty_pizzas:ingredients}</p>
+{/specialty_pizzas}
+
+<h3>{specialty_pizzas:title}</h3>
+<p>{specialty_pizzas:description}</p>
+<p>{specialty_pizzas:ingredients}</p>
+
+{exp:channel:entries channel="pizzas"}
+	<h2>{title}</h2>
+	<p>{description}</p>
+	<p>{ingredients}</p>
+	<h3>Where can I find this pizza?</h3>
+	{parents field="specialty_pizzas"}
+		<strong>{parents:title}</strong>: <br />
+		{parents:phone} <br />
+		<p>{parents:address}</p>
+	{/parents}
+{/exp:channel:entries}
+
+<strong>{parents:title}</strong>: <br />
+{parents:phone} <br />
+<p>{parents:address}</p>
+
+{exp:channel:entries channel="shows"}
+	<div class="show">
+		<h2><a href="{path="shows/index"}/{url_title}">{title}</a></h2>
+		<div class="show-body">
+			<div class="what"><label>What</label>{what}</div>
+			<div class="when"><label>When</label>{when}</div>
+			<div class="who">
+				<label>Who's playing?</label>
+				{bands}
+					<div class="band"><strong>{bands:title}</strong> {bands:style}</div>
+				{/bands}
+			</div>
+		</div>
+	</div>
+{/exp:channel:entries}
+
+<div class="who">
+	<label>Who's playing?</label>
+	{bands}
+		<div class="band"><strong>{bands:title}</strong> {bands:style}</div>
+	{/bands}
+</div>
+
+<div class="band"><strong>{bands:title}</strong> {bands:style}</div>
+
+{exp:channel:entries channel="bands" limit="1"}
+	<div class="band">
+		<h2>{title}</h2>
+		<span class="style">{style}</span>
+		<p>{history}</p>
+		<div class="members">
+			{members}
+				<div class="member">
+					<a href="{path="musicians/index"}/{members:url_title}">{members:first_name} {members:last_name}</a>
+				</div>
+			{/members}
+		</div>
+		<div class="shows">
+			<h3>Recent Shows</h3>
+			{parents channel="shows" field="bands"}
+				<div class="show">
+					<strong>{parents:title}</strong>
+					<div class="what">{parents:what}</div>
+					<div class="when">{parents:when}</div>
+				</div>
+			{/parents}
+		</div>
+	</div>
+{/exp:channel:entries}
+
+<div class="shows">
+<h3>Recent Shows</h3>
+{parents channel="shows" field="bands"}
+	<div class="show">
+		<strong>{parents:title}</strong>
+		<div class="what">{parents:what}</div>
+		<div class="when">{parents:when}</div>
+	</div>
+{/parents}
+</div>
+
+<div class="show">
+	<strong>{parents:title}</strong>
+	<div class="what">{parents:what}</div>
+	<div class="when">{parents:when}</div>
+</div>
+
+{exp:channel:entries channel="musicians" limit="1"}
+	<div class="musician">
+		<h2>{first_name} {last_name}<h2>
+		<div class="instruments">
+			{instruments}
+		</div>
+		<div class="biography">
+			{biography}
+		</div>
+		<div class="past-bands">
+			<ul>
+			{parents field="members"}
+				<li class="band-name"><a href="{path="bands/index"}/{parents:url-title}">{parents:title}</a></li>
+			{/parents}
+			</ul>
+		</div>
+	</div>
+{/exp:channel:entries}
+
+<div class="past-bands">
+	<ul>
+	{parents field="members"}
+		<li class="band-name"><a href="{path="bands/index"}/{parents:url-title}">{parents:title}</a></li>
+	{/parents}
+	</ul>
+</div>
+
+{exp:channel:entries channel="seasons" title="Spring 2013" limit="1"}
+	<div class="season">
+		<h2>{title}</h2>
+		<h3>Teams</h3>
+		<div class="teams">
+			{teams}
+				<div class="team">
+					<h4>{teams:title}</h4>
+					{teams:players}
+						<span class="player">{teams:players:first_name} {teams:players:last_name}</span>
+					{/teams:players}
+				</div>
+			{/teams}
+		</div>
+		<h3>Games</h3>
+		<div class="games">
+			{games}
+				<div class="game">
+					<h4>{games:title}</h4>
+					{games:home:title} vs {games:away:title}
+				</div>
+			{/games}
+		</div>
+	</div>
+{/exp:channel:entries}
+
+{exp:channel:entries channel="seasons" title="Spring 2013" limit="1"}
+
+{teams}
+	<div class="team">
+		<h4>{teams:title}</h4>
+		{teams:players}
+			<span class="player"><span class="number">{teams:players:number}{teams:players:first_name} {teams:players:last_name}</span>
+		{/teams:players}
+	</div>
+{/teams}
+
+<h4>{teams:title}</h4>
+
+{exp:channel:entries channel="seasons" url-title="winter-2013" limit="1"}
+	<a href="{path="seasons/index"}/{previous:url_title}">{previous:title}</a>
+	<a href="{path="seasons/index"}/{next:url_title}">{next:title}</a>
+
+{teams:players}
+	<span class="player">{teams:players:first_name} {teams:players:last_name}</span>
+{/teams:players}
+
+<span class="player">{teams:players:first_name} {teams:players:last_name}</span>
+
+{teams:players}
+	<span class="player">{teams:players:first_name} {teams:players:last_name}</span>
+{/teams:players}
+
+{games}
+	<div class="game">
+		<h4>{games:title}</h4>
+		{games:home:title} vs {games:away:title}
+	</div>
+{/games}
+
+{exp:channel:entries channel="games" limit="1"}
+	<h2>{home:title} ({home_score}) vs {away:title} ({away_score})</h2>
+	<p>In this game the {home:title} played the {away:title}.</p>
+	<p>The final scores were {home:title} with {home_score} and {away:title} with {away_score}.</p>
+	<p>Playing for {home:title} were:</p>
+	<div class="players">
+		{home:players}
+			<span class="player">#{home:players:number} {home:players:first_name} {home:players:last_name}</span>
+		{/home:players}
+	</div>
+	<p>Playing for {away:title} were:</p>
+	<div class="players">
+		{away:players}
+			<span class="player">#{away:players:number} {away:players:first_name} {away:players:last_name}</span>
+		{/away:players}
+	</div>
+{/exp:channel:entries}
+
+{exp:channel:entries channel="teams"}
+	<div class="games"><ul>
+		{parents field="home|away"}
+			<li>{parents:home:title} ({parents:home_score}) vs {parents:away:title} ({parents:away_score})</li>
+		{/parents}
+	</ul></div>
+{/exp:channel:entries}
+
+{exp:channel:entries channel="games"}
+	<div class="navigation"><ul>
+		{siblings channel="seasons" field="games"}
+			<li>{siblings:title}	- {siblings:home:title} vs {siblings:away:title}</li>
+		{/siblings}
+	</ul></div>
+{/exp:channel:entries}
+
+{exp:channel:entries channel="parentChannel"}
+	{title} - {field1} - {field2}
+	{relationship_field}
+		{relationship_field:title}
+		{relationship_field:field1}
+		{relationship_field:field2}
+	{/relationship_field}
+{/exp:channel:entries}
+
+{relationship_field}
+	{relationship_field:title}
+	{relationship_field:field1}
+	{relationship_field:field2}
+{/relationship_field}
+
+ParentChannel
+	title
+	url_title
+	field1				  Text
+	field2				  Text
+	relationship_field		  Relationship (ChildChannel, Single)
+
+ChildChannel
+	title
+	url_title
+	field1				  Text
+	field2				  Text
+
+{exp:channel:entries channel="parentChannel"}
+	{title} - {field1} - {field2}
+	{relationship_field:title}
+	{relationship_field:field1}
+	{relationship_field:field2}
+{/exp:channel:entries}
+
+ParentChannel
+	title
+	url_title
+	field1				  Text
+	field2				  Text
+	relationship_field		  Relationship (ChildChannel, Multiple)
+
+ChildChannel
+	title
+	url_title
+	field1				  Text
+	field2				  Text
+
+{exp:channel:entries channel="childChannel"}
+	{siblings field="relationship_field"}
+		{siblings:title} - {siblings:field1} - {siblings:field2}
+	{/siblings}
+{/exp:channel:entries}
+
+{exp:channel:entries channel="parentChannel"}
+	{relationship_field}
+		{relationship_field:siblings field="relationship_field"}
+			{relationship_field:siblings:title}
+		{/relationship_field:siblings}
+	{/relationship_field}
+{/exp:channel:entries}
+
+{siblings field="relationship_field"}
+
+{siblings channel="parentChannel" field="relationship_field"}
+
+{exp:channel:entries channel="childChannel"}
+	{parents field="relationship_field"}
+		{parents:title} - {parents:field1} - {parents:field2}
+	{/parents}
+{/exp:channel:entries}
+
+{exp:channel:entries channel="parentChannel"}
+	{relationship_field}
+		{relationship_field:parents field="relationship_field"}
+			{relationship_field:parents:title}
+		{/relationship_field:parents}
+	{/relationship_field}
+{/exp:channel:entries}
+
+{parents field="relationship_field"}
+
+{parents channel="parentChannel" field="relationship_field"}
+
+<table border="0" cellpadding="6" cellspacing="1" width="100%">
+	<tr>
+	<th>{lang:title}</th>
+	<th>{lang:excerpt}</th>
+	<th>{lang:author}</th>
+	<th>{lang:date}</th>
+	<th>{lang:total_comments}</th>
+	<th>{lang:recent_comments}</th>
+	</tr>
+
+{exp:search:search_results switch="resultRowOne|resultRowTwo"
+backspace="7"
+}
+
+<tr class="{switch}">
+	<td width="30%" valign="top"><b><a href="{auto_path}">{title}</a></b></td>
+	<td width="30%" valign="top">{excerpt}</td>
+	<td width="10%" valign="top"><a href="{member_path="member/index"}">{author}</a></td>
+	<td width="10%" valign="top">{entry_date format="%m/%d/%y"}</td>
+	<td width="10%" valign="top">{comment_total}</td>
+	<td width="10%" valign="top">{recent_comment_date format="%m/%d/%y"}</td>
+	</tr>
+
+{if count == total_results}
+	</table>
+	{/if}
+
+{paginate}
+	<p>Page {current_page} of {total_pages} pages {pagination_links}</p>
+	{/paginate}
+
+{/exp:search:search_results}
+
+Entry 1<br />
+Entry 2<br />
+Entry 3<br />
+
+{exp:search:search_results backspace="7"}
+	{title}<br />
+{/exp:search:search_results}
+
+Entry 1<br />
+Entry 2<br />
+Entry 3
+
+{auto_path}
+
+{excerpt}
+
+{full_text}
+
+{id_auto_path}
+
+{member_path="member/index"}
+
+{exp:search:keywords}
+
+{exp:search:total_results}
+
+{exp:search:total_results}
+	{total_results}
+{/exp:search:total_results}
+
+Purchase completed!  QTY {quantity} - {item_name}  Total Payment: {payment_gross} PayPal Transaction Fee: {payment_fee}  --------------------------  Buyer ({payer_status}):  {first_name} {last_name} {payer_business_name}  Address ({address_status}):  {address_name} {address_street} {address_city}, {address_state}  {address_zip} {address_country}
+
+{exp:search:simple_form channel="news"
+name="search_form"
+no_result_page="search/noresults"
+result_page="news/searches"
+results="20"
+search_in="entries"
+search_in="everywhere"
+search_in="titles"
+show_expired="yes"
+show_future_entries="yes"
+status="open"
+status="draft|reviewed|published"
+status="not submitted|processing|closed"
+channel="which"
+channel="channel1|channel2|channel3"
+channel="not channel1|channel2|channel3"
+where="all"
+form_class="search_form"
+form_id="my_search_form"
+}
+	<p>
+		<label for="keywords">Search:</label><br>
+		<input type="text" name="keywords" id="keywords"  maxlength="100">
+	</p>
+	<p>
+		<a href="{path="search/index"}">Advanced Search</a>
+	</p>
+	<p>
+		<input type="submit" value="submit" class="submit">
+	</p>
+{/exp:search:simple_form}
+
+<label for="keywords">Keywords:</label><br>
+<input type="text" name="keywords" id="keywords" maxlength="100" size="20">
+
+<label for="member_name">Member Name:</label><br>
+<input type="text" name="member_name" id="member_name" maxlength="100" size="40">
+
+<input type="checkbox" name="exact_match" id="exact_match" value="y">
+<label for="exact_match">Match Name Exactly</label>
+
+<label for="field_show_expired">Include Expired Entries?</label>
+<select name="show_expired" id="field_show_expired">
+	<option value="no">No</option>
+	<option value="yes">Yes</option>
+</select>
+
+<label for="field_show_future_entries">Include Future Entries?</label>
+<select name="show_future_entries" id="field_show_future_entries">
+	<option value="no">No</option>
+	<option value="yes">Yes</option>
+</select>
+
+{app_build}
+{if app_build == "2.61"}
+
+{app_version}
+
+{charset}
+
+<meta http-equiv="Content-Type" content="text/html; charset={charset}" />
+
+{cp_url}
+
+{current_path}
+
+{current_time}
+
+{current_time format="%Y %m %d %H:%i:%s"}
+
+{current_url}
+
+{debug_mode}
+
+{doc_url}
+
+{elapsed_time}
+
+{email}
+
+{embed=news/local}
+
+{encode="you@example.com" title="Email Me!"}
+
+Email Me!
+
+{group_id}
+
+{group_title}
+
+{gzip_mode}
+
+{hits}
+
+{homepage}
+
+{ip_address}
+
+{lang}
+
+{location}
+
+{member_group}
+
+{member_id}
+
+{member_profile_link}
+
+<a href="http://example.com/index.php/member/1/">Joe Smith</a>
+
+{redirect="news/local" status_code="301"}
+
+{if segment_3 != "cookies"}   {redirect="bake/cookies"} {/if}
+
+{if segment_2 != ""}   {redirect="404"} {/if}
+
+{screen_name}
+
+{site_name}
+
+{site_url}
+
+{template_edit_date format="%Y %m %d %H:%i:%s"}
+
+{total_comments}
+
+{theme_folder_url}
+
+{total_entries}
+
+{total_queries}
+
+{username}
+
+{webmaster_email}
+
+{encode="{webmaster_email}" title="Contact Us"}
+
+{XID_HASH}
+
+{exp:channel:entries channel="default_site"}
+  This article was written by: {screen_name}<br />
+  The currently logged in user is: {logged_in_screen_name}
+{/exp:channel:entries}
+
+{entry_date {my_date_formatting}}
+
+{entry_date format="%m-%d-%Y"}
+
+{ellislab_date_formatting}
+
+{codeigniter_date_formatting}
+
+{global_date_formatting}
+
+{stylesheet="template_group/css_template"}
+
+<link rel="stylesheet" type="text/css" media="all" href="{stylesheet="channel/channel_css"}" />
+
+{exp:email:tell_a_friend} {/exp:email:tell_a_friend}
+
+{exp:email:tell_a_friend charset="utf-8" allow_html="no"
+allow_html="yes" allow_html="<p>,<a>" allow_html="no"
+charset="utf-8"
+recipients="admin@example.com"
+recipients="admin@example.com,ceo@example.com,president@example.com"
+redirect="5"
+redirect="6"
+redirect="none"
+replyto="yes"
+return="http://example.com/index.php"
+return="http://example.com/index.php"
+return="http://example.com/index.php|Home Page"
+return="|Return to the Entry"
+status="open"
+status="draft|reviewed|published"
+status="not submitted|processing|closed"
+channel="news"
+form_class="tellafriend_form"
+form_id="tellafriend_form"}
+	<p>
+		<label for="from">Your Email: </label><br />
+		<input type="text" id="from" name="from" size="40" maxlength="35" value="{member_email}" />
+	</p>
+	<p>
+		<label for="name">Your Name: </label><br />
+		<input type="text" id="name" name="name" size="40" maxlength="35" value="{member_name}" />
+	</p>
+	<p>
+		<label for="to">To: </label><br />
+		<input type="text" id="to" name="to" size="40" maxlength="35" />
+	</p>
+	<p>
+		<label for="subject">Subject: </label><br />
+		<input type="text" id="subject" name="subject" size="40" value="Entry by: {author}" />
+	</p>
+	<p>
+		<label for="message">Message: </label><br />
+		<textarea id="message" name="message" readonly="readonly" rows="18" cols="40">
+			{summary}
+			{body}
+			{permalink="template_group/template"}
+		</textarea>
+	</p>
+	<p>
+		<input name="submit" type="submit" value="Submit Form" />
+	</p>
+{/exp:email:tell_a_friend}
+
+<a href="{permalink="channel/friend"}">Tell-a-Friend</a>
+
+{member_email}
+
+{member_name}
+
+{title}	 {permalink}	 {author}	 {body}	 et cetera...
+
+<input type="text" name="captcha" maxlength="20" />
+
+{if captcha}
+	<p>Please enter the word you see in the image below:</p>
+	<p>{captcha}<br /> <input type="text" name="captcha" /></p>
+{/if}
+
+<input type="text" name="from" size="40" />
+
+<textarea name="message" rows="10" cols="40"></textarea>
+
+<input type="text" name="name" size="40" />
+
+<textarea name="required" rows="5" cols="40" readonly="readonly"></textarea>
+
+<input type="text" name="subject" size="40" />
+
+<input type="text" name="to" size="40" />
+
+{segment_1} {segment_2} {segment_3} {segment_4} {segment_5} {segment_6} {segment_7} {segment_8} {segment_9}
+
+{exp:channel:entries  url_title="{segment_3}"}
+	<h1>{title}</h1>
+	<p>{body}</p>
+{/exp:channel:entries}
+
+{if last_segment == "joe"}	 Hey Joe, where you goin" with that? {/if}
+
+Hey {last_segment}, where you goin" with that?
+
+{copyright}
+
+{exp:channel:entries channel="{special_channel}" limit="10"}
+
+{embed="Namespace:Topic"}
+
+{article}
+
+{author}
+
+{revision_date format=""}
+
+Revised: {revision_date format="%D, %F %d, %Y - %g:%i:%s"}
+
+{if categories}
+
+{content}
+
+{path:redirect_page}
+
+{preview}
+
+{redirect_page}
+
+{if moderated}
+
+{if old_revision}
+
+{if locked}
+
+{if preview}
+
+{form_declaration:wiki:edit}
+
+{file_name}
+
+{file_type}
+
+{summary}
+
+{path:view_file}
+
+{upload_date format=""}
+
+{author}
+
+{email}
+
+{url}
+
+{path:author_profile}
+
+{if is_image}
+
+{if no_history}
+
+{if history}
+
+{count}
+
+{path:open_revision}
+
+{path:close_revision}
+
+{revision_author}
+
+{revision_date format=""}
+
+Revised: {revision_date format="%D, %F %d, %Y - %g:%i:%s"}
+
+{revision_notes}
+
+{revision_status}
+
+{switch="option_one|option_two|option_three"}
+
+{if notes}
+
+{if revision_status}
+
+{if revision_status == "closed"} [<a href="{path:open_revision}">Open Revision</a>] {/if}   {if revision_status == "open"} [<a href="{path:close_revision}">Close Revision</a>] {/if}
+
+[<a href="http://example.com/index.php/wiki/index/revision/25/open/">Open Revision</a>]
+
+{elapsed_time}
+
+{original_page}
+
+{redirect_page}
+
+{revision_id}
+
+{title}
+
+{wiki_name}
+
+{XID_HASH}
+
+{namespace}
+
+{category_namespace}
+
+{file_namespace}
+
+{image_namespace}
+
+{main_namespace}
+
+{special_namespace}
+
+{path:wiki_base_url}
+
+<a href="{path:wiki_base_url}{special_namespace}:Titles">Title List</a>
+
+<a href="http://example.com/index.php/wiki/Special:Titles">Title List</a>
+
+{path:wiki_home}
+
+<a href="{path:wiki_home}">Home</a>
+
+<a href="http://example.com/index.php/wiki">Home</a>
+
+{path:view_article}
+
+{path:edit_topic}
+
+{path:topic_history}
+
+{if logged_out}
+
+{if logged_in}
+
+{screen_name}
+
+{path:login}
+
+{path:register}
+
+{path:memberlist}
+
+{path:your_profile}
+
+{path:your_control_panel}
+
+{path:logout}
+
+{if new_article}
+
+{if article}
+
+{if redirected}
+
+{if redirect_page}
+
+{if revision}
+
+{if edit_article}
+
+{if article_history}
+
+{if special_page}
+
+{if file_page}
+
+{if can_edit}
+
+{if cannot_edit}
+
+{if can_admin}
+
+{if cannot_admin}
+
+{if uploads}
+
+{wiki:categories backspace="#"}
+
+{wiki:categories show_empty="no"}
+
+{wiki:categories style=""}
+
+{path:view_category}
+
+{depth}
+
+{if depth == "#"}
+
+{if children}
+
+{if first_child}
+
+{if last_child}
+
+{header} content before listing articles. {/header}
+
+{footer} content after listing articles. {/footer}
+
+{if no_results}
+
+{article_title}
+
+{count}
+
+{path:view_article}
+
+{path:view_orig_article}
+
+{switch="option_one|option_two|option_three"}
+
+{title}
+{path:view_category}
+
+{wiki:categories backspace="#"}
+
+{wiki:categories show_empty="no"}
+
+{wiki:categories style=""}
+
+{path:view_category}
+
+{count}
+
+{depth}
+
+{switch="option_one|option_two|option_three"}
+
+{if depth == "#"}
+
+{if children}
+
+{if first_child}
+
+{if last_child}
+
+{wiki:category_subcategories backspace="#"}
+
+{wiki:category_subcategories style=""}
+
+{header} content before listing subcategories. {/header}
+
+{footer} content after listing subcategories. {/footer}
+
+{if subcategory_total == "0"}
+
+{path:view_category}
+
+{category_name}
+
+{subcategory_total}
+
+{wiki:category_articles backspace="#"}
+
+{wiki:category_articles limit=""}
+
+{wiki:category_articles limit="20"}
+
+{wiki:category_articles paginate=""}
+
+{header} content before listing articles. {/header}
+
+{footer} content after listing articles. {/footer}
+
+{letter_header}<div class="cap">{letter}</div>{/letter_header}
+
+{if articles_total == "0"}
+
+{path:view_category}
+
+{category_name}
+
+{articles_total}
+
+{revision_date format=""}
+
+{title}
+
+{revision_id}
+
+{author}
+
+{email}
+
+{revision_notes}
+
+{path:view_article}
+
+{path:view_revision}
+
+{path:open_revision}
+
+{path:close_revision}
+
+{content}
+
+{article}
+
+{wiki:files limit="#"}
+
+{wiki:files paginate=""}
+
+{wiki:files orderby="file_name"}
+
+{wiki:files orderby="file_size"}
+
+{wiki:files sort="asc"}
+
+{wiki:files orderby="upload_date" sort="desc"}
+
+{absolute_count}
+
+{author}
+
+{count}
+
+{email}
+
+{file_name}
+
+{file_type}
+
+{path:author_profile}
+
+{path:view_file}
+
+{summary}
+
+{switch="option_one|option_two|option_three"}
+
+{upload_date format=""}
+
+{url}
+
+{if is_image}
+
+{gmt_last_updated format=""}
+
+{last_updated format=""}
+
+{language}
+
+{wiki:recent_changes limit=""}
+
+{wiki:recent_changes limit="20"}
+
+{wiki:recent_changes paginate=""}
+
+{absolute_count}
+
+{article}
+
+{author}
+
+{content}
+
+{count}
+
+{email}
+
+{gmt_revision_date format=""}
+
+{page_id}
+
+{path:view_article}
+
+{revision_date format=""}
+
+{revision_id}
+
+{revision_notes}
+
+{switch="option_one|option_two|option_three"}
+
+{title}
+
+{url}
+
+{if no_results}
+
+{if results}
+
+{keywords}
+
+{wiki:search_results limit="#"}
+
+{wiki:search_results paginate=""}
+
+{wiki:search_results switch=""}
+
+{wiki:search_results switch="blue|red"} <div class="{switch}">a search result</div>
+
+<div class="blue">a search result</div> <div class="red">a search result</div> <div class="blue">a search result</div> <div class="red">a search result</div>
+
+{absolute_count}
+
+{article}
+
+{author}
+
+{content}
+
+{count}
+
+{email}
+
+{gmt_revision_date format=""}
+
+{page_id}
+
+{path:view_article}
+
+{revision_date format=""}
+
+{revision_id}
+
+{revision_notes}
+
+{switch}
+
+{switch="option_one|option_two|option_three"}
+
+{title}
+
+{url}
+
+{wiki:title_list columns="#"}
+
+{articles}
+
+{row_start}
+
+{row_blank}
+
+{row_end}
+
+{row_column}
+
+{article}
+
+{author}
+
+{content}
+
+{count}
+
+{email}
+
+{last_updated format=""}
+
+{path:view_article}
+
+{revision_notes}
+
+{switch="option_one|option_two|option_three"}
+
+{title}
+
+{url}
+
+{wiki:title_list columns="#"}
+
+{articles}
+
+{row_start}
+
+{row_blank}
+
+{row_end}
+
+{row_column}
+
+{article}
+
+{author}
+
+{content}
+
+{count}
+
+{email}
+
+{last_updated format=""}
+
+{path:view_article}
+
+{revision_notes}
+
+{switch="option_one|option_two|option_three"}
+
+{title}
+
+{url}
+
+{file_types}
+
+{if file_types == "images"}
+
+{form_declaration:wiki:uploads}
+
+{path:wiki_base_url}{special_namespace}:Categories
+
+<form method="post" action="{path:wiki_base_url}{special_namespace}:Search_results">
+
+<form method="post" action="{path:wiki_base_url}{special_namespace}:Find_page">
+
+{if preview} <div class="defaultBold">WARNING: You are viewing a preview of your submission.  No changes to the article have been made.</div> <div class="preview">{preview}</div> {/if}
+
+Notes:&nbsp; <input class="input" name="revision_notes" id="revision_notes" value="{revision_notes}" type="text" size="50" maxlength="80" />
+
+<input name="submit" class="submit" type="submit" value="Submit" onclick="is_preview = false;" />	 <input name="preview" class="submit" type="submit" value="Preview" onclick="is_preview = true;" />
+
+/* ---------------------------------------- /*  Template - Special Page: Associated Pages /* ----------------------------------------*/  function wiki_special_associated_pages() {   ob_start();    ?>
+{wiki:associated_pages}
+ {if no_results} <h3>No Articles Link to {article_title}</h3> {/if}  {header}<h3>Articles that link to {article_title}</h3> <p>The following pages link to <a href="{path:view_orig_article}">{article_title}</a>:</p> <ul> {/header}  <li><a href="{path:view_article}">{title}</a></li>  {footer}</ul>{/footer}
+ {/wiki:associated_pages}
+	<?php    $buffer = ob_get_contents();   ob_end_clean();    return $buffer; } /* END */  /** Variables List for wiki_special_associated_articles():  Along with the variables from wiki_page(), this template also has:  TAG VARIABLES: {wiki:associated_articles}  - Used for displaying list of recent changes   --- SINGLE VARIABLES:     {title}              - Page Title     {path:view_article}        - Link to View Article     {article_title}          - Page Title of the originating article     {path:view_orig_article}    - Link to view the originating article     {count}              - "count" of the current revision being displayed     {switch="one|two|three"}    - Rotate between any number of values, separated by a pipe symbol   --- PAIR VARIABLES:     {header}{/header}        - Content to go before this tag's content     {footer}{/footer}        - Content to go after this tag's content   --- CONDITIONAL VARIABLES:     {if no_results}          -- Content to display if there are no associated articles  */
+
+{if article}<li><a href="{path:wiki_home}{special_namespace}:Associated_Pages/{url_title}/" title="What Links Here">What Links Here</a></li>{/if}
+
+/* ---------------------------------------- /*  Template - Special Page: Uncategorized Pages /* ----------------------------------------*/  function wiki_special_uncategorized_pages() {   ob_start();    ?>  <div class='defaultLeft'> Choose Namespace:  <select onchange="location.href=this.value"> <option value="{path:wiki_home}{special_namespace}:Uncategorized/">{main_namespace}</option> {wiki:custom_namespaces_list} <option value="{path:wiki_home}{special_namespace}:Uncategorized/{namespace_short_name}/" {namespace_selected}>{namespace_label}</option> {/wiki:custom_namespaces_list} </select> </div>
+{wiki:title_list columns="3"}
+ {if no_results} <div class="marginpad"><strong>Sorry, there seem to be no uncategorized articles for this namespace.</strong></div> {/if}  <table style="width:98%;">  {articles} {row_start}<tr>{/row_start}  {row_column} <td style="width:33%"> <a href="{path:view_article}">{title}</a><br /> </td> {/row_column}  {row_blank}<td>&nbsp;</td>{/row_blank}  {row_end}</tr>{/row_end}  {/articles}  </table>
+ {/wiki:title_list}    <?php    $buffer = ob_get_contents();   ob_end_clean();    return $buffer; } /* END */  /** Variables List for wiki_special_uncategorized_pages():  Along with the variables from wiki_page(), this template also has:  TAG VARIABLES: {wiki:title_list}   - Used for displaying list of titles   --- CONDITIONALS     {if no_results}  - If there are no articles to show   --- PARAMETERS     columns=""   - How many columns to display   -- VARIABLE PAIRS     {articles}   - Encloses the repeating portion of the tag     {row_start}   - What content to use at start of a row     {row_blank}   - What content to use if blank column     {row_end}   - What content to use at end of a row     {row_column} - Used for each column in a row     --- SINGLE VARIABLES       {title}            - Title of article       {last_updated format=""}  - When Article was last updated       {author}          - Screen Name of revision author       {email}            - Email for Revision Author       {url}            - URL for Revision Author       {revision_notes}      - Notes about revision, if any       {path:view_article}      - Link to View Article       {content}          - Content of revision       {article}          - Fully rendered article       {count}            - "count" of the current article being displayed       {switch="one|two|three"}  - Rotate between any number of values, separated by a pipe symbol  */
+
+<li><a href="{path:wiki_home}{special_namespace}:Uncategorized" title="Uncategorized Pages">Uncategorized Pages</a></li>
+
+{exp:channel:entries channel="stores"}
+	<h1>{title}</h1>
+	<p>Phone: {phone}</p>
+	<p>Address: {address}</p>
+	<h2>Specialty Pizzas</h2>
+	{specialty_pizzas}
+		<h3>{specialty_pizzas:title}</h3>
+		<p>{specialty_pizzas:description}</p>
+		<p>{specialty_pizzas:ingredients}</p>
+	{/specialty_pizzas}
+{/exp:channel:entries}
+
+<h2>Specialty Pizzas</h2>
+{specialty_pizzas}
+	<h3>{specialty_pizzas:title}</h3>
+	<p>{specialty_pizzas:description}</p>
+	<p>{specialty_pizzas:ingredients}</p>
+{/specialty_pizzas}
+
+<h3>{specialty_pizzas:title}</h3>
+<p>{specialty_pizzas:description}</p>
+<p>{specialty_pizzas:ingredients}</p>
+
+{exp:channel:entries channel="pizzas"}
+	<h2>{title}</h2>
+	<p>{description}</p>
+	<p>{ingredients}</p>
+	<h3>Where can I find this pizza?</h3>
+	{parents field="specialty_pizzas"}
+		<strong>{parents:title}</strong>: <br />
+		{parents:phone} <br />
+		<p>{parents:address}</p>
+	{/parents}
+{/exp:channel:entries}
+
+<strong>{parents:title}</strong>: <br />
+{parents:phone} <br />
+<p>{parents:address}</p>
+
+{exp:channel:entries channel="shows"}
+	<div class="show">
+		<h2><a href="{path="shows/index"}/{url_title}">{title}</a></h2>
+		<div class="show-body">
+			<div class="what"><label>What</label>{what}</div>
+			<div class="when"><label>When</label>{when}</div>
+			<div class="who">
+				<label>Who's playing?</label>
+				{bands}
+					<div class="band"><strong>{bands:title}</strong> {bands:style}</div>
+				{/bands}
+			</div>
+		</div>
+	</div>
+{/exp:channel:entries}
+
+<div class="who">
+	<label>Who's playing?</label>
+	{bands}
+		<div class="band"><strong>{bands:title}</strong> {bands:style}</div>
+	{/bands}
+</div>
+
+<div class="band"><strong>{bands:title}</strong> {bands:style}</div>
+
+{exp:channel:entries channel="bands" limit="1"}
+	<div class="band">
+		<h2>{title}</h2>
+		<span class="style">{style}</span>
+		<p>{history}</p>
+		<div class="members">
+			{members}
+				<div class="member">
+					<a href="{path="musicians/index"}/{members:url_title}">{members:first_name} {members:last_name}</a>
+				</div>
+			{/members}
+		</div>
+		<div class="shows">
+			<h3>Recent Shows</h3>
+			{parents channel="shows" field="bands"}
+				<div class="show">
+					<strong>{parents:title}</strong>
+					<div class="what">{parents:what}</div>
+					<div class="when">{parents:when}</div>
+				</div>
+			{/parents}
+		</div>
+	</div>
+{/exp:channel:entries}
+
+<div class="shows">
+<h3>Recent Shows</h3>
+{parents channel="shows" field="bands"}
+	<div class="show">
+		<strong>{parents:title}</strong>
+		<div class="what">{parents:what}</div>
+		<div class="when">{parents:when}</div>
+	</div>
+{/parents}
+</div>
+
+<div class="show">
+	<strong>{parents:title}</strong>
+	<div class="what">{parents:what}</div>
+	<div class="when">{parents:when}</div>
+</div>
+
+{exp:channel:entries channel="musicians" limit="1"}
+	<div class="musician">
+		<h2>{first_name} {last_name}<h2>
+		<div class="instruments">
+			{instruments}
+		</div>
+		<div class="biography">
+			{biography}
+		</div>
+		<div class="past-bands">
+			<ul>
+			{parents field="members"}
+				<li class="band-name"><a href="{path="bands/index"}/{parents:url-title}">{parents:title}</a></li>
+			{/parents}
+			</ul>
+		</div>
+	</div>
+{/exp:channel:entries}
+
+<div class="past-bands">
+	<ul>
+	{parents field="members"}
+		<li class="band-name"><a href="{path="bands/index"}/{parents:url-title}">{parents:title}</a></li>
+	{/parents}
+	</ul>
+</div>
+
+{exp:channel:entries channel="seasons" title="Spring 2013" limit="1"}
+	<div class="season">
+		<h2>{title}</h2>
+		<h3>Teams</h3>
+		<div class="teams">
+			{teams}
+				<div class="team">
+					<h4>{teams:title}</h4>
+					{teams:players}
+						<span class="player">{teams:players:first_name} {teams:players:last_name}</span>
+					{/teams:players}
+				</div>
+			{/teams}
+		</div>
+		<h3>Games</h3>
+		<div class="games">
+			{games}
+				<div class="game">
+					<h4>{games:title}</h4>
+					{games:home:title} vs {games:away:title}
+				</div>
+			{/games}
+		</div>
+	</div>
+{/exp:channel:entries}
+
+{exp:channel:entries channel="seasons" title="Spring 2013" limit="1"}
+
+{teams}
+	<div class="team">
+		<h4>{teams:title}</h4>
+		{teams:players}
+			<span class="player"><span class="number">{teams:players:number}{teams:players:first_name} {teams:players:last_name}</span>
+		{/teams:players}
+	</div>
+{/teams}
+
+<h4>{teams:title}</h4>
+
+{exp:channel:entries channel="seasons" url-title="winter-2013" limit="1"}
+	<a href="{path="seasons/index"}/{previous:url_title}">{previous:title}</a>
+	<a href="{path="seasons/index"}/{next:url_title}">{next:title}</a>
+
+{teams:players}
+	<span class="player">{teams:players:first_name} {teams:players:last_name}</span>
+{/teams:players}
+
+<span class="player">{teams:players:first_name} {teams:players:last_name}</span>
+
+{teams:players}
+	<span class="player">{teams:players:first_name} {teams:players:last_name}</span>
+{/teams:players}
+
+{games}
+	<div class="game">
+		<h4>{games:title}</h4>
+		{games:home:title} vs {games:away:title}
+	</div>
+{/games}
+
+{exp:channel:entries channel="games" limit="1"}
+	<h2>{home:title} ({home_score}) vs {away:title} ({away_score})</h2>
+	<p>In this game the {home:title} played the {away:title}.</p>
+	<p>The final scores were {home:title} with {home_score} and {away:title} with {away_score}.</p>
+	<p>Playing for {home:title} were:</p>
+	<div class="players">
+		{home:players}
+			<span class="player">#{home:players:number} {home:players:first_name} {home:players:last_name}</span>
+		{/home:players}
+	</div>
+	<p>Playing for {away:title} were:</p>
+	<div class="players">
+		{away:players}
+			<span class="player">#{away:players:number} {away:players:first_name} {away:players:last_name}</span>
+		{/away:players}
+	</div>
+{/exp:channel:entries}
+
+{exp:channel:entries channel="teams"}
+	<div class="games"><ul>
+		{parents field="home|away"}
+			<li>{parents:home:title} ({parents:home_score}) vs {parents:away:title} ({parents:away_score})</li>
+		{/parents}
+	</ul></div>
+{/exp:channel:entries}
+
+{exp:channel:entries channel="games"}
+	<div class="navigation"><ul>
+		{siblings channel="seasons" field="games"}
+			<li>{siblings:title}	- {siblings:home:title} vs {siblings:away:title}</li>
+		{/siblings}
+	</ul></div>
+{/exp:channel:entries}
+
+{exp:channel:entries channel="parentChannel"}
+	{title} - {field1} - {field2}
+	{relationship_field}
+		{relationship_field:title}
+		{relationship_field:field1}
+		{relationship_field:field2}
+	{/relationship_field}
+{/exp:channel:entries}
+
+{relationship_field}
+	{relationship_field:title}
+	{relationship_field:field1}
+	{relationship_field:field2}
+{/relationship_field}
+
+{exp:channel:entries channel="parentChannel"}
+	{title} - {field1} - {field2}
+	{relationship_field:title}
+	{relationship_field:field1}
+	{relationship_field:field2}
+{/exp:channel:entries}
+
+{exp:channel:entries channel="childChannel"}
+	{siblings field="relationship_field"}
+		{siblings:title} - {siblings:field1} - {siblings:field2}
+	{/siblings}
+{/exp:channel:entries}
+
+{exp:channel:entries channel="parentChannel"}
+	{relationship_field}
+		{relationship_field:siblings field="relationship_field"}
+			{relationship_field:siblings:title}
+		{/relationship_field:siblings}
+	{/relationship_field}
+{/exp:channel:entries}
+
+{siblings field="relationship_field"}
+
+{siblings channel="parentChannel" field="relationship_field"}
+
+{exp:channel:entries channel="childChannel"}
+	{parents field="relationship_field"}
+		{parents:title} - {parents:field1} - {parents:field2}
+	{/parents}
+{/exp:channel:entries}
+
+{exp:channel:entries channel="parentChannel"}
+	{relationship_field}
+		{relationship_field:parents field="relationship_field"}
+			{relationship_field:parents:title}
+		{/relationship_field:parents}
+	{/relationship_field}
+{/exp:channel:entries}
+
+{parents field="relationship_field"}
+
+{parents channel="parentChannel" field="relationship_field"}
+
+{site_name}
