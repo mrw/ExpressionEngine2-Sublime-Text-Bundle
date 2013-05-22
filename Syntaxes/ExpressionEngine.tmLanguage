@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>comment</key>
-	<string>ExpressionEngine grammar for Sublime Text. Forked and overhauled and expanded by fcgrx from imjared's module, which was forked from wes baker's fork of tim kelty's original work.</string>
+	<string>ExpressionEngine grammar for Sublime Text. Forked, overhauled and expanded by fcgrx from imjared's module, which was forked from wes baker's fork of tim kelty's original work.</string>
 	<key>fileTypes</key>
 	<array>
 		<string>html</string>
@@ -420,7 +420,7 @@
 			<key>match</key>
 			<string>(/?exp:weblog:.*|exp:channel:entry_form|exp:trackback:.*|exp:gallery:.*|display_custom_fields|saef_javascript)\b(?=\s|\})</string>
 			<key>name</key>
-			<string>invalid.deprecated</string>
+			<string>invalid.deprecated.ee</string>
 		</dict>
 		<key>ee-tag-global-variable</key>
 		<dict>

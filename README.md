@@ -1,7 +1,7 @@
-ExpressionEngine 2.0 Sublime Text 3 Bundle
+ExpressionEngine 2.7 Sublime Text 3 Bundle
 ==========================================
 
-ExpressionEngine support package for Sublime Text 2 &amp; 3 that also supports the [jQuery bundle](https://github.com/mrmartineau/jQuery) syntax when inside of `<script>` tags.
+ExpressionEngine 2 support package for Sublime Text 2 &amp; 3 that also supports the [jQuery bundle](https://github.com/mrmartineau/jQuery) syntax when inside of `<script>` tags.
 
 PLUS:
 
@@ -33,7 +33,25 @@ You must install the jQuery bundle (mentioned above) to take full avantage of th
 
 The HTML5 package for ST may override this package and prevent proper highlighting.
 
-To take full advantage of the extended syntax highlighting made available with this package, you will want to use a full-featured Sublime Text color theme. Specifically, your theme should assign unique styling to the following scopes:
+Grammar forked, overhauled and expanded by fcgrx from [imjared's ExpressionEngine2-Sublime-Text-Bundle][https://github.com/imjared/ExpressionEngine2-Sublime-Text-Bundle], which had this note:
+
+Forked and only slightly modified from [Wes Baker's EE 2 TextMate Bundle][https://github.com/wesbaker/ExpressionEngine2.tmbundle], which had this note:
+
+A reworked version of [Tim Kelty's ExpressionEngine bundle](http://github.com/timkelty/expressionengine-tweaked-tmbundle), updated to work with ExpressionEngine 2.0.
+
+Installation
+------------
+
+1. Click the Downloads button at the top right of this page.
+2. Choose the zip file.
+3. Once downloaded, unzip the the zip file.
+4. If you're looking at a folder, rename it to ExpressionEngine. If you're looking at a set of files, create a new folder named ExpressionEngine and put the files in.
+5. Copy the folder to ~/Library/Application Support/Sublime Text 2/Packages/ (make sure this is the Library inside your home folder, not the one in the root of your hard drive)
+
+Use a good color theme
+----------------------
+
+To take full advantage of the extended syntax highlighting available with this package, you will want to use a full-featured Sublime Text color theme. Specifically, your theme should assign unique styling to the following scopes:
 
 * entity.function
 * entity.other
@@ -53,9 +71,9 @@ More comprehensive coloring can be accomplished by also assigning styling to the
 * entity.other.attribute-name.user.ee
 * entity.other.attribute-name.predefined.ee
 * invalid.illegal
-* invalid.deprecated
+* invalid.deprecated.ee
 * keyword.control.ee
-* keyword.operator.logical
+* keyword.operator.logical.ee
 * punctuation.definition.tag.begin.ee
 * punctuation.definition.tag.end.ee
 * support.constant.ee
@@ -64,27 +82,10 @@ More comprehensive coloring can be accomplished by also assigning styling to the
 * variable.parameter.ee
 * variable.other.ee
 
-Forked and modified from [imjared's ExpressionEngine2-Sublime-Text-Bundle][https://github.com/imjared/ExpressionEngine2-Sublime-Text-Bundle], which had this note:
-
-Forked and only slightly modified from [Wes Baker's EE 2 TextMate Bundle][https://github.com/wesbaker/ExpressionEngine2.tmbundle], which had this note:
-
-A reworked version of [Tim Kelty's ExpressionEngine bundle](http://github.com/timkelty/expressionengine-tweaked-tmbundle), updated to work with ExpressionEngine 2.0.
-
-Installation
-------------
-
-1. Click the Downloads button at the top right of this page.
-2. Choose the zip file.
-3. Once downloaded, unzip the the zip file.
-4. If you're looking at a folder, rename it to ExpressionEngine. If you're looking at a set of files, create a new folder named ExpressionEngine and put the files in.
-5. Copy the folder to ~/Library/Application Support/Sublime Text 2/Packages/ (make sure this is the Library inside your home folder, not the one in the root of your hard drive)
 
 
-
-
-
-REMAINING PROBLEMS WITH THIS SYNTAX
------------------------------------
+Remaining issues with the highlighting syntax
+---------------------------------------------
 
 A list of shortcomings with this syntax definition (and test cases for each) is included in the file "known_problems.html".
 
