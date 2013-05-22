@@ -1,5 +1,5 @@
-ExpressionEngine 2.0 Sublime Text 2 Bundle2
-===========================================
+ExpressionEngine 2.0 Sublime Text 3 Bundle
+==========================================
 
 ExpressionEngine support package for Sublime Text 2 &amp; 3 that also supports the [jQuery bundle](https://github.com/mrmartineau/jQuery) syntax when inside of `<script>` tags.
 
