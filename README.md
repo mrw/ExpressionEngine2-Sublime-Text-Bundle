@@ -21,15 +21,44 @@ PLUS:
 
 
 
-NOTE:
+NOTES:
 
 You must install a jQuery support package to take full avantage of this package.
 
 The HTML5 package for ST may override this package and prevent proper highlighting.
 
+To take full advantage of the extended syntax highlighting made available with this package, you will want to use a full-featured Sublime Text color theme. Specifically, your theme should assign unique styling to the following scopes:
+
+* entity.function
+* entity.other
+* invalid
+* keyword.control
+* keyword.operator
+* support.constant
+* support.function
+* support.variable
+* variable
+* variable.parameter
+
+More comprehensive coloring can be accomplished by also assigning styling to these more specific scopes:
+
+* ee.tag.html
+* entity.function.addon.ee
+* entity.other.attribute-name.user.ee
+* entity.other.attribute-name.predefined.ee
+* invalid.illegal
+* keyword.control.ee
+* keyword.operator.logical
+* support.constant.ee
+* support.function.addon.ee
+* support.variable.language.ee
+* variable.parameter.ee
+* variable.other.ee
+
+
 Forked and modified from [imjared's ExpressionEngine2-Sublime-Text-Bundle][https://github.com/imjared/ExpressionEngine2-Sublime-Text-Bundle], which had this note:
 
-Forked and only slightly modified from [Wes Baker's EE 2 TextMate Bundle](https://github.com/wesbaker/ExpressionEngine2.tmbundle), which had this note:
+Forked and only slightly modified from [Wes Baker's EE 2 TextMate Bundle][https://github.com/wesbaker/ExpressionEngine2.tmbundle], which had this note:
 
 A reworked version of [Tim Kelty's ExpressionEngine bundle](http://github.com/timkelty/expressionengine-tweaked-tmbundle), updated to work with ExpressionEngine 2.0.
 
