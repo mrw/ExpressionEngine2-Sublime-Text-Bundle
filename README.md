@@ -23,6 +23,8 @@ PLUS:
 
 NOTE:
 
+You must install a jQuery support package to take full avantage of this package.
+
 The HTML5 package for ST may override this package and prevent proper highlighting.
 
 Forked and modified from [imjared's ExpressionEngine2-Sublime-Text-Bundle][https://github.com/imjared/ExpressionEngine2-Sublime-Text-Bundle], which had this note:
