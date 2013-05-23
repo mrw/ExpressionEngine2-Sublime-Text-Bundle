@@ -8,22 +8,54 @@ Most of these problems have to do with nesting multiple syntaxes. Many could pro
 From higher to lower priority:
 
 
-(1) Nested quotes (EE tag containing quote nested inside quoted string). Actually a nested syntax challenge -- EE tags within HTML tags:
-
-	<a href="{path="channel/archives"}">{month}, {year}</a>
-	<a href="{day_path="channel/index"}">{day_number}</a>
-	<a href="{title_permalink="channel/index"}">{title}</a>
-	<a href="{profile_path="member/profile"}">{author}</a>
-
-(2) Nesting EE tags inside HTML tags _AND_ not losing full highlighting of all HTML (solving both requirements probably requires injection grammar):
+(1) Nesting EE tags inside HTML tags _AND_ not losing full highlighting of all HTML (solving both requirements probably requires injection grammar):
 
 	<a {!-- COMMENT --} href="{path="channel/archives"}">
-		<img src="foo" alt="{site_name}" />
+		<img src="foo" {if site_name}alt="{site_name}"{/if} />
 	</a>
 
-(3) No coloring of php code (hidden cost of properly coloring EE code within PHP code)
+HACK SOLUTION: Insert this into HTML.tmLanguage (right after the <array> tag which follows "<key>tag-stuff</key>", ~line 900):
+<dict>
+	<key>include</key>
+	<string>text.html.ee</string>
+</dict>
+
+(2) No coloring of php code (hidden cost of properly coloring EE code within PHP code). Can be solved with injection grammar.
+
+	 <?php {if username}echo 'hello {username}';{/if} ?>
 
 	 <?php echo 'hello {username}'; ?>
+
+HACK SOLUTION: Insert this into PHP.tmLanguage (right after the <array> tag which follows "<key>language</key>", ~line 466):
+<dict>
+	<key>include</key>
+	<string>text.html.ee</string>
+</dict>
+
+(3) Nesting EE tags inside jQuery functions (probably requires injection grammar):
+
+	<script>
+		{!-- COMMENT --}
+		$(function() {
+			{!-- COMMENT --}
+		});
+		var foo = function()
+		{
+			{!-- COMMENT --}
+		};
+	</script>
+
+HACK SOLUTION:
+First, Insert this into jQuery.tmLanguage (right after the <array> tag which follows "<key>patterns</key>" that follows "<string>(\$|jQuery)(\((?!('|")&lt;))</string>", ~line 55):
+<dict>
+	<key>include</key>
+	<string>text.html.ee</string>
+</dict>
+Then, Insert this into jQuery.tmLanguage (right after the <array> tag which follows "<key>patterns</key>" that follows "<key>nested-parens</key>", ~line 588):
+<dict>
+	<key>include</key>
+	<string>text.html.ee</string>
+</dict>
 
 (4) EE code inside CSS (CSS definitions get messed up by EE brackets). Possible solution: inject EE definition (at least comments) into CSS and JS and PHP syntaxes?? Or use Matching Nested Constructs feature of regex
 
@@ -34,17 +66,25 @@ From higher to lower priority:
 		{if logged_in}
 			html{ {if group_id == 1}background:yellow;{/if} }
 		{/if}
-		body{ background:{!-- white --} black;}
+		body{ background:
+		// css
+			{!-- white --} black;}
 	</style>
 	/* THIS TEXT IS INTERPRETED AS A "comment.block.css" EVEN THOUGH IT"S OUTSIDE THE STYLE BLOCK ABOVE. ALL HIGHLIGHTING IS BROKEN FROM HERE ON OUT DUE TO EE COMMENT ABOVE. SECOND STYLE TAG BELOW IS NEEDED TO CLOSE THE STYLE BLOCK AND RESTORE ORDER. */
 	</style>
 
-(5) EE tags inside HTML tags. Presents like nested quotes problem (EE tag containing quote nested inside quoted string):
+(5) Nested quotes (EE tag containing quote nested inside quoted string). Actually a nested syntax challenge -- EE tags within HTML tags. Workaround = use single quotes inside double quotes:
 
 	<a href="{path="channel/archives"}">{month}, {year}</a>
 	<a href="{day_path="channel/index"}">{day_number}</a>
 	<a href="{title_permalink="channel/index"}">{title}</a>
 	<a href="{profile_path="member/profile"}">{author}</a>
+
+HACK SOLUTION: Insert this into HTML.tmLanguage (right after the <array> tag which follows "<key>patterns</key>" that follows "<string>string.quoted.double.html</string>", ~line 744):
+<dict>
+	<key>include</key>
+	<string>text.html.ee</string>
+</dict>
 
 (6) Don't match local variables preceded by colon:
 
