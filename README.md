@@ -1,5 +1,5 @@
-ExpressionEngine 2.7 Sublime Text 3 Bundle
-==========================================
+ExpressionEngine 2.61 Sublime Text 3 Bundle
+===========================================
 
 ExpressionEngine 2 support package for Sublime Text 2 &amp; 3 that also supports the [jQuery bundle](https://github.com/mrmartineau/jQuery) syntax when inside of `<script>` tags.
 
@@ -27,7 +27,8 @@ PLUS:
 
 
 
-NOTES:
+Notes
+-----
 
 You must install the jQuery bundle (mentioned above) to take full avantage of this package.
 
@@ -66,21 +67,26 @@ To take full advantage of the extended syntax highlighting available with this p
 
 More comprehensive coloring can be accomplished by also assigning styling to these more specific scopes:
 
-* ee.tag.html
-* entity.function.addon.ee
-* entity.other.attribute-name.user.ee
-* entity.other.attribute-name.predefined.ee
-* invalid.illegal
-* invalid.deprecated.ee
-* keyword.control.ee
-* keyword.operator.logical.ee
-* punctuation.definition.tag.begin.ee
-* punctuation.definition.tag.end.ee
-* support.constant.ee
-* support.function.addon.ee
-* support.variable.language.ee
-* variable.parameter.ee
-* variable.other.ee
+* ee.tag.html _(the entire tag)_
+* entity.function.addon.ee _(user-defined addon)_
+* entity.other.attribute-name.user.ee _(user-defined attribute)_
+* entity.other.attribute-name.predefined.ee _(built-in / system attribute)_
+* invalid.illegal _(grammatical errors)_
+* invalid.deprecated.ee _(deprecated tags)_
+* keyword.control.ee _(conditional)_
+* keyword.operator.logical.ee _(logical operator)_
+* punctuation.definition.tag.begin.ee _(tag begin)_
+* punctuation.definition.tag.end.ee _(tag end)_
+* support.constant.ee _(constant)_
+* support.function.addon.ee _(built-in addon)_
+* support.variable.language.ee _(built-in global variable)_
+* variable.parameter.ee _(parameter)_
+* variable.other.ee _(user-defined variable)_
+
+A starter color theme with all these scopes installed is available here:
+
+  https://github.com/fcgrx/fcgrx-dark-color-theme-sublime-text-and-textmate
+
 
 
 
