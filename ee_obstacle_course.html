@@ -40,6 +40,20 @@ Built-in and other addons:
 	{exp:my_plugin my_param="foo"}
 	{/exp:my_plugin}
 
+Distinguishing between EE tags, JS arrays and CSS styles:
+
+	{background}
+	<script>
+		var body = {background:'red'};
+		var body = { background:'red' };
+	</script>
+	<style>
+		body{background:red;}
+		body {background:red;}
+		body {background: red;}
+		body { background: red; }
+	</style>
+
 Three uses of switch:
 
 	{exp:search:search_results switch="resultRowOne|resultRowTwo"}
@@ -129,7 +143,7 @@ Nesting EE tags inside HTML tags:
 
 Nesting EE tags inside PHP:
 
-	 <?php echo 'hello {username}'; ?>
+	<?php echo 'hello {username}'; ?>
 
 	<?php
 	/* COMMENT */ {if count == 2}{author}{/if}
@@ -4223,8 +4237,7 @@ paginate="top" paginate="bottom"  paginate="both"  paginate="inline"
 
 {switch="option_one|option_two|option_three"}
 
-{exp:comment:entries} <div class="{switch='one}
-{two'}"> <h1>{name}</h1> {comment} </div> {/exp:comment:entries}
+{exp:comment:entries} <div class="{switch='one|two'}"> <h1>{name}</h1> {comment} </div> {/exp:comment:entries}
 
 {title}
 
@@ -6431,7 +6444,6 @@ Notes:&nbsp; <input class="input" name="revision_notes" id="revision_notes" valu
 	<div class="what">{parents:what}</div>
 	<div class="when">{parents:when}</div>
 </div>
-
 {exp:channel:entries channel="musicians" limit="1"}
 	<div class="musician">
 		<h2>{first_name} {last_name}<h2>

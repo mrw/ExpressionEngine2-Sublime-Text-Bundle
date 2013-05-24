@@ -102,6 +102,15 @@ current_page > 6 OR (member_id)) OR
  member_id)
 }
 
+(7) Prevent javascript arrays from being confused for EE tags:
+
+	<script>
+		{!-- THE LINE BELOW IS CONFUSED FOR AN EE TAG --}
+		args = {mode: 'text/html', tabMode: "indent"};
+		{!-- THE LINE BELOW IS NOT CONFUSED FOR AN EE TAG --}
+		args = { mode: 'text/html', tabMode: "indent"};
+	</script>
+
 (7) Dont highlight variables preceded by end slashes that shouldnt be there:
 
 	{header}	 	is valid
