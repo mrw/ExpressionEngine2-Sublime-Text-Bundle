@@ -91,7 +91,7 @@
 		<key>ee-tag</key>
 		<dict>
 			<key>begin</key>
-			<string>\{(?=/?[a-zA-Z][a-zA-Z0-9:_-]*[a-zA-Z]+\b(?!:))</string>
+			<string>\{(?=/?[a-zA-Z][a-zA-Z0-9:_-]*[a-zA-Z]+\b(?![:;]))</string>
 			<key>end</key>
 			<string>\}</string>
 			<key>beginCaptures</key>
@@ -219,7 +219,14 @@
 				</dict>
 			</array>
 		</dict>
-		<key>php</key>
+		<key>numbers</key>
+		<dict>
+			<key>match</key>
+			<string>\b((0(x|X)[0-9a-fA-F]*)|(([0-9]+\.?[0-9]*)|(\.[0-9]+))((e|E)(\+|-)?[0-9]+)?)\b</string>
+			<key>name</key>
+			<string>constant.numeric.ee</string>
+		</dict>
+		<key>phpx</key>
 		<dict>
 			<key>patterns</key>
 			<array>
@@ -577,6 +584,10 @@
 				<dict>
 					<key>include</key>
 					<string>#string-single-quoted</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#numbers</string>
 				</dict>
 				<dict>
 					<key>include</key>
