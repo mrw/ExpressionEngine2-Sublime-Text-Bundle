@@ -10,46 +10,332 @@
 	<dict>
 		<key>completions</key>
 		<array>
+			<string>absolute_count</string>
+			<string>absolute_results</string>
+			<string>active</string>
+			<string>add_to_cart_button</string>
+			<string>add_to_cart_url</string>
+			<string>address_city</string>
+			<string>address_country</string>
+			<string>address_name</string>
+			<string>address_state</string>
+			<string>address_status</string>
+			<string>address_street</string>
+			<string>address_zip</string>
+			<string>age</string>
+			<string>allow_comments</string>
 			<string>allow_html</string>
+			<string>allow_multiple</string>
+			<string>aol_im</string>
+			<string>app_build</string>
 			<string>app_version</string>
+			<string>article</string>
+			<string>article_history</string>
+			<string>article_title</string>
+			<string>articles</string>
+			<string>articles_total</string>
+			<string>audio</string>
+			<string>author</string>
+			<string>author_email</string>
+			<string>author_id</string>
+			<string>author_name</string>
+			<string>author_only</string>
+			<string>auto_log_in</string>
+			<string>auto_login</string>
+			<string>auto_path</string>
+			<string>auto_thread_path</string>
+			<string>avatar</string>
+			<string>avatar_height</string>
+			<string>avatar_image_height</string>
+			<string>avatar_image_width</string>
+			<string>avatar_url</string>
+			<string>avatar_width</string>
 			<string>backspace</string>
 			<string>base_path</string>
+			<string>bio</string>
+			<string>birthday</string>
+			<string>blank</string>
+			<string>board</string>
+			<string>board_label</string>
+			<string>board_name</string>
+			<string>boards</string>
+			<string>body</string>
+			<string>build</string>
+			<string>bulletins</string>
+			<string>buy_now_button</string>
+			<string>buy_now_url</string>
 			<string>cache</string>
+			<string>calendar_heading</string>
+			<string>calendar_rows</string>
+			<string>can_admin</string>
+			<string>can_ban</string>
+			<string>can_change_status</string>
+			<string>can_delete</string>
+			<string>can_edit</string>
+			<string>can_merge</string>
+			<string>can_moderate_comment</string>
+			<string>can_move</string>
+			<string>can_post</string>
+			<string>can_post_bulletin</string>
+			<string>can_private_message</string>
+			<string>can_report</string>
+			<string>can_split</string>
 			<string>cancel</string>
-			<string>category</string>
-			<string>category_group</string>
+			<string>cannot_admin</string>
+			<string>cannot_edit</string>
+			<string>captcha</string>
+			<string>caption</string>
 			<string>cat_limit</string>
 			<string>cat_style</string>
+			<string>categories</string>
+			<string>category</string>
+			<string>category_description</string>
+			<string>category_group</string>
+			<string>category_id</string>
+			<string>category_image</string>
+			<string>category_menu</string>
+			<string>category_name</string>
+			<string>category_namespace</string>
+			<string>category_request</string>
+			<string>category_url_title</string>
+			<string>channel</string>
+			<string>channel_description</string>
+			<string>channel_encoding</string>
+			<string>channel_id</string>
+			<string>channel_lang</string>
+			<string>channel_language</string>
+			<string>channel_name</string>
+			<string>channel_names</string>
+			<string>channel_short_name</string>
+			<string>channel_title</string>
+			<string>channel_url</string>
 			<string>charset</string>
-			<string>charset</string>
+			<string>checkbox</string>
+			<string>children</string>
 			<string>class</string>
+			<string>clear_all_cookies_link</string>
+			<string>clear_ee_cookies_link</string>
 			<string>columns</string>
+			<string>comment</string>
+			<string>comment_auto_path</string>
+			<string>comment_date</string>
+			<string>comment_entry_id_auto_path</string>
+			<string>comment_id</string>
+			<string>comment_path</string>
+			<string>comment_site_id</string>
+			<string>comment_stripped</string>
+			<string>comment_subscriber_total</string>
+			<string>comment_tb_total</string>
+			<string>comment_total</string>
+			<string>comment_url_title_auto_path</string>
+			<string>comments_disabled</string>
+			<string>comments_expired</string>
+			<string>content</string>
+			<string>cookies_allowed</string>
+			<string>cookies_allowed_link</string>
+			<string>cookies_not_allowed</string>
+			<string>count</string>
 			<string>country_code</string>
+			<string>cp_url</string>
+			<string>credit</string>
 			<string>currency</string>
+			<string>current_id</string>
+			<string>current_page</string>
+			<string>current_path</string>
+			<string>current_request</string>
+			<string>current_time</string>
+			<string>current_url</string>
+			<string>custom_fields</string>
+			<string>date</string>
+			<string>DATE_ATOM</string>
+			<string>DATE_COOKIE</string>
+			<string>date_footer</string>
+			<string>date_heading</string>
+			<string>DATE_ISO8601</string>
+			<string>DATE_RFC1036</string>
+			<string>DATE_RFC1123</string>
+			<string>DATE_RFC2822</string>
+			<string>DATE_RFC822</string>
+			<string>DATE_RFC850</string>
+			<string>DATE_RSS</string>
+			<string>DATE_W3C</string>
+			<string>datepicker</string>
 			<string>day</string>
+			<string>day_number</string>
+			<string>day_path</string>
+			<string>debug</string>
 			<string>debug_mode</string>
 			<string>decimal</string>
+			<string>depth</string>
+			<string>description</string>
+			<string>directory_id</string>
+			<string>directory_title</string>
 			<string>disable</string>
+			<string>display</string>
+			<string>display_by</string>
+			<string>display_field</string>
+			<string>doc_url</string>
 			<string>dynamic</string>
+			<string>dynamic_parameters</string>
 			<string>dynamic_start</string>
+			<string>dynamic_title</string>
+			<string>edit_article</string>
+			<string>edit_date</string>
+			<string>editable</string>
+			<string>effect</string>
 			<string>elapsed_time</string>
 			<string>email</string>
+			<string>embed</string>
+			<string>embed:</string>
+			<string>empty_feed</string>
+			<string>encode</string>
+			<string>encoding</string>
+			<string>entries</string>
+			<string>entry_author_id</string>
+			<string>entry_date</string>
 			<string>entry_id</string>
 			<string>entry_id_from</string>
+			<string>entry_id_path</string>
 			<string>entry_id_to</string>
+			<string>entry_site_id</string>
+			<string>entry_status</string>
+			<string>entry_titles</string>
+			<string>error</string>
+			<string>error:</string>
+			<string>error_handling</string>
+			<string>error_message</string>
+			<string>excerpt</string>
+			<string>exclude_guests</string>
+			<string>expiration_date</string>
+			<string>extended_description</string>
+			<string>extension</string>
+			<string>field</string>
+			<string>field:</string>
+			<string>field_data</string>
+			<string>field_errors</string>
+			<string>field_errors:count</string>
+			<string>field_id</string>
+			<string>field_instructions</string>
+			<string>field_label</string>
+			<string>field_name</string>
+			<string>file</string>
+			<string>file_id</string>
+			<string>file_name</string>
+			<string>file_namespace</string>
+			<string>file_page</string>
+			<string>file_size</string>
+			<string>file_type</string>
+			<string>file_types</string>
+			<string>file_url</string>
+			<string>filename</string>
+			<string>files</string>
+			<string>first_child</string>
+			<string>first_name</string>
+			<string>first_page</string>
+			<string>fixed_order</string>
+			<string>footer</string>
+			<string>form_class</string>
+			<string>form_declaration:wiki:edit</string>
+			<string>form_declaration:wiki:uploads</string>
+			<string>form_id</string>
+			<string>form_name</string>
 			<string>format</string>
+			<string>formatting_buttons</string>
+			<string>forum_build</string>
+			<string>forum_name</string>
+			<string>forum_topic</string>
+			<string>forum_topic_id</string>
+			<string>forum_url</string>
+			<string>forums</string>
+			<string>forums_exist</string>
+			<string>freelancer_version</string>
+			<string>full_name</string>
+			<string>full_text</string>
 			<string>gallery</string>
+			<string>gender</string>
+			<string>global_errors</string>
+			<string>global_errors:count</string>
+			<string>gmt_comment_date</string>
+			<string>gmt_date</string>
+			<string>gmt_edit_date</string>
+			<string>gmt_entry_date</string>
+			<string>gmt_last_updated</string>
+			<string>gmt_revision_date</string>
+			<string>group_description</string>
 			<string>group_id</string>
+			<string>group_title</string>
 			<string>gzip_mode</string>
+			<string>header</string>
+			<string>heading</string>
+			<string>height</string>
+			<string>history</string>
 			<string>hits</string>
 			<string>homepage</string>
+			<string>html_email</string>
+			<string>icq</string>
 			<string>id</string>
+			<string>id_auto_path</string>
+			<string>id_path</string>
+			<string>ignore_screen_name</string>
+			<string>image_namespace</string>
 			<string>image_url</string>
+			<string>images</string>
+			<string>in_forum</string>
+			<string>include:body_extra</string>
+			<string>include:head_extra</string>
+			<string>include:spellcheck_js</string>
+			<string>include:theme_option_list</string>
+			<string>include_jquery</string>
+			<string>instructions</string>
+			<string>interests</string>
 			<string>ip_address</string>
+			<string>ip_hostname</string>
+			<string>is_ignored</string>
+			<string>is_image</string>
+			<string>is_post</string>
+			<string>is_topic</string>
+			<string>item</string>
+			<string>item_enabled</string>
+			<string>item_id</string>
+			<string>item_name</string>
+			<string>item_purchases</string>
+			<string>item_regular_price</string>
+			<string>item_sale_price</string>
+			<string>item_type</string>
+			<string>item_use_sale</string>
+			<string>items</string>
+			<string>join_date</string>
+			<string>json</string>
+			<string>keywords</string>
+			<string>label:</string>
 			<string>lang</string>
+			<string>language</string>
+			<string>last_activity</string>
+			<string>last_author</string>
+			<string>last_author_profile_path</string>
+			<string>last_child</string>
+			<string>last_comment_date</string>
+			<string>last_entry_date</string>
+			<string>last_forum_post_date</string>
+			<string>last_name</string>
+			<string>last_page</string>
+			<string>last_post_date</string>
+			<string>last_post_id</string>
+			<string>last_post_relative_date</string>
+			<string>last_reply</string>
+			<string>last_segment</string>
+			<string>last_updated</string>
+			<string>last_visit</string>
+			<string>last_visitor_date</string>
+			<string>leading_zeroes</string>
+			<string>letter</string>
+			<string>letter_header</string>
 			<string>limit</string>
+			<string>link</string>
 			<string>list</string>
+			<string>local_time</string>
 			<string>location</string>
+			<string>locked</string>
 			<string>logged_in</string>
 			<string>logged_in_email</string>
 			<string>logged_in_group_description</string>
@@ -66,68 +352,355 @@
 			<string>logged_in_total_forum_topics</string>
 			<string>logged_in_username</string>
 			<string>logged_out</string>
+			<string>logged_out_member_id</string>
+			<string>mailing_list</string>
+			<string>main_namespace</string>
+			<string>markup</string>
+			<string>match</string>
+			<string>maxlength</string>
+			<string>member_data</string>
+			<string>member_email</string>
 			<string>member_group</string>
 			<string>member_id</string>
+			<string>member_name</string>
+			<string>member_names</string>
+			<string>member_path</string>
 			<string>member_profile_link</string>
+			<string>member_search_path</string>
+			<string>message_text</string>
+			<string>meta_refresh</string>
+			<string>mime_type</string>
+			<string>moderated</string>
+			<string>moderators</string>
+			<string>modified_date</string>
+			<string>module_version</string>
 			<string>month</string>
 			<string>month_limit</string>
+			<string>month_num</string>
+			<string>month_short</string>
+			<string>most_visitor_date</string>
+			<string>most_visitors</string>
+			<string>movie</string>
+			<string>msn_im</string>
+			<string>multi_field</string>
+			<string>multipname</string>
+			<string>multiselect</string>
 			<string>name</string>
+			<string>name_namespace</string>
+			<string>namespace</string>
+			<string>namespace_label</string>
+			<string>new_article</string>
+			<string>next:</string>
+			<string>next_date</string>
+			<string>next_page</string>
+			<string>next_path</string>
+			<string>next_topic</string>
+			<string>next_topic_title</string>
+			<string>no_bulletins</string>
+			<string>no_history</string>
 			<string>no_result_page</string>
+			<string>no_results</string>
+			<string>no_results_page</string>
+			<string>not_category_request</string>
+			<string>not_entries</string>
+			<string>not_forum_topic</string>
+			<string>notes</string>
+			<string>occupation</string>
 			<string>offset</string>
+			<string>old_revision</string>
+			<string>option_name</string>
+			<string>option_value</string>
+			<string>options</string>
+			<string>options:</string>
 			<string>orderby</string>
+			<string>original_page</string>
+			<string>page</string>
+			<string>page_id</string>
+			<string>page_title</string>
+			<string>page_uri</string>
+			<string>page_url</string>
 			<string>paginate</string>
+			<string>paginate_base</string>
 			<string>paginate_type</string>
+			<string>pagination_links</string>
+			<string>pagination_page_number</string>
+			<string>pagination_url</string>
+			<string>parent_id</string>
 			<string>parent_only</string>
+			<string>parents</string>
+			<string>parents:</string>
+			<string>parents:title</string>
+			<string>parents:url-title</string>
+			<string>parse</string>
+			<string>password</string>
+			<string>path</string>
+			<string>path:advanced_search</string>
+			<string>path:atom</string>
+			<string>path:author_profile</string>
+			<string>path:close_revision</string>
+			<string>path:do_search</string>
+			<string>path:edit_topic</string>
+			<string>path:forgot</string>
+			<string>path:forum_home</string>
+			<string>path:image_url</string>
+			<string>path:login</string>
+			<string>path:logout</string>
+			<string>path:mark_all_read</string>
+			<string>path:memberlist</string>
+			<string>path:open_revision</string>
+			<string>path:private_messages</string>
+			<string>path:recent_poster</string>
+			<string>path:redirect_page</string>
+			<string>path:register</string>
+			<string>path:rss</string>
+			<string>path:smileys</string>
+			<string>path:spellcheck_iframe</string>
+			<string>path:theme_css</string>
+			<string>path:topic_history</string>
+			<string>path:view_active_topics</string>
+			<string>path:view_article</string>
+			<string>path:view_category</string>
+			<string>path:view_file</string>
+			<string>path:view_new_topics</string>
+			<string>path:view_orig_article</string>
+			<string>path:view_pending_topics</string>
+			<string>path:view_revision</string>
+			<string>path:wiki_base_url</string>
+			<string>path:wiki_home</string>
+			<string>path:your_control_panel</string>
+			<string>path:your_profile</string>
+			<string>payer_business_name</string>
+			<string>payer_status</string>
+			<string>payment_fee</string>
+			<string>payment_gross</string>
+			<string>permalink</string>
+			<string>photo</string>
+			<string>photo_height</string>
+			<string>photo_image_height</string>
+			<string>photo_image_width</string>
+			<string>photo_url</string>
+			<string>photo_width</string>
+			<string>ping_date</string>
+			<string>ping_ipaddress</string>
+			<string>ping_row</string>
+			<string>ping_server_name</string>
+			<string>ping_servers</string>
+			<string>ping_site_check</string>
+			<string>ping_site_name</string>
+			<string>ping_site_rss</string>
+			<string>ping_site_url</string>
+			<string>plain_email</string>
+			<string>plugin</string>
 			<string>popup</string>
+			<string>post_date</string>
+			<string>post_number</string>
+			<string>post_total</string>
+			<string>posts</string>
+			<string>preload_replace:</string>
+			<string>preserve_checkboxes</string>
 			<string>preview</string>
+			<string>previous:</string>
+			<string>previous_date</string>
+			<string>previous_page</string>
+			<string>previous_path</string>
+			<string>previous_topic</string>
+			<string>previous_topic_title</string>
+			<string>private_messages</string>
 			<string>profile_path</string>
+			<string>quantity</string>
+			<string>radio</string>
 			<string>rdf</string>
+			<string>recent_comment_date</string>
+			<string>recent_poster</string>
 			<string>recipients</string>
 			<string>redirect</string>
+			<string>redirect_page</string>
+			<string>redirected</string>
+			<string>ref_agent</string>
+			<string>ref_agent_short</string>
+			<string>ref_date</string>
+			<string>ref_from</string>
+			<string>ref_ip</string>
+			<string>ref_to</string>
+			<string>refresh</string>
 			<string>related_categories_mode</string>
+			<string>relationship</string>
+			<string>relative_date</string>
+			<string>relative_url</string>
+			<string>relaxed_categories</string>
+			<string>replies</string>
+			<string>reply_author</string>
+			<string>reply_results</string>
 			<string>replyto</string>
 			<string>require_entry</string>
-			<string>results</string>
+			<string>required</string>
+			<string>restrict_channel</string>
 			<string>result_page</string>
+			<string>results</string>
 			<string>return</string>
+			<string>revision</string>
+			<string>revision_author</string>
+			<string>revision_date</string>
+			<string>revision_id</string>
+			<string>revision_notes</string>
+			<string>revision_status</string>
+			<string>row_blank</string>
+			<string>row_column</string>
+			<string>row_end</string>
+			<string>row_start</string>
 			<string>rows</string>
+			<string>rte_selector</string>
+			<string>rte_toolset_id</string>
+			<string>rules:</string>
+			<string>safecracker_file</string>
+			<string>safecracker_head</string>
 			<string>screen_name</string>
+			<string>search:</string>
 			<string>search_in</string>
+			<string>search_path</string>
+			<string>secure_action</string>
+			<string>secure_return</string>
+			<string>select</string>
+			<string>select_date</string>
+			<string>select_options</string>
+			<string>selected</string>
+			<string>selected_option:</string>
+			<string>selector</string>
+			<string>send_private_message</string>
 			<string>show</string>
 			<string>show_all</string>
 			<string>show_current_week</string>
+			<string>show_disabled</string>
 			<string>show_empty</string>
 			<string>show_expired</string>
+			<string>show_expired_entries</string>
 			<string>show_future_entries</string>
+			<string>show_group</string>
+			<string>show_pages</string>
+			<string>siblings</string>
+			<string>siblings:</string>
+			<string>siblings:title</string>
+			<string>siblings:url-title</string>
+			<string>signature</string>
+			<string>signature_image</string>
+			<string>signature_image_height</string>
+			<string>signature_image_url</string>
+			<string>signature_image_width</string>
 			<string>silent</string>
+			<string>site</string>
+			<string>site_id</string>
+			<string>site_index</string>
+			<string>site_label</string>
 			<string>site_name</string>
+			<string>site_short_name</string>
+			<string>site_url</string>
+			<string>size</string>
+			<string>smiley</string>
 			<string>sort</string>
+			<string>special_namespace</string>
+			<string>special_page</string>
 			<string>sql</string>
 			<string>start_day</string>
 			<string>start_on</string>
 			<string>status</string>
+			<string>status_code</string>
+			<string>status_footer</string>
+			<string>status_group</string>
+			<string>status_header</string>
+			<string>status_menu</string>
+			<string>statuses</string>
 			<string>sticky</string>
 			<string>stop_before</string>
 			<string>style</string>
+			<string>stylesheet</string>
+			<string>subcategory_total</string>
+			<string>subscribed</string>
+			<string>subscriber_count</string>
+			<string>subscriber_email</string>
+			<string>subscriber_guest_total</string>
+			<string>subscriber_is_member</string>
+			<string>subscriber_member_id</string>
+			<string>subscriber_member_total</string>
+			<string>subscriber_screen_name</string>
+			<string>subscriber_total_results</string>
 			<string>success</string>
+			<string>summary</string>
 			<string>switch</string>
+			<string>switch(?!==)</string>
+			<string>template_edit_date</string>
+			<string>text</string>
+			<string>text_direction</string>
+			<string>textarea</string>
+			<string>textinput</string>
 			<string>theme</string>
+			<string>theme_folder_url</string>
+			<string>thread_path</string>
+			<string>timezone</string>
 			<string>title</string>
+			<string>title_permalink</string>
+			<string>toolset_id</string>
+			<string>topic_date</string>
+			<string>topic_relative_date</string>
+			<string>topic_title</string>
+			<string>topic_type</string>
+			<string>total_anon</string>
 			<string>total_comments</string>
 			<string>total_entries</string>
+			<string>total_forum_posts</string>
+			<string>total_forum_replies</string>
+			<string>total_forum_topics</string>
+			<string>total_guests</string>
+			<string>total_logged_in</string>
+			<string>total_members</string>
+			<string>total_pages</string>
+			<string>total_posts</string>
 			<string>total_queries</string>
+			<string>total_replies</string>
+			<string>total_results</string>
 			<string>track_views</string>
+			<string>trackback_total</string>
+			<string>trimmed_url</string>
+			<string>type</string>
+			<string>ui</string>
 			<string>uncategorized_entries</string>
+			<string>unsubscribe_url</string>
+			<string>upload_date</string>
+			<string>uploads</string>
+			<string>url</string>
+			<string>url_as_author</string>
+			<string>url_or_email</string>
+			<string>url_or_email_as_author</string>
+			<string>url_or_email_as_link</string>
 			<string>url_title</string>
-			<string>username</string>
+			<string>url_title_path</string>
+			<string>use_live_url</string>
 			<string>user_recipients</string>
+			<string>username</string>
+			<string>users</string>
+			<string>version</string>
+			<string>view_cart_button</string>
+			<string>view_cart_url</string>
+			<string>view_count_four</string>
+			<string>view_count_one</string>
+			<string>view_count_three</string>
+			<string>view_count_two</string>
+			<string>viewable_image</string>
+			<string>views</string>
 			<string>weblog</string>
 			<string>webmaster_email</string>
+			<string>week_date</string>
 			<string>week_sort</string>
 			<string>where</string>
 			<string>which</string>
+			<string>width</string>
 			<string>wiki</string>
+			<string>wiki_name</string>
+			<string>wrap</string>
+			<string>XID_HASH</string>
+			<string>yahoo_im</string>
 			<string>year</string>
+			<string>year_heading</string>
+			<string>year_short</string>
 		</array>
 	</dict>
 	<key>uuid</key>

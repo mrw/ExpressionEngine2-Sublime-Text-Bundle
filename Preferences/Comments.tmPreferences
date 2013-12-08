@@ -16,13 +16,19 @@
 				<key>name</key>
 				<string>TM_COMMENT_START</string>
 				<key>value</key>
-				<string>{!-- </string>
+				<string>{!--</string>
 			</dict>
 			<dict>
 				<key>name</key>
 				<string>TM_COMMENT_END</string>
 				<key>value</key>
-				<string> --}</string>
+				<string>--}</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>TM_COMMENT_MODE</string>
+				<key>value</key>
+				<string>block</string>
 			</dict>
 		</array>
 	</dict>

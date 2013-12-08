@@ -1,0 +1,153 @@
+
+## REMAINING PROBLEMS WITH EE SYNTAX ##
+
+To evaluate the test cases below, load this file with the ExpressionEngine syntax.
+
+Most of these problems have to do with nesting multiple syntaxes. Many could probably be fixed with grammar injection if Sublime Text supports it.
+
+From higher to lower priority:
+
+
+(1) Nesting EE tags inside HTML tags _AND_ not losing full highlighting of all HTML (solving both requirements probably requires injection grammar):
+
+	<a {!-- COMMENT --} href="{path="channel/archives"}">
+		<img src="foo" {if site_name}alt="{site_name}"{/if} />
+	</a>
+
+HACK SOLUTION: Insert this into HTML.tmLanguage (right after the <array> tag which follows "<key>tag-stuff</key>", ~line 900):
+<dict>
+	<key>include</key>
+	<string>text.html.ee</string>
+</dict>
+
+(2) No coloring of php code (hidden cost of properly coloring EE code within PHP code). Can be solved with injection grammar.
+
+	 <?php {if username}echo 'hello {username}';{/if} ?>
+
+	 <?php echo 'hello {username}'; ?>
+
+HACK SOLUTION: Insert this into PHP.tmLanguage (right after the <array> tag which follows "<key>language</key>", ~line 466):
+<dict>
+	<key>include</key>
+	<string>text.html.ee</string>
+</dict>
+
+(3) Nesting EE tags inside jQuery functions (probably requires injection grammar):
+
+	<script>
+		{!-- COMMENT --}
+		$(function() {
+			{!-- COMMENT --}
+		});
+		var foo = function()
+		{
+			{!-- COMMENT --}
+		};
+	</script>
+
+HACK SOLUTION:
+First, Insert this into jQuery.tmLanguage (right after the <array> tag which follows "<key>patterns</key>" that follows "<string>(\$|jQuery)(\((?!('|")&lt;))</string>", ~line 55):
+<dict>
+	<key>include</key>
+	<string>text.html.ee</string>
+</dict>
+Then, Insert this into jQuery.tmLanguage (right after the <array> tag which follows "<key>patterns</key>" that follows "<key>nested-parens</key>", ~line 588):
+<dict>
+	<key>include</key>
+	<string>text.html.ee</string>
+</dict>
+
+(4) EE code inside CSS (CSS definitions get messed up by EE brackets). Possible solution: inject EE definition (at least comments) into CSS and JS and PHP syntaxes?? Or use Matching Nested Constructs feature of regex
+
+	<style>
+		{!-- comment --}
+		.my_class { background:#fff; content:{site_name}; }
+		{!-- .unwanted_class {background:green;} --}
+		{if logged_in}
+			html{ {if group_id == 1}background:yellow;{/if} }
+		{/if}
+		body{ background:
+		// css
+			{!-- white --} black;}
+	</style>
+	/* THIS TEXT IS INTERPRETED AS A "comment.block.css" EVEN THOUGH IT"S OUTSIDE THE STYLE BLOCK ABOVE. ALL HIGHLIGHTING IS BROKEN FROM HERE ON OUT DUE TO EE COMMENT ABOVE. SECOND STYLE TAG BELOW IS NEEDED TO CLOSE THE STYLE BLOCK AND RESTORE ORDER. */
+	</style>
+
+(5) Nested quotes (EE tag containing quote nested inside quoted string). Actually a nested syntax challenge -- EE tags within HTML tags. Workaround = use single quotes inside double quotes:
+
+	<a href="{path="channel/archives"}">{month}, {year}</a>
+	<a href="{day_path="channel/index"}">{day_number}</a>
+	<a href="{title_permalink="channel/index"}">{title}</a>
+	<a href="{profile_path="member/profile"}">{author}</a>
+
+HACK SOLUTION: Insert this into HTML.tmLanguage (right after the <array> tag which follows "<key>patterns</key>" that follows "<string>string.quoted.double.html</string>", ~line 744):
+<dict>
+	<key>include</key>
+	<string>text.html.ee</string>
+</dict>
+
+(6) Don't match local variables preceded by colon:
+
+	{nothing:here:should:be:colored:item:version}
+	{this_too:item}
+	{bands:title}
+
+	NOTE: Make sure formatting of these is not disturbed:
+	{if (timezone == 2 OR
+timezone > 6 OR (can_edit)) OR
+ channel_id)
+}
+{if (member_id == 2 OR
+current_page > 6 OR (member_id)) OR
+ member_id)
+}
+
+(7) Prevent javascript arrays from being confused for EE tags:
+
+	<script>
+		{!-- THE LINE BELOW IS CONFUSED FOR AN EE TAG --}
+		args = {mode: 'text/html', tabMode: "indent"};
+		{!-- THE LINE BELOW IS NOT CONFUSED FOR AN EE TAG --}
+		args = { mode: 'text/html', tabMode: "indent"};
+	</script>
+
+(7) Dont highlight variables preceded by end slashes that shouldnt be there:
+
+	{header}	 	is valid
+	{/header}	 	is valid
+	{site_name} 	is valid
+	{/site_name} 	is INVALID
+	{author}		is valid
+	{/author}		is INVALID
+	{author x="x"}	is valid
+	{x /author}		is INVALID
+	(all INVALID tags should go uncolored)
+
+	NOTE: Make sure formatting of these is not disturbed:
+	{if (timezone == 2 OR
+timezone > 6 OR (can_edit)) OR
+ channel_id)
+}
+{if (member_id == 2 OR
+current_page > 6 OR (member_id)) OR
+ member_id)
+}
+
+(8) Allow logical operators to not be surrounded by spaces. Both these are legal:
+
+	{if name == "bozo"}
+	{if name=="bozo"}
+
+(9) EE comments (and code) in quoted string are not colored. (maybe this is as it should be, it could get confusing if quotes not uniformly colored?)
+
+	<a href="{path=blog}{!-- COMMENT --}" title="{site_name}">{!-- COMMENT--}{site_name}</a>
+
+(10) Distinguish between local and global for variables that can be either (requires compiler, or possibly setting scope between open and close tags inclusive):
+
+	{location}
+	{exp:member:custom_profile_data}
+		{location}
+	{/exp:member:custom_profile_data}
+
+
+
